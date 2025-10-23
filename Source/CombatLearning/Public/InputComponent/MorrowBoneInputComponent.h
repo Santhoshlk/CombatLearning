@@ -1,0 +1,38 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "EnhancedInputComponent.h"
+#include "DataAssets/InputConfig_DataAsset.h"
+#include "MorrowBoneInputComponent.generated.h"
+
+
+
+
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+class COMBATLEARNING_API UMorrowBoneInputComponent : public UEnhancedInputComponent
+{
+	GENERATED_BODY()
+
+public:
+
+	template<class UserObject,typename CallBackFunc>
+	void BindingInputs( UInputConfig_DataAsset* &InInputConfig,const FGameplayTag& InInputTag,ETriggerEvent TriggerEvent,UserObject* ContextObject,CallBackFunc Func);
+	
+
+
+};
+
+template <class UserObject, typename CallBackFunc>
+void UMorrowBoneInputComponent::BindingInputs(UInputConfig_DataAsset*& InInputConfig,
+	const FGameplayTag& InInputTag, ETriggerEvent TriggerEvent, UserObject* ContextObject, CallBackFunc Func)
+{
+	//to check the Input Config
+	checkf(InInputConfig,TEXT("U did not provide the valid Asset"));
+	if (UInputAction* FoundAction=InInputConfig->FindInputActionInGameplayTag(InInputTag))
+	{
+		//so we are checking the search function and then we are binding The InputAction
+		BindAction(FoundAction,TriggerEvent,ContextObject,Func);
+	}
+}
