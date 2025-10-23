@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputActionValue.h"
 #include "Character/MorrowBoneClassBase.h"
 #include "MorrowBone.generated.h"
 
+class UInputConfig_DataAsset;
 class UCameraComponent;
 class USpringArmComponent;
 class UCapsuleComponent;
@@ -40,5 +42,19 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<USkeletalMeshComponent> SkeletonMesh;
-#pragma endregion 
+#pragma endregion
+
+public:
+	//Create the DataType Of this Custom DataAsset
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,meta=(AllowPrivateAccess="true"),Category="Input")
+	TObjectPtr<UInputConfig_DataAsset> InputConfig;
+
+public:
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+#pragma region Functions
+  void Looking(const FInputActionValue& Value );
+	void Moving(const FInputActionValue& Value );
+#pragma endregion
+	
 };

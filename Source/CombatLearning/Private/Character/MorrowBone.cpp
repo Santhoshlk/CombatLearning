@@ -3,10 +3,14 @@
 
 #include "Character/MorrowBone.h"
 #include "CombatDebugHelper.h"
+#include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "DataAssets/InputConfig_DataAsset.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "InputComponent/MorrowBoneInputComponent.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 
 AMorrowBone::AMorrowBone()
 {
@@ -42,6 +46,38 @@ AMorrowBone::AMorrowBone()
 	GetCharacterMovement()->BrakingDecelerationWalking=2000.f;
 	
 	
+}
+
+void AMorrowBone::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	APlayerController* PlayerController=Cast<APlayerController>(GetController());
+	UEnhancedInputLocalPlayerSubsystem* SubSystem=ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+	check(SubSystem);
+	SubSystem->AddMappingContext(InputConfig->InputMappingContext,0);
+
+	//now normally are going to cast to EnhancedInputComponent But Now WE are going To Cast to Our Custom Input Componeentr
+	UMorrowBoneInputComponent* PlayerComponent=CastChecked<UMorrowBoneInputComponent>(PlayerInputComponent);
+	PlayerComponent->BindingInputs(InputConfig,MorrowBoneGameplayTags::InputTag_Look,ETriggerEvent::Triggered,this,&AMorrowBone::Looking);
+	PlayerComponent->BindingInputs(InputConfig,MorrowBoneGameplayTags::InputTag_Move,ETriggerEvent::Triggered,this,&AMorrowBone::Moving);
+}
+
+void AMorrowBone::Looking(const FInputActionValue& Value)
+{
+	const FVector2D Look= Value.Get<FVector2D>();
+	AddControllerYawInput(Look.X);
+	AddControllerPitchInput(Look.Y);
+}
+
+void AMorrowBone::Moving(const FInputActionValue& Value)
+{
+	const FVector2D Movement= Value.Get<FVector2D>();
+    FRotator CurrentRotation=GetController()->GetControlRotation();
+	FRotator YawRotation(0.0f,CurrentRotation.Yaw,0.0f);
+	FVector ForwardVector=FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	AddMovementInput(ForwardVector,Movement.Y);
+	FVector RightVector=FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(RightVector,Movement.X);
 }
 
 void AMorrowBone::BeginPlay()

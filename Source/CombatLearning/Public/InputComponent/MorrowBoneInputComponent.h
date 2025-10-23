@@ -18,14 +18,14 @@ class COMBATLEARNING_API UMorrowBoneInputComponent : public UEnhancedInputCompon
 public:
 
 	template<class UserObject,typename CallBackFunc>
-	void BindingInputs( UInputConfig_DataAsset* &InInputConfig,const FGameplayTag& InInputTag,ETriggerEvent TriggerEvent,UserObject* ContextObject,CallBackFunc Func);
+	void BindingInputs( TObjectPtr<UInputConfig_DataAsset> &InInputConfig,const FGameplayTag& InInputTag,ETriggerEvent TriggerEvent,UserObject* ContextObject,CallBackFunc Func);
 	
 
 
 };
 
 template <class UserObject, typename CallBackFunc>
-void UMorrowBoneInputComponent::BindingInputs(UInputConfig_DataAsset*& InInputConfig,
+void UMorrowBoneInputComponent::BindingInputs(TObjectPtr<UInputConfig_DataAsset>& InInputConfig,
 	const FGameplayTag& InInputTag, ETriggerEvent TriggerEvent, UserObject* ContextObject, CallBackFunc Func)
 {
 	//to check the Input Config
