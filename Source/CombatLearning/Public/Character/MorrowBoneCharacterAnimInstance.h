@@ -6,8 +6,9 @@
 #include "Character/MorrowBoneBaseAnimInstance.h"
 #include "MorrowBoneCharacterAnimInstance.generated.h"
 
-class UCharacterMovementComponent;
 class AMorrowBoneClassBase;
+class UCharacterMovementComponent;
+
 /**
  * 
  */
@@ -24,10 +25,10 @@ public:
 
 #pragma region Components
 	UPROPERTY()
-	TObjectPtr<AMorrowBoneClassBase> OwningPtr;
+	AMorrowBoneClassBase* OwningPtr;
 
 	UPROPERTY()
-	TObjectPtr<UCharacterMovementComponent> OwningCharacterMovement;
+	UCharacterMovementComponent* OwningCharacterMovement;
 #pragma endregion
 
 #pragma region Variables
