@@ -15,9 +15,9 @@ void UMorrowBoneCharacterAnimInstance::NativeInitializeAnimation()
 	}
 }
 
-void UMorrowBoneCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
+void UMorrowBoneCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
-	Super::NativeUpdateAnimation(DeltaSeconds);
+	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
 	//check if Owning Ptr and Owning Character Movement is valid
 	if (IsValid(OwningPtr) && OwningCharacterMovement )
 	{
@@ -25,3 +25,4 @@ void UMorrowBoneCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bHasAcceleration=OwningCharacterMovement->GetCurrentAcceleration().SizeSquared2D()>0.f;
 	}
 }
+

@@ -21,7 +21,7 @@ public:
 	//If u have doubt That UNeed To call Super Then Go and Check The Signature
 	virtual void NativeInitializeAnimation() override;
 
-	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+	virtual void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 
 #pragma region Components
 	UPROPERTY()
