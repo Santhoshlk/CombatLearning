@@ -4,19 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "AbilitySystemInterface.h"
 #include "MorrowBoneClassBase.generated.h"
 
 class UMorrowBoneAttributeSet;
 class UMorrowBoneAbilitySystemComponent;
 
 UCLASS()
-class COMBATLEARNING_API AMorrowBoneClassBase : public ACharacter
+class COMBATLEARNING_API AMorrowBoneClassBase : public ACharacter , public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	
 	AMorrowBoneClassBase();
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 protected:
 	// the process is normal as we create the AbilitySystem components ,Attribute set which are common for both character and etc
@@ -26,14 +29,19 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="AttributeSet")
 	TObjectPtr<UMorrowBoneAttributeSet> AttributeSet;
 
+	//to make this work we need to override
+	//~ Begin APawn Interface.
+	virtual void PossessedBy(AController* NewController) override;
+	//~ End APawn Interface
+
 public:
     //make the public getters
-	UFUNCTION(BlueprintCallable)
-	FORCEINLINE UMorrowBoneAbilitySystemComponent* GetAbilitySystemComponent() const 
+	
+	FORCEINLINE UMorrowBoneAbilitySystemComponent* GetMorrowBoneAbilitySystemComponent() const 
 	{
 		return AbilitySystemComponent.Get();
 	}
-    UFUNCTION(BlueprintCallable)
+    
 	FORCEINLINE UMorrowBoneAttributeSet*  GetAttributeSet() const 
 	{
 		return AttributeSet.Get();

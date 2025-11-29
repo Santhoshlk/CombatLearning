@@ -16,9 +16,26 @@ AMorrowBoneClassBase::AMorrowBoneClassBase()
 	//create the components
 	AbilitySystemComponent=CreateDefaultSubobject<UMorrowBoneAbilitySystemComponent>(TEXT("ASC"));
 	AttributeSet=CreateDefaultSubobject<UMorrowBoneAttributeSet>(TEXT("AttributeSet"));
+	
 
 	
 
+}
+
+UAbilitySystemComponent* AMorrowBoneClassBase::GetAbilitySystemComponent() const
+{
+	return GetMorrowBoneAbilitySystemComponent();
+}
+
+
+
+void AMorrowBoneClassBase::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	if (IsValid(AbilitySystemComponent))
+	{
+		AbilitySystemComponent->InitAbilityActorInfo(this,this);
+	}
 }
 
 

@@ -24,7 +24,7 @@ public:
 	// u can still have Begin play even if u delete it from the base class it is a right of every unreal class
 	virtual void BeginPlay() override;
 	AMorrowBone();
-
+	virtual void PossessedBy(AController* NewController) override;
 	
 private:
 	//to divide into regions new trick by Vince Petrel

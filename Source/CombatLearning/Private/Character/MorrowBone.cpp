@@ -11,6 +11,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "InputComponent/MorrowBoneInputComponent.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
+#include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 
 AMorrowBone::AMorrowBone()
 {
@@ -48,6 +49,18 @@ AMorrowBone::AMorrowBone()
 	
 }
 
+void AMorrowBone::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (AbilitySystemComponent && AttributeSet)
+	{
+		FString Msg=FString::Printf(TEXT("The Owner Actor: %s, The Avatar Actor : %s"),*AbilitySystemComponent->GetOwnerActor()->GetActorLabel(),*AbilitySystemComponent->GetAvatarActor()->GetActorLabel());
+		Debug::PrintMessage(TEXT("ASC Valid")+Msg);
+	}
+	
+}
+
 void AMorrowBone::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -56,7 +69,7 @@ void AMorrowBone::SetupPlayerInputComponent(class UInputComponent* PlayerInputCo
 	check(SubSystem);
 	SubSystem->AddMappingContext(InputConfig->InputMappingContext,0);
 
-	//now normally are going to cast to EnhancedInputComponent But Now WE are going To Cast to Our Custom Input Componeentr
+	//now normally are going to cast to EnhancedInputComponent But Now WE are going To Cast to Our Custom Input Component
 	UMorrowBoneInputComponent* PlayerComponent=CastChecked<UMorrowBoneInputComponent>(PlayerInputComponent);
 	PlayerComponent->BindingInputs(InputConfig,MorrowBoneGameplayTags::InputTag_Look,ETriggerEvent::Triggered,this,&AMorrowBone::Looking);
 	PlayerComponent->BindingInputs(InputConfig,MorrowBoneGameplayTags::InputTag_Move,ETriggerEvent::Triggered,this,&AMorrowBone::Moving);
