@@ -35,7 +35,7 @@ public:
 	bool bShouldEnterRelaxedState;
 
 	//u should have some float one to see the threshold and one to calculate elapsed
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Anim Data | Relax")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Anim Data | Relax")
 	float EnterRelaxedStateThreshold=5.f;
 
 	

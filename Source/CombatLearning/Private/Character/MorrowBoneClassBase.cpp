@@ -1,5 +1,7 @@
 
 #include "Character/MorrowBoneClassBase.h"
+#include "Attributes/MorrowBoneAttributeSet.h"
+#include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 
 
 AMorrowBoneClassBase::AMorrowBoneClassBase()
@@ -10,6 +12,12 @@ AMorrowBoneClassBase::AMorrowBoneClassBase()
 
 	//To avoid getting affected by the vfx that hits the ground use
 	GetMesh()->bReceivesDecals = false;
+
+	//create the components
+	AbilitySystemComponent=CreateDefaultSubobject<UMorrowBoneAbilitySystemComponent>(TEXT("ASC"));
+	AttributeSet=CreateDefaultSubobject<UMorrowBoneAttributeSet>(TEXT("AttributeSet"));
+
+	
 
 }
 
