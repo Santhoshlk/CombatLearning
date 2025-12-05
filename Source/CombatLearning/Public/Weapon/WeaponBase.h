@@ -25,6 +25,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="BoxCollision")
 	TObjectPtr<UBoxComponent> BoxCollision;
 
+	
+
 #pragma endregion
 
 public:

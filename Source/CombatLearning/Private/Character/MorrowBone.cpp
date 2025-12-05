@@ -11,7 +11,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "InputComponent/MorrowBoneInputComponent.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
-#include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
+#include "DataAssets/StartUpData/DataAsset_StartupData.h"
 
 AMorrowBone::AMorrowBone()
 {
@@ -52,11 +52,14 @@ AMorrowBone::AMorrowBone()
 void AMorrowBone::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-
-	if (AbilitySystemComponent && AttributeSet)
+	// we need to check that our DataAsset is not null and need to load is Synchronously
+	if (!StartUpData.IsNull())
 	{
-		FString Msg=FString::Printf(TEXT("The Owner Actor: %s, The Avatar Actor : %s"),*AbilitySystemComponent->GetOwnerActor()->GetActorLabel(),*AbilitySystemComponent->GetAvatarActor()->GetActorLabel());
-		Debug::PrintMessage(TEXT("ASC Valid")+Msg);
+		if (UDataAsset_StartupData* LoadedData=StartUpData.LoadSynchronous())
+		{
+			LoadedData->GiveToASC(AbilitySystemComponent);
+		}
+		// the startup data is loaded in character so asc will be give by character so just if ur making a data take asc as an input and make the function
 	}
 	
 }

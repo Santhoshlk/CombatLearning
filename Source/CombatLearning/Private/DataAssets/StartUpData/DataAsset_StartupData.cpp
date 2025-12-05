@@ -5,7 +5,7 @@
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "GameplayAbility/MorrowBoneGameplayAbility.h"
 
-void UDataAsset_StartupData::GiveToASC(UMorrowBoneAbilitySystemComponent*& ASC, int32 ApplyLevel)
+void UDataAsset_StartupData::GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemComponent>& ASC, int32 ApplyLevel)
 {
 	//it is important to check your ASC
 	checkf(ASC,TEXT("The AbilitySystem Component is Not Valid for the Avatar Actor u want to give the Ability "));
@@ -14,7 +14,7 @@ void UDataAsset_StartupData::GiveToASC(UMorrowBoneAbilitySystemComponent*& ASC, 
 }
 
 void UDataAsset_StartupData::GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplayAbility>> &InitialAbilities,
-	UMorrowBoneAbilitySystemComponent*& ASC, int32 ApplyLevel)
+	TObjectPtr<UMorrowBoneAbilitySystemComponent>& ASC, int32 ApplyLevel)
 {
 	if (InitialAbilities.IsEmpty())
 	{

@@ -17,8 +17,9 @@ class COMBATLEARNING_API UDataAsset_StartupData : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	virtual void GiveToASC(UMorrowBoneAbilitySystemComponent* & ASC,int32 ApplyLevel=1);
-	void GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplayAbility>> &InitialAbilities,UMorrowBoneAbilitySystemComponent* & ASC,int32 ApplyLevel=1);
+	virtual void GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemComponent> & ASC,int32 ApplyLevel=1);
+private:
+	void GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplayAbility>> &InitialAbilities,TObjectPtr<UMorrowBoneAbilitySystemComponent> & ASC,int32 ApplyLevel=1);
 protected:
 	UPROPERTY(EditDefaultsOnly,Category="OnGiveAbility")
 	TArray<TSubclassOf<UMorrowBoneGameplayAbility>> CommonStartupAbility;

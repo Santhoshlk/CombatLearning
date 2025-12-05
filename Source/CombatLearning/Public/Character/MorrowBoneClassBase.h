@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "MorrowBoneClassBase.generated.h"
 
+class UDataAsset_StartupData;
 class UMorrowBoneAttributeSet;
 class UMorrowBoneAbilitySystemComponent;
 
@@ -28,6 +29,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="AttributeSet")
 	TObjectPtr<UMorrowBoneAttributeSet> AttributeSet;
+
+	UPROPERTY(EditDefaultsOnly,Category="StartupData")
+	TSoftObjectPtr<UDataAsset_StartupData> StartUpData;
 
 	//to make this work we need to override
 	//~ Begin APawn Interface.
