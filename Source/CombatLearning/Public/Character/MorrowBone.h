@@ -7,6 +7,7 @@
 #include "Character/MorrowBoneClassBase.h"
 #include "MorrowBone.generated.h"
 
+class UMorrowBoneCombatComponent;
 class UInputConfig_DataAsset;
 class UCameraComponent;
 class USpringArmComponent;
@@ -42,6 +43,9 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<USkeletalMeshComponent> SkeletonMesh;
+
+	UPROPERTY()
+	TObjectPtr<UMorrowBoneCombatComponent> CombatComponent;
 #pragma endregion
 
 public:

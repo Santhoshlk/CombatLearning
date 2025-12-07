@@ -6,12 +6,14 @@
 #include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/Combat/MorrowBoneCombatComponent.h"
 #include "DataAssets/InputConfig_DataAsset.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputComponent/MorrowBoneInputComponent.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
 #include "DataAssets/StartUpData/DataAsset_StartupData.h"
+
 
 AMorrowBone::AMorrowBone()
 {
@@ -35,6 +37,10 @@ AMorrowBone::AMorrowBone()
 	FollowCamera=CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->bUsePawnControlRotation = false;
 
+	//Create the combat component
+    CombatComponent=CreateDefaultSubobject<UMorrowBoneCombatComponent>(TEXT("CombatComponent"));
+
+	
 	//setup Attachments of both Camera and spring Arm
 	SpringArm->SetupAttachment(Capsule);
 	FollowCamera->SetupAttachment(SpringArm,USpringArmComponent::SocketName);
