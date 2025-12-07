@@ -60,5 +60,9 @@ public:
   void Looking(const FInputActionValue& Value );
 	void Moving(const FInputActionValue& Value );
 #pragma endregion
-	
+
+ FORCEINLINE	TObjectPtr<UMorrowBoneCombatComponent> GetCombatComponent() const 
+	{
+		return CombatComponent;
+	}
 };
