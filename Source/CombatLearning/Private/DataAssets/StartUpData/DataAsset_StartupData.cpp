@@ -21,7 +21,7 @@ void UDataAsset_StartupData::GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplay
 		return;
 	}
 	//Now Loop through the Data and Give THe Ability To your ASC
-	for (const TSubclassOf<UMorrowBoneGameplayAbility>& Ability : InitialAbilities)
+	for (const auto& Ability : InitialAbilities)
 	{
 		//always do the safety check
 		if (!IsValid(Ability))
