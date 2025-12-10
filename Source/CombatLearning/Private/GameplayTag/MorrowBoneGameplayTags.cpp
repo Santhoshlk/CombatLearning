@@ -13,4 +13,6 @@ namespace MorrowBoneGameplayTags
   UE_DEFINE_GAMEPLAY_TAG(InputTag_Move,TEXT("InputTag.Move"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Look,TEXT("InputTag.Look"))
 	
+	//here we are declaring new Gameplay Tag for our weapon spawned
+	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe,TEXT("Player.Weapon.Axe"))
 }

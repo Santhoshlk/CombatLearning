@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "Components/Combat/PawnCombatComponent.h"
 #include "MorrowBoneGameplayAbility.generated.h"
+class UPawnCombatComponent;
+
 UENUM(BlueprintType)
 enum class EMorrowBoneAbilityActivationPolicy : uint8
 {
@@ -25,5 +28,12 @@ public:
 	virtual void OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 
 	virtual void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
+
 	
+	//this bridges the Two classes so we can use Blueprint Pure
+	UFUNCTION(BlueprintPure)
+	UPawnCombatComponent* GetPawnCombatComponent() const
+	{
+		 return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
+	}
 };

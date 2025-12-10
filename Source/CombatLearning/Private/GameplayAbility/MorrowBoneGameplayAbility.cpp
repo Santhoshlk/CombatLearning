@@ -11,7 +11,7 @@ void UMorrowBoneGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* 
 	Super::OnGiveAbility(ActorInfo, Spec);
 	//FGameplayAbilityActorInfo is a great struct which can have a lot of Info about our actor
 	//i we want we acn include our ASC header and  get Some Functions
-	if (ActivationPolicy==EMorrowBoneAbilityActivationPolicy::onGiven && !Spec.IsActive())
+	if (ActivationPolicy==EMorrowBoneAbilityActivationPolicy::onGiven && ActorInfo->IsNetAuthority() && !Spec.IsActive())
 	{
 		//to Activate Ability
 		ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle);

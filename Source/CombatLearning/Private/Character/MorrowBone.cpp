@@ -2,7 +2,6 @@
 
 
 #include "Character/MorrowBone.h"
-#include "CombatDebugHelper.h"
 #include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -105,5 +104,5 @@ void AMorrowBone::Moving(const FInputActionValue& Value)
 void AMorrowBone::BeginPlay()
 {
 	Super::BeginPlay();
-	Debug::PrintMessage(FString(TEXT("The Debug Helper is Working")));
+	
 }
