@@ -5,49 +5,53 @@
 #include "Weapon/WeaponBase.h"
 #include "CombatDebugHelper.h"
 
-void UPawnCombatComponent::RegisterSpawnedWeapons(FGameplayTag InputRegisterTag, AWeaponBase* WeaponToRegister,
-	bool IsWeaponEquipped) 
+void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InInputTag, AWeaponBase* Weapon, bool IsEquipped)
 {
-	//u also need to check that if the weapons registered contains the Tag already
-	if (RegisteredWeapons.Contains(InputRegisterTag))
+	// u need to check both are valid before adding
+	checkf(InInputTag.IsValid(),TEXT("The Tag which u are using to add the weapon is not valid "));
+	checkf(IsValid(Weapon),TEXT("The Weapon which u are trying To register is not valid"));
+
+	// To not add double have a return check
+	// instead of check because of a common GAS quirk as it will call this func twice
+	if (WeaponsToRegister.Contains(InInputTag))
 	{
 		return;
 	}
-	check(InputRegisterTag.IsValid())
-	checkf(IsValid(WeaponToRegister),TEXT("The Weapon Which u are Trying to Register is Invalid"));
-	RegisteredWeapons.Emplace(InputRegisterTag,WeaponToRegister);
-	if (IsWeaponEquipped)
+	//else we can add
+	WeaponsToRegister.Emplace(InInputTag,Weapon);
+
+	if (IsEquipped)
 	{
-		CurrentEquippedWeaponTag=InputRegisterTag;
+		CurrentWeapon=InInputTag;
 	}
-	// if you're able to register then print a debug message
-	FString Message=FString::Printf(TEXT("The Weapon Spawned is registered under Weapon:%s and GameplayTag:%s"),*WeaponToRegister->GetName(),*InputRegisterTag.ToString());
+	// To show That This work we can add a debug Message
+
+	FString Message=FString::Printf(TEXT("The Register Weapon is %s to GameplayTag %s"),*Weapon->GetName(),*InInputTag.ToString());
 	Debug::PrintMessage(Message);
-	
 }
 
-AWeaponBase* UPawnCombatComponent::GetCharacterCarriedWeaponByTag(FGameplayTag InputTag)
+AWeaponBase* UPawnCombatComponent::GetWeaponCarriedbyTag(FGameplayTag InputTag) const
 {
-	//u need to add another layering of * as we are using Const a good practice
-	if (AWeaponBase* const* Weapon=RegisteredWeapons.Find(InputTag))
-	{
-		return *Weapon;
-	}
+	// Just a case check
+		if (!InputTag.IsValid())
+		{
+			return nullptr;
+		}
+	 if (AWeaponBase* const* SearchedWeapon=WeaponsToRegister.Find(InputTag))
+	 {
+	 	return *SearchedWeapon;
+	 }
 	return nullptr;
 }
 
-AWeaponBase* UPawnCombatComponent::GetCharacterCurrentWeapon() const
+AWeaponBase* UPawnCombatComponent::GetEquippedWeapon() const
 {
-	//if u don't have a current tag return nullptr
-	if (!CurrentEquippedWeaponTag.IsValid())
+	if (CurrentWeapon.IsValid())
 	{
 		return nullptr;
 	}
-	if (AWeaponBase* const* Weapon=RegisteredWeapons.Find(CurrentEquippedWeaponTag))
-	{
-		return *Weapon;
-	}
-	return nullptr;
+	return GetWeaponCarriedbyTag(CurrentWeapon);
+	
 }
 
 

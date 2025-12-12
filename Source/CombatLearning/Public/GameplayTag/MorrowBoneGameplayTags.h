@@ -10,7 +10,7 @@ namespace MorrowBoneGameplayTags
 {
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Move)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Look)
-	
-	//create new tags for weapon
+
+	//** Declare ur Tags**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe)
 }

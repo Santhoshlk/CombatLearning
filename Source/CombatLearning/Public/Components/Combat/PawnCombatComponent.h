@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameplayTagContainer.h"
 #include "Components/PawnHelperComponent.h"
+#include "GameplayTagContainer.h"
 #include "PawnCombatComponent.generated.h"
 
 class AWeaponBase;
@@ -15,18 +15,27 @@ UCLASS()
 class COMBATLEARNING_API UPawnCombatComponent : public UPawnHelperComponent
 {
 	GENERATED_BODY()
+
 public:
-  UFUNCTION(BlueprintCallable,Category="MorrowBone|Weapons")
-	void RegisterSpawnedWeapons(FGameplayTag InputRegisterTag,AWeaponBase* WeaponToRegister,bool IsWeaponEquipped=false) ;
-	UFUNCTION(BlueprintCallable)
-    AWeaponBase* GetCharacterCarriedWeaponByTag(FGameplayTag InputTag);	
+// we need to create functions to register the weapons and get them back using gameplay tags
+
+	//function to Register the weapon
+	UFUNCTION(BlueprintCallable,Category="Weapon|Register")
+ void RegisterSpawnedWeapon(FGameplayTag InInputTag,AWeaponBase* Weapon,bool IsEquipped);
+
+	//searching Function
+	UFUNCTION(BlueprintCallable,Category="Weapon|Search")
+	AWeaponBase* GetWeaponCarriedbyTag(FGameplayTag InputTag) const ;
+
+	UFUNCTION(BlueprintCallable,Category="Weapon|Search")
+	AWeaponBase* GetEquippedWeapon() const;
+
+	// u also need to give a current weaponTag Obviously
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|CurrentWeapon")
+	FGameplayTag CurrentWeapon;
+ private:
+ //we don't need to show the TMap
+UPROPERTY()
+TMap<FGameplayTag,AWeaponBase*> WeaponsToRegister;
 	
-	UPROPERTY(BlueprintReadWrite,Category="MorrowBone|Tags")
-	FGameplayTag CurrentEquippedWeaponTag;
-	
-	UFUNCTION(BlueprintCallable,Category="MorrowBone|Weapons")
-	AWeaponBase* GetCharacterCurrentWeapon() const;
-private:
-	UPROPERTY()
-	TMap<FGameplayTag,AWeaponBase*> RegisteredWeapons;
 };
