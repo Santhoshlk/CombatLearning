@@ -33,3 +33,8 @@ void UMorrowBoneGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Han
 	}
 }
 
+UMorrowBoneAbilitySystemComponent* UMorrowBoneGameplayAbility::GetAbilitySystemComponent() const
+{
+	return Cast<UMorrowBoneAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
+}
+

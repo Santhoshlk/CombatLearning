@@ -8,6 +8,7 @@
 #include "MorrowBoneGameplayAbility.generated.h"
 
 
+class UMorrowBoneAbilitySystemComponent;
 
 UENUM(BlueprintType)
 enum class EMorrowBoneAbilityActivationPolicy : uint8
@@ -37,4 +38,7 @@ public:
 	{
 		return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
 	}
+
+	UFUNCTION(BlueprintPure,Category="GameplayAbility|AbilitySystemComponent")
+	UMorrowBoneAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
