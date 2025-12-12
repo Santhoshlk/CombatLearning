@@ -19,7 +19,10 @@ public:
 
 	template<class UserObject,typename CallBackFunc>
 	void BindingInputs( TObjectPtr<UInputConfig_DataAsset> &InInputConfig,const FGameplayTag& InInputTag,ETriggerEvent TriggerEvent,UserObject* ContextObject,CallBackFunc Func);
-	
+
+	// u need a new template class to have the logic for AbilityInput Bindings
+	template<class  UserObject,typename CallBackFunc>
+	void AbilityBindingInputs(TObjectPtr<UInputConfig_DataAsset> &InInputConfig,UserObject object,CallBackFunc StartedFunc,CallBackFunc ReleasedFunc);
 
 
 };
@@ -34,5 +37,21 @@ void UMorrowBoneInputComponent::BindingInputs(TObjectPtr<UInputConfig_DataAsset>
 	{
 		//so we are checking the search function and then we are binding The InputAction
 		BindAction(FoundAction,TriggerEvent,ContextObject,Func);
+	}
+}
+
+template <class UserObject, typename CallBackFunc>
+void UMorrowBoneInputComponent::AbilityBindingInputs(TObjectPtr<UInputConfig_DataAsset>& InInputConfig,
+	UserObject object, CallBackFunc StartedFunc, CallBackFunc ReleasedFunc)
+{
+	// first of all u need to check the Data Asset
+	checkf(InInputConfig,TEXT("The Data Asset which u have provided is Not Valid"))
+
+	for (const auto& InputAbilityAction : InInputConfig->AbilityInputActions)
+	{
+		// always if you are adding a value in TArrays or using it check the nullptr;
+		if (!InputAbilityAction.IsValid()) continue;
+		BindAction(InputAbilityAction.InputAction,ETriggerEvent::Started,object,StartedFunc);
+		BindAction(InputAbilityAction.InputAction,ETriggerEvent::Completed,object,ReleasedFunc);
 	}
 }

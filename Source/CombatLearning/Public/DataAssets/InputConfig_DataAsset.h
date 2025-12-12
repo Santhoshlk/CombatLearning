@@ -27,6 +27,11 @@ public:
 	//now u can declare The Input Action
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	TObjectPtr<UInputAction> InputAction;
+
+	bool IsValid() const
+	{
+		return InputTag.IsValid() &&  InputAction!=nullptr;
+	}
 	
 };
 UCLASS()
@@ -35,13 +40,16 @@ class COMBATLEARNING_API UInputConfig_DataAsset : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	//what we are trying to do is Completely Seperate
+	//what we are trying to do is Completely Separate
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	 TObjectPtr<UInputMappingContext> InputMappingContext;
 
 	//create a TArray of the Struct
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,meta=(TitleProperty="InputAction"))
 	TArray<FMorrowBoneInputMappingConfig> NativeInputActions;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,meta=(TitleProperty="InputAction"))
+	TArray<FMorrowBoneInputMappingConfig> AbilityInputActions;
 
 	//create a function which goes through the Gameplay Tag and gives U correct One
 	UInputAction* FindInputActionInGameplayTag(const FGameplayTag& InInputTag);
