@@ -46,7 +46,7 @@ AWeaponBase* UPawnCombatComponent::GetWeaponCarriedbyTag(FGameplayTag InputTag) 
 
 AWeaponBase* UPawnCombatComponent::GetEquippedWeapon() const
 {
-	if (CurrentWeapon.IsValid())
+	if (!CurrentWeapon.IsValid())
 	{
 		return nullptr;
 	}
