@@ -51,7 +51,7 @@ void UMorrowBoneInputComponent::AbilityBindingInputs(TObjectPtr<UInputConfig_Dat
 	{
 		// always if you are adding a value in TArrays or using it check the nullptr;
 		if (!InputAbilityAction.IsValid()) continue;
-		BindAction(InputAbilityAction.InputAction,ETriggerEvent::Started,object,StartedFunc);
-		BindAction(InputAbilityAction.InputAction,ETriggerEvent::Completed,object,ReleasedFunc);
+		BindAction(InputAbilityAction.InputAction,ETriggerEvent::Started,object,StartedFunc,InputAbilityAction.InputTag);
+		BindAction(InputAbilityAction.InputAction,ETriggerEvent::Completed,object,ReleasedFunc,InputAbilityAction.InputTag);
 	}
 }
