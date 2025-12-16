@@ -22,7 +22,7 @@ public:
 
 	// u need a new template class to have the logic for AbilityInput Bindings
 	template<class  UserObject,typename CallBackFunc>
-	void AbilityBindingInputs(TObjectPtr<UInputConfig_DataAsset> &InInputConfig,UserObject object,CallBackFunc StartedFunc,CallBackFunc ReleasedFunc);
+	void BindAbilityInputAction(TObjectPtr<UInputConfig_DataAsset> &InInputConfig,UserObject object,CallBackFunc StartedFunc,CallBackFunc ReleasedFunc);
 
 
 };
@@ -41,7 +41,7 @@ void UMorrowBoneInputComponent::BindingInputs(TObjectPtr<UInputConfig_DataAsset>
 }
 
 template <class UserObject, typename CallBackFunc>
-void UMorrowBoneInputComponent::AbilityBindingInputs(TObjectPtr<UInputConfig_DataAsset>& InInputConfig,
+void UMorrowBoneInputComponent::BindAbilityInputAction(TObjectPtr<UInputConfig_DataAsset>& InInputConfig,
 	UserObject object, CallBackFunc StartedFunc, CallBackFunc ReleasedFunc)
 {
 	// first of all u need to check the Data Asset

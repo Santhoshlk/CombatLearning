@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "InputActionValue.h"
 #include "Character/MorrowBoneClassBase.h"
+#include "GameplayTagContainer.h"
 #include "MorrowBone.generated.h"
 
 class UMorrowBoneCombatComponent;
@@ -59,6 +60,10 @@ public:
 #pragma region Functions
   void Looking(const FInputActionValue& Value );
 	void Moving(const FInputActionValue& Value );
+
+	//create functions for input Binding
+	void AbilityInputAction_Pressed(FGameplayTag InInputTag);
+	void AbilityInputAction_Released(FGameplayTag InInputTag);
 #pragma endregion
 
  FORCEINLINE	TObjectPtr<UMorrowBoneCombatComponent> GetCombatComponent() const 

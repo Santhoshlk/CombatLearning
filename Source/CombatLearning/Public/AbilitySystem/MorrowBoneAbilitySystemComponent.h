@@ -13,5 +13,9 @@ UCLASS()
 class COMBATLEARNING_API UMorrowBoneAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
+
+public:
+	void OnPressed(FGameplayTag InInputTag);
+	void OnReleased(FGameplayTag InInputTag);
 	
 };
