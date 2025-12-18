@@ -58,15 +58,6 @@ AMorrowBone::AMorrowBone()
 void AMorrowBone::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	// we need to check that our DataAsset is not null and need to load is Synchronously
-	if (!StartUpData.IsNull())
-	{
-		if (UDataAsset_StartupData* LoadedData=StartUpData.LoadSynchronous())
-		{
-			LoadedData->GiveToASC(AbilitySystemComponent);
-		}
-		// the startup data is loaded in character so asc will be give by character so just if ur making a data take asc as an input and make the function
-	}
 	
 }
 
@@ -116,5 +107,15 @@ void AMorrowBone::AbilityInputAction_Released(FGameplayTag InInputTag)
 void AMorrowBone::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// we need to check that our DataAsset is not null and need to load is Synchronously
+	if (!StartUpData.IsNull())
+	{
+		if (UDataAsset_StartupData* LoadedData=StartUpData.LoadSynchronous())
+		{
+			LoadedData->GiveToASC(AbilitySystemComponent);
+		}
+		// the startup data is loaded in character so asc will be give by character so just if ur making a data take asc as an input and make the function
+	}
 	
 }
