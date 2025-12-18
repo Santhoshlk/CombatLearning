@@ -108,7 +108,12 @@ void AMorrowBone::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//** Note :**//
+	  //We are doing in begin play as this will not be called twice as in Possessed by it called Multiple time
+	// This reduces errors.
 	// we need to check that our DataAsset is not null and need to load is Synchronously
+
+	
 	if (!StartUpData.IsNull())
 	{
 		if (UDataAsset_StartupData* LoadedData=StartUpData.LoadSynchronous())
