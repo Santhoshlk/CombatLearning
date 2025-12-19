@@ -32,7 +32,7 @@ public:
 
 	// u also need to give a current weaponTag Obviously
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|CurrentWeapon")
-	FGameplayTag CurrentWeapon;
+	FGameplayTag CurrentWeaponTag;
  private:
  //we don't need to show the TMap
 UPROPERTY()

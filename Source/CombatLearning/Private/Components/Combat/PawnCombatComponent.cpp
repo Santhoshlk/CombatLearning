@@ -22,7 +22,7 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InInputTag, AWeapo
 
 	if (IsEquipped)
 	{
-		CurrentWeapon=InInputTag;
+		CurrentWeaponTag=InInputTag;
 	}
 	// To show That This work we can add a debug Message
 
@@ -46,11 +46,11 @@ AWeaponBase* UPawnCombatComponent::GetWeaponCarriedbyTag(FGameplayTag InputTag) 
 
 AWeaponBase* UPawnCombatComponent::GetEquippedWeapon() const
 {
-	if (!CurrentWeapon.IsValid())
+	if (!CurrentWeaponTag.IsValid())
 	{
 		return nullptr;
 	}
-	return GetWeaponCarriedbyTag(CurrentWeapon);
+	return GetWeaponCarriedbyTag(CurrentWeaponTag);
 	
 }
 

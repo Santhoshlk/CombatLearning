@@ -29,7 +29,7 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	
 private:
-	//to divide into regions new trick by Vince Petrel
+	//to divide into regions new trick by Vince Petrelli
 #pragma region component
 
 	//now add all ur components in that region
@@ -45,7 +45,7 @@ private:
 	UPROPERTY()
 	TObjectPtr<USkeletalMeshComponent> SkeletonMesh;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,meta=(AllowPrivateAccess="true"),Category="CombatComponent")
 	TObjectPtr<UMorrowBoneCombatComponent> CombatComponent;
 #pragma endregion
 
