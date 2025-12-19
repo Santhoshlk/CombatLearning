@@ -2,4 +2,9 @@
 
 
 #include "Components/Combat/MorrowBoneCombatComponent.h"
+#include "Weapon/WeaponMorrowBone.h"
 
+AWeaponMorrowBone* UMorrowBoneCombatComponent::GetMorrowBoneWeaponCarriedByTag(FGameplayTag InInputTag) const
+{
+	return Cast<AWeaponMorrowBone>(GetWeaponCarriedbyTag(InInputTag));
+}

@@ -6,6 +6,7 @@
 #include "Components/Combat/PawnCombatComponent.h"
 #include "MorrowBoneCombatComponent.generated.h"
 
+class AWeaponMorrowBone;
 /**
  * 
  */
@@ -13,5 +14,9 @@ UCLASS()
 class COMBATLEARNING_API UMorrowBoneCombatComponent : public UPawnCombatComponent
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintCallable)
+	AWeaponMorrowBone* GetMorrowBoneWeaponCarriedByTag(FGameplayTag InInputTag) const;
 	
 };

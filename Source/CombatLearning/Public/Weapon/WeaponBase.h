@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "WeaponStruct/WeaponStructTypes.h"
 #include "WeaponBase.generated.h"
 
 class UBoxComponent;
@@ -25,10 +26,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="BoxCollision")
 	TObjectPtr<UBoxComponent> BoxCollision;
 
-	
-
 #pragma endregion
 
+	
+#pragma region variables
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="WeaponData")
+	FWeaponData WeaponData;
+#pragma endregion
+
+	
 public:
 	FORCEINLINE UBoxComponent* GetBoxCollision() const
 	{
