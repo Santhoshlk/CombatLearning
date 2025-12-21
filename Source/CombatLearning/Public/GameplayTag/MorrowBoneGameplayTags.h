@@ -8,14 +8,22 @@
 
 namespace MorrowBoneGameplayTags
 {
+	//**Tags For input action**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Move)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Look)
+
+	//**Tags for ability Inputs**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Equip_Axe)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_UnEquip_Axe)
 
-	//** Declare ur Tags**//
+	//** Tags for ur weapons**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe)
 
+	//**Tags for notifies and events**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Equip_Weapon_Axe)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_UnEquip_Weapon_Axe)
+
+	//**Tags for Abilities Itself**//
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Weapon_Axe)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_UnEquip_Weapon_Axe)
 }

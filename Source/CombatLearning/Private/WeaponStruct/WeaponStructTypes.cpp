@@ -2,4 +2,9 @@
 
 
 #include "WeaponStruct/WeaponStructTypes.h"
+#include "GameplayAbility/MorrowBoneGameplayAbility.h"
 
+bool FMorrowBoneAbilitySet::IsValid()
+{
+	return InputTag.IsValid() && HeroInputGameplayAbility!=nullptr;
+}

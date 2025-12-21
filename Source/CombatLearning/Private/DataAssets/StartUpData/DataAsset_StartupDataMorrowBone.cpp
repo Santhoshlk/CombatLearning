@@ -2,14 +2,8 @@
 
 
 #include "DataAssets/StartUpData/DataAsset_StartupDataMorrowBone.h"
-
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "GameplayAbility/MorrowBoneGameplayAbility.h"
-
-bool FMorrowBoneAbilitySet::IsValid()
-{
-	return InputTag.IsValid() && HeroInputGameplayAbility!=nullptr;
-}
 
 void UDataAsset_StartupDataMorrowBone::GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemComponent>& ASC, int32 ApplyLevel)
 {
