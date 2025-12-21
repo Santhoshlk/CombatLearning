@@ -2,6 +2,7 @@
 
 
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
+#include "GameplayAbility/MorrowBoneGameplayAbility.h"
 
 void UMorrowBoneAbilitySystemComponent::OnPressed(FGameplayTag InInputTag)
 {
@@ -24,3 +25,32 @@ void UMorrowBoneAbilitySystemComponent::OnReleased(FGameplayTag InInputTag)
 {
 	
 }
+
+void UMorrowBoneAbilitySystemComponent::GiveWeaponAbilitiestoASC(const 
+	TArray<FMorrowBoneAbilitySet>& WeaponGameplayAbilities, int32 ApplyLevel,TArray<FGameplayAbilitySpecHandle>& OutGrantedSpecHandle)
+{
+	if (WeaponGameplayAbilities.IsEmpty())
+	{
+		return;
+	}
+
+	for ( const auto& WeaponAbilitySet:WeaponGameplayAbilities)
+	{
+		if(!WeaponAbilitySet.IsValid())
+		{
+			continue;
+		}
+
+		FGameplayAbilitySpec AbilitySpec(WeaponAbilitySet.HeroInputGameplayAbility);
+		//next setup the things
+		AbilitySpec.SourceObject=GetAvatarActor();
+		AbilitySpec.Level = ApplyLevel;
+		AbilitySpec.GetDynamicSpecSourceTags().AddTag(WeaponAbilitySet.InputTag);
+
+		//give the ability and store the return value in Ability spec handle
+		OutGrantedSpecHandle.AddUnique(GiveAbility(AbilitySpec));
+	}
+}
+
+
+

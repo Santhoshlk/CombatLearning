@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "WeaponStruct/WeaponStructTypes.h"
 #include "MorrowBoneAbilitySystemComponent.generated.h"
 
 /**
@@ -17,5 +18,8 @@ class COMBATLEARNING_API UMorrowBoneAbilitySystemComponent : public UAbilitySyst
 public:
 	void OnPressed(FGameplayTag InInputTag);
 	void OnReleased(FGameplayTag InInputTag);
-	
+
+	//create a function to give the asc by taking GameplayAbilities input
+	UFUNCTION(BlueprintCallable,Category="ASC|WeaponData",meta=(ApplyLevel="1"))
+	void GiveWeaponAbilitiestoASC(const  TArray<FMorrowBoneAbilitySet>& WeaponGameplayAbilities,int32 ApplyLevel,TArray<FGameplayAbilitySpecHandle>& OutGrantedSpecHandle) ;
 };

@@ -40,5 +40,5 @@ public:
 	}
 
 	UFUNCTION(BlueprintPure,Category="GameplayAbility|AbilitySystemComponent")
-	UMorrowBoneAbilitySystemComponent* GetAbilitySystemComponent() const;
+	UMorrowBoneAbilitySystemComponent* GetMorrowBoneAbilitySystemComponent() const;
 };

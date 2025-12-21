@@ -22,7 +22,7 @@ struct FMorrowBoneAbilitySet
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UMorrowBoneGameplayAbility> HeroInputGameplayAbility;
 
-	bool IsValid();
+	bool IsValid() const;
 };
 USTRUCT(BlueprintType)
 struct FWeaponData
