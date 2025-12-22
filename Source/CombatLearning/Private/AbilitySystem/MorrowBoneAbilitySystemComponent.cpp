@@ -52,5 +52,22 @@ void UMorrowBoneAbilitySystemComponent::GiveWeaponAbilitiestoASC(const
 	}
 }
 
+void UMorrowBoneAbilitySystemComponent::RemoveWeaponGameplayAbilities(
+	TArray<FGameplayAbilitySpecHandle>& OutGrantedWeaponAbilitySpecHandle)
+{
+	 if (OutGrantedWeaponAbilitySpecHandle.IsEmpty())
+	 {
+		 return;
+	 }
+	for (const auto& WeaponAbilitiesToRemove : OutGrantedWeaponAbilitySpecHandle)
+	{
+		if (WeaponAbilitiesToRemove.IsValid())
+		{
+			ClearAbility(WeaponAbilitiesToRemove);
+		}
+	}
+	OutGrantedWeaponAbilitySpecHandle.Empty();
+}
+
 
 

@@ -19,6 +19,17 @@ AWeaponBase::AWeaponBase()
 	BoxCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+void AWeaponBase::SetOutGrantedMorrowBoneWeaponAbilitySpecHandle(
+	const TArray<FGameplayAbilitySpecHandle>&InGrantedMorrowBoneWeaponAbilitySpecHandle) 
+{
+	OutGrantedMorrowBoneWeaponAbilitySpecHandle=InGrantedMorrowBoneWeaponAbilitySpecHandle;
+}
+
+TArray<FGameplayAbilitySpecHandle> AWeaponBase::GetOutGrantedMorrowBoneWeaponAbilitySpecHandle() const
+{
+	return OutGrantedMorrowBoneWeaponAbilitySpecHandle;
+}
+
 
 
 

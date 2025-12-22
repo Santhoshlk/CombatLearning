@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayAbilitySpecHandle.h"
 #include "GameFramework/Actor.h"
 #include "WeaponStruct/WeaponStructTypes.h"
 #include "WeaponBase.generated.h"
@@ -32,6 +33,10 @@ protected:
 #pragma region variables
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="WeaponData")
 	FWeaponData WeaponData;
+
+private:
+	UPROPERTY()
+	TArray<FGameplayAbilitySpecHandle> OutGrantedMorrowBoneWeaponAbilitySpecHandle;
 #pragma endregion
 
 	
@@ -40,4 +45,10 @@ public:
 	{
 		return BoxCollision;
 	}
+
+	UFUNCTION(BlueprintCallable,Category="Weapon|WeaponData")
+	void SetOutGrantedMorrowBoneWeaponAbilitySpecHandle(const TArray<FGameplayAbilitySpecHandle>&InGrantedMorrowBoneWeaponAbilitySpecHandle);
+
+	UFUNCTION(BlueprintPure,Category="Weapon|WeaponData")
+	TArray<FGameplayAbilitySpecHandle> GetOutGrantedMorrowBoneWeaponAbilitySpecHandle() const;
 };

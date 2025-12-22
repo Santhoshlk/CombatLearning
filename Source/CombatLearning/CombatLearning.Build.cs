@@ -20,7 +20,7 @@ public class CombatLearning : ModuleRules
 			"UMG",
 			"Slate",
 			"GameplayTags",
-			"GameplayTasks"
+			"GameplayTasks", "GameplayAbilities"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
