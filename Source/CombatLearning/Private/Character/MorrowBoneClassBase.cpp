@@ -37,8 +37,7 @@ void AMorrowBoneClassBase::PossessedBy(AController* NewController)
 	{
 		AbilitySystemComponent->InitAbilityActorInfo(this,this);
 	}
-	//so we give the condition and Message
-	ensureMsgf(!StartUpData.IsNull(),TEXT("We have Forgot To set The StartupData in the character"));
+	
 }
 
 

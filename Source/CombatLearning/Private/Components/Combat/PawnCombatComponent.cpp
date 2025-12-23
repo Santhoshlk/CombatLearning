@@ -3,7 +3,7 @@
 
 #include "Components/Combat/PawnCombatComponent.h"
 #include "Weapon/WeaponBase.h"
-#include "CombatDebugHelper.h"
+
 
 void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InInputTag, AWeaponBase* Weapon, bool IsEquipped)
 {
@@ -26,8 +26,7 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InInputTag, AWeapo
 	}
 	// To show That This work we can add a debug Message
 
-	FString Message=FString::Printf(TEXT("The Register Weapon is %s to GameplayTag %s"),*Weapon->GetName(),*InInputTag.ToString());
-	Debug::PrintMessage(Message);
+	
 }
 
 AWeaponBase* UPawnCombatComponent::GetWeaponCarriedbyTag(FGameplayTag InputTag) const
