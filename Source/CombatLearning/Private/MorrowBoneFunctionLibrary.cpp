@@ -52,5 +52,6 @@ bool UMorrowBoneFunctionLibrary::NativeDoesActorHaveTag(AActor* InputActor, FGam
 
 bool UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(AActor* InputActor, FGameplayTag InputTag)
 {
+	
 	return NativeDoesActorHaveTag(InputActor,InputTag);
 }

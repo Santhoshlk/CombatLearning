@@ -30,4 +30,7 @@ namespace MorrowBoneGameplayTags
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_UnEquip_Weapon_Axe)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_LightAttack_Axe)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_HeavyAttack_Axe)
+
+	//** Tags for state Machines**//
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_State_JumpToFinisher_Axe)
 }

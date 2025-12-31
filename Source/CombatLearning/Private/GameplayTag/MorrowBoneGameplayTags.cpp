@@ -33,4 +33,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_UnEquip_Weapon_Axe,TEXT("Player.Ability.UnEquip.Weapon.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_LightAttack_Axe,TEXT("Player.Ability.Attack.LightAttack.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_HeavyAttack_Axe,TEXT("Player.Ability.Attack.HeavyAttack.Axe"))
+
+	//** Sate Machine Tags**//
+	UE_DEFINE_GAMEPLAY_TAG(Player_State_JumpToFinisher_Axe,TEXT("Player.State.JumpToFinisher.Axe"))
 }
