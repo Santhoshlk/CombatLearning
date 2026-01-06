@@ -2,9 +2,11 @@
 
 
 #include "Character/Enemy/EnemyBase.h"
-
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Engine/AssetManager.h"
+#include "DataAssets/StartUpData/DataAsset_StartupDataEnemy.h"
+#include "CombatDebugHelper.h"
 
 AEnemyBase::AEnemyBase()
 {
@@ -26,4 +28,36 @@ AEnemyBase::AEnemyBase()
 
 	//creating the Subobject of Combat component
 	EnemyCombatComponent=CreateDefaultSubobject<UEnemyCombatComponent>(TEXT("EnemyCombatComponent"));
+}
+
+void AEnemyBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// call the asynchronous Loading
+	AsynchronousLoadStartUpData();
+}
+
+void AEnemyBase::AsynchronousLoadStartUpData()
+{
+
+	if (StartUpData.IsNull())
+	{
+		  return;
+	}
+	UAssetManager::GetStreamableManager().RequestAsyncLoad(
+	  StartUpData.ToSoftObjectPath(),FStreamableDelegate::CreateLambda(
+       [this]()
+       {
+	       // this is for the function Definition
+       	   if ( UDataAsset_StartupData* LoadedData=StartUpData.Get())
+       	   {
+	       	   LoadedData->GiveToASC(AbilitySystemComponent);
+       	   }
+
+       	 //now To show that it works I can call Debug helper
+       	Debug::PrintMessage(TEXT("EnemyAsynchronous Loading is Successful"));
+       }
+	  )
+		);
 }

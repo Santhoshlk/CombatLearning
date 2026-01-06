@@ -21,6 +21,7 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="CombatComponent")
 	TObjectPtr<UEnemyCombatComponent> EnemyCombatComponent;
 
+	virtual void BeginPlay() override;
 public:
 	//have a seter and getter for our combat component
 	UFUNCTION(BlueprintCallable,Category="Enemy|CombatComponent")
@@ -28,5 +29,7 @@ public:
 	{
 		return EnemyCombatComponent;
 	}
-  
+
+private:
+	void AsynchronousLoadStartUpData();
 };
