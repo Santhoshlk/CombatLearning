@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "DataAsset_StartupData.generated.h"
 
+class UGameplayEffect;
 class UMorrowBoneAbilitySystemComponent;
 class UMorrowBoneGameplayAbility;
 /**
@@ -20,10 +21,14 @@ public:
 	virtual void GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemComponent> & ASC,int32 ApplyLevel=1);
 private:
 	void GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplayAbility>> &InitialAbilities,TObjectPtr<UMorrowBoneAbilitySystemComponent> & ASC,int32 ApplyLevel=1);
+
 protected:
 	UPROPERTY(EditDefaultsOnly,Category="OnGiveAbility")
 	TArray<TSubclassOf<UMorrowBoneGameplayAbility>> CommonStartupAbility;
 
 	UPROPERTY(EditDefaultsOnly,Category="OnGiveAbility")
 	TArray<TSubclassOf<UMorrowBoneGameplayAbility>> ReactiveAbility;
+
+	UPROPERTY(EditDefaultsOnly,Category="GameplayEffects")
+	TArray<TSubclassOf<UGameplayEffect>> GameplayEffect_Startup;
 };

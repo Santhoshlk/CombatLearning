@@ -11,6 +11,20 @@ void UDataAsset_StartupData::GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemCompon
 	checkf(ASC,TEXT("The AbilitySystem Component is Not Valid for the Avatar Actor u want to give the Ability "));
 	GrantAbility(CommonStartupAbility,ASC);
 	GrantAbility(ReactiveAbility,ASC);
+
+	// u can grant the gameplay effects to ability system component
+	if (!GameplayEffect_Startup.IsEmpty())
+	{
+		// now we give each effect
+		for (const auto& EffectsToGive: GameplayEffect_Startup )
+		{
+			if (!EffectsToGive) continue;
+
+			UGameplayEffect*Effect=EffectsToGive->GetDefaultObject<UGameplayEffect>();
+
+			ASC->ApplyGameplayEffectToSelf(Effect,ApplyLevel,ASC->MakeEffectContext());
+		}
+	}
 }
 
 void UDataAsset_StartupData::GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplayAbility>> &InitialAbilities,
