@@ -12,6 +12,8 @@ void UDataAsset_StartupData::GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemCompon
 	GrantAbility(CommonStartupAbility,ASC);
 	GrantAbility(ReactiveAbility,ASC);
 
+	//set the applyLevel to be 3
+	
 	// u can grant the gameplay effects to ability system component
 	if (!GameplayEffect_Startup.IsEmpty())
 	{
@@ -22,7 +24,7 @@ void UDataAsset_StartupData::GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemCompon
 
 			UGameplayEffect*Effect=EffectsToGive->GetDefaultObject<UGameplayEffect>();
 
-			ASC->ApplyGameplayEffectToSelf(Effect,ApplyLevel,ASC->MakeEffectContext());
+			ASC->ApplyGameplayEffectToSelf(Effect,3,ASC->MakeEffectContext());
 		}
 	}
 }
