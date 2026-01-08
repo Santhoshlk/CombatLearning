@@ -61,6 +61,11 @@ void AMorrowBone::PossessedBy(AController* NewController)
 	
 }
 
+UPawnCombatComponent* AMorrowBone::GetPawnCombatComponent() const
+{
+	return CombatComponent;
+}
+
 void AMorrowBone::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

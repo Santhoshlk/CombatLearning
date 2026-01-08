@@ -27,6 +27,8 @@ public:
 	virtual void BeginPlay() override;
 	AMorrowBone();
 	virtual void PossessedBy(AController* NewController) override;
+
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 	
 private:
 	//to divide into regions new trick by Vince Petrelli

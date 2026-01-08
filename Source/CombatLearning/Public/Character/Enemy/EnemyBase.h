@@ -16,7 +16,7 @@ class COMBATLEARNING_API AEnemyBase : public AMorrowBoneClassBase
 	GENERATED_BODY()
 public:
 	AEnemyBase();
-	
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="CombatComponent")
 	TObjectPtr<UEnemyCombatComponent> EnemyCombatComponent;

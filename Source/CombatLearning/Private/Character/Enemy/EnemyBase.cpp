@@ -30,6 +30,11 @@ AEnemyBase::AEnemyBase()
 	EnemyCombatComponent=CreateDefaultSubobject<UEnemyCombatComponent>(TEXT("EnemyCombatComponent"));
 }
 
+UPawnCombatComponent* AEnemyBase::GetPawnCombatComponent() const
+{
+	return EnemyCombatComponent;
+}
+
 void AEnemyBase::BeginPlay()
 {
 	Super::BeginPlay();

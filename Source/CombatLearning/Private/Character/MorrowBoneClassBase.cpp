@@ -28,6 +28,10 @@ UAbilitySystemComponent* AMorrowBoneClassBase::GetAbilitySystemComponent() const
 	return GetMorrowBoneAbilitySystemComponent();
 }
 
+UPawnCombatComponent* AMorrowBoneClassBase::GetPawnCombatComponent() const
+{
+	return nullptr;
+}
 
 
 void AMorrowBoneClassBase::PossessedBy(AController* NewController)

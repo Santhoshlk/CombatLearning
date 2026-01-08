@@ -4,6 +4,7 @@
 #include "MorrowBoneFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
+#include "Interface/PawnCombatInterface.h"
 
 UMorrowBoneAbilitySystemComponent* UMorrowBoneFunctionLibrary::NativeGetAbilitySystemComponentFromActor(AActor* InputActor)
 {
@@ -54,4 +55,21 @@ bool UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(AActor* InputActor, FGamepl
 {
 	
 	return NativeDoesActorHaveTag(InputActor,InputTag);
+}
+
+UPawnCombatComponent* UMorrowBoneFunctionLibrary::NativeGetCombatComponentFromActor(AActor* InputActor)
+{
+	checkf(InputActor,TEXT("The Input Actor Needs to be valid"))
+
+	if(IPawnCombatInterface* PawnCombatInterface=Cast<IPawnCombatInterface>(InputActor))
+	{
+		return PawnCombatInterface->GetPawnCombatComponent();
+	}
+	return nullptr;
+}
+
+UPawnCombatComponent* UMorrowBoneFunctionLibrary::BP_GetCombatComponentFromActor(AActor* InputActor)
+{
+	checkf(InputActor,TEXT("The Input Actor Needs to be valid"))
+	return NativeGetCombatComponentFromActor(InputActor);
 }

@@ -7,6 +7,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "MorrowBoneFunctionLibrary.generated.h"
 
+class UPawnCombatComponent;
 class UMorrowBoneAbilitySystemComponent;
 /**
  * 
@@ -30,4 +31,9 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="MorrowBone|MorrowBoneFunctionLibrary",meta=(DisplayName="DoesActorHaveTag"))
 	static bool BP_DoesActorHaveTag(AActor* InputActor,FGameplayTag InputTag);
+
+	static UPawnCombatComponent* NativeGetCombatComponentFromActor(AActor* InputActor);
+
+	UFUNCTION(BlueprintCallable,Category="MorrowBoneFunctionLibrary|CombatComponent",meta=(DisplayName="GetCombatComponentFromActor"))
+	static UPawnCombatComponent* BP_GetCombatComponentFromActor(AActor* InputActor);
 };

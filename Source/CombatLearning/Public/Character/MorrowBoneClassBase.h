@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Interface/PawnCombatInterface.h"
 #include "MorrowBoneClassBase.generated.h"
 
 class UDataAsset_StartupData;
@@ -12,7 +13,7 @@ class UMorrowBoneAttributeSet;
 class UMorrowBoneAbilitySystemComponent;
 
 UCLASS()
-class COMBATLEARNING_API AMorrowBoneClassBase : public ACharacter , public IAbilitySystemInterface
+class COMBATLEARNING_API AMorrowBoneClassBase : public ACharacter , public IAbilitySystemInterface , public IPawnCombatInterface
 {
 	GENERATED_BODY()
 
@@ -22,6 +23,7 @@ public:
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
+      virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 protected:
 	// the process is normal as we create the AbilitySystem components ,Attribute set which are common for both character and etc
      UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="AblilitySystem")
