@@ -51,4 +51,10 @@ public:
 
 	UFUNCTION(BlueprintPure,Category="Weapon|WeaponData")
 	TArray<FGameplayAbilitySpecHandle> GetOutGrantedMorrowBoneWeaponAbilitySpecHandle() const;
+
+	UFUNCTION()
+	virtual void WeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &  SweepResult);
+
+	UFUNCTION()
+	virtual void WeaponEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 };
