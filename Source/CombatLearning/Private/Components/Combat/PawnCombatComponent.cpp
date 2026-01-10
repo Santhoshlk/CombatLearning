@@ -3,6 +3,7 @@
 
 #include "Components/Combat/PawnCombatComponent.h"
 #include "Weapon/WeaponBase.h"
+#include "Components/BoxComponent.h"
 
 
 void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InInputTag, AWeaponBase* Weapon, bool IsEquipped)
@@ -51,6 +52,27 @@ AWeaponBase* UPawnCombatComponent::GetEquippedWeapon() const
 	}
 	return GetWeaponCarriedbyTag(CurrentWeaponTag);
 	
+}
+
+void UPawnCombatComponent::ToggleWeaponCollision(bool ActiveWeaponCollision, EWeaponEquippedTypes WeaponEquippedTypes)
+{
+	if (WeaponEquippedTypes==EWeaponEquippedTypes::CurrentWeaponEquipped)
+	{
+		AWeaponBase* WeaponEquipped=GetEquippedWeapon();
+
+		checkf(WeaponEquipped,TEXT("The Weapon that u are equipping is not valid"));
+
+		if (ActiveWeaponCollision)
+		{
+			WeaponEquipped->GetBoxCollision()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			
+		}
+		else
+		{
+			WeaponEquipped->GetBoxCollision()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			
+		}
+	}
 }
 
 

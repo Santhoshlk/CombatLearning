@@ -11,6 +11,14 @@ class AWeaponBase;
 /**
  * 
  */
+
+UENUM(BlueprintType)
+enum class EWeaponEquippedTypes : uint8
+{
+	CurrentWeaponEquipped,
+	LeftHanded,
+	RightHanded
+};
 UCLASS()
 class COMBATLEARNING_API UPawnCombatComponent : public UPawnHelperComponent
 {
@@ -33,6 +41,9 @@ public:
 	// u also need to give a current weaponTag Obviously
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|CurrentWeapon")
 	FGameplayTag CurrentWeaponTag;
+
+	UFUNCTION(BlueprintCallable,Category="Combat Component|Toggle Weapon Collision")
+	void ToggleWeaponCollision(bool ActiveWeaponCollision,EWeaponEquippedTypes WeaponEquippedTypes=EWeaponEquippedTypes::CurrentWeaponEquipped);
  private:
  //we don't need to show the TMap
 UPROPERTY()

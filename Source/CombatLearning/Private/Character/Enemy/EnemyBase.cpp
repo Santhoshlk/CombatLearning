@@ -6,7 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/AssetManager.h"
 #include "DataAssets/StartUpData/DataAsset_StartupDataEnemy.h"
-#include "CombatDebugHelper.h"
+
 
 AEnemyBase::AEnemyBase()
 {
@@ -60,8 +60,7 @@ void AEnemyBase::AsynchronousLoadStartUpData()
 	       	   LoadedData->GiveToASC(AbilitySystemComponent);
        	   }
 
-       	 //now To show that it works I can call Debug helper
-       	Debug::PrintMessage(TEXT("EnemyAsynchronous Loading is Successful"));
+       	 
        }
 	  )
 		);
