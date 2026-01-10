@@ -18,6 +18,11 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InInputTag, AWeapo
 	{
 		return;
 	}
+	//now as we bind these we can use set the logic in func that can get called anywhere
+	Weapon->WeaponHitTarget.BindUObject(this,&UPawnCombatComponent::OnWeaponHitTarget);
+	Weapon->WeaponPulledFromTarget.BindUObject(this,&UPawnCombatComponent::OnWeaponPulledFromFromTarget);
+
+	
 	//else we can add
 	WeaponsToRegister.Emplace(InInputTag,Weapon);
 
@@ -73,6 +78,17 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool ActiveWeaponCollision, EWe
 			
 		}
 	}
+}
+
+void UPawnCombatComponent::OnWeaponHitTarget(AActor* HitActor)
+{
+	//we bound this to delegate which calls when any weapon has an overlap
+	
+}
+
+void UPawnCombatComponent::OnWeaponPulledFromFromTarget(AActor* HitActor)
+{
+	//we bound this to delegate which calls when any weapon has an overlap
 }
 
 

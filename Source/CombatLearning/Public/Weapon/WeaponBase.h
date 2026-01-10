@@ -10,6 +10,12 @@
 
 class UBoxComponent;
 class UStaticMeshComponent;
+
+//declare a delegate so that it can take an AActor input and can be called from any class i.e. Combat Component
+// all the logic of hit react  should be in combat component henceforth Combat component
+
+DECLARE_DELEGATE_OneParam(FOnWeaponOverlapTarget,AActor*)
+
 UCLASS()
 class COMBATLEARNING_API AWeaponBase : public AActor
 {
@@ -18,6 +24,10 @@ class COMBATLEARNING_API AWeaponBase : public AActor
 public:	
 	
 	AWeaponBase();
+
+	FOnWeaponOverlapTarget WeaponHitTarget;
+	FOnWeaponOverlapTarget WeaponPulledFromTarget;
+	
 protected:
 #pragma region Components
 	// we need a box collision and skeletal Mesh and maybe some scene Components

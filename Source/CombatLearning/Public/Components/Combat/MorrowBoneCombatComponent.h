@@ -18,5 +18,7 @@ class COMBATLEARNING_API UMorrowBoneCombatComponent : public UPawnCombatComponen
 public:
 	UFUNCTION(BlueprintCallable)
 	AWeaponMorrowBone* GetMorrowBoneWeaponCarriedByTag(FGameplayTag InInputTag) const;
-	
+
+	virtual void OnWeaponHitTarget(AActor* HitActor) override;
+	virtual void OnWeaponPulledFromFromTarget(AActor* HitActor) override;
 };

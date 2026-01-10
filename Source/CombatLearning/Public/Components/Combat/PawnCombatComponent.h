@@ -44,6 +44,10 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="Combat Component|Toggle Weapon Collision")
 	void ToggleWeaponCollision(bool ActiveWeaponCollision,EWeaponEquippedTypes WeaponEquippedTypes=EWeaponEquippedTypes::CurrentWeaponEquipped);
+
+	// functions bound to hit detection Delegate
+	virtual void OnWeaponHitTarget(AActor* HitActor);
+	virtual void OnWeaponPulledFromFromTarget(AActor* HitActor);
  private:
  //we don't need to show the TMap
 UPROPERTY()

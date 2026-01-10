@@ -4,7 +4,7 @@
 #include "Weapon/WeaponBase.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "CombatDebugHelper.h"
+
 
 AWeaponBase::AWeaponBase()
 {
@@ -48,8 +48,8 @@ void AWeaponBase::WeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, A
 	{
 		if (WeaponOwner != HitActor)
 		{
-			// then we can show any message
-		    Debug::PrintMessage(TEXT("The overlap began with actor:") + HitActor->GetName(),0);
+			//now we can call the delegate to take the input and bind the functions
+			WeaponHitTarget.ExecuteIfBound(HitActor);
 		}
 	}
 }
@@ -66,8 +66,8 @@ void AWeaponBase::WeaponEndOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 	{
 		if (WeaponOwner != HitActor)
 		{
-			// then we can show any message
-			Debug::PrintMessage(TEXT("The overlap ended with actor:") + HitActor->GetName(),0);
+			//now we can call the delegate to take the input and bind the functions
+			 WeaponPulledFromTarget.ExecuteIfBound(HitActor);                                                                                                                                    
 		}
 	}
 }
