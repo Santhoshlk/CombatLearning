@@ -30,10 +30,11 @@ void UMorrowBoneCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 	EventData.Target = HitActor;
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
 		GetOwningPawn(),
-		MorrowBoneGameplayTags::Shared_Attack_LightAttack,
+		MorrowBoneGameplayTags::Shared_Attack_MeeleAttack,
 		 EventData
 		);
 }
+
 
 void UMorrowBoneCombatComponent::OnWeaponPulledFromFromTarget(AActor* HitActor)
 {

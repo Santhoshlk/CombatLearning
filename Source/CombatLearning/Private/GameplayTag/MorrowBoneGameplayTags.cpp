@@ -29,7 +29,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_UnEquip_Weapon_Axe,TEXT("Player.Event.UnEquip.Weapon.Axe"))
 
 	//**shared Event input tags**//
-	UE_DEFINE_GAMEPLAY_TAG(Shared_Attack_LightAttack,TEXT("Shared.Attack.LightAttack"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Attack_MeeleAttack,TEXT("Shared.Attack.MeeleAttack"))
 
 	//** Ability Input Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Equip_Weapon_Axe,TEXT("Player.Ability.Equip.Weapon.Axe"))
