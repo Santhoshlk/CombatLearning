@@ -48,6 +48,11 @@ public:
 	// functions bound to hit detection Delegate
 	virtual void OnWeaponHitTarget(AActor* HitActor);
 	virtual void OnWeaponPulledFromFromTarget(AActor* HitActor);
+
+protected:
+	UPROPERTY()
+	TArray<TObjectPtr<AActor>> OverlappedActors;
+	
  private:
  //we don't need to show the TMap
 UPROPERTY()

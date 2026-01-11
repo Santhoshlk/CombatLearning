@@ -3,6 +3,8 @@
 
 #include "Components/Combat/MorrowBoneCombatComponent.h"
 #include "Weapon/WeaponMorrowBone.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 
 AWeaponMorrowBone* UMorrowBoneCombatComponent::GetMorrowBoneWeaponCarriedByTag(FGameplayTag InInputTag) const
 {
@@ -12,18 +14,29 @@ AWeaponMorrowBone* UMorrowBoneCombatComponent::GetMorrowBoneWeaponCarriedByTag(F
 void UMorrowBoneCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 {
 	Super::OnWeaponHitTarget(HitActor);
+  // Now when we overlap and get an actor we can check and add it to the array , and we can send a gameplay event.
+  //to give damage to APawn
 
-	if (GEngine && HitActor)
+	if (OverlappedActors.Contains(HitActor))
 	{
-		GEngine->AddOnScreenDebugMessage(0,2.f,FColor::MakeRandomColor(),TEXT("The Weapon Hit")+HitActor->GetActorNameOrLabel());
+		return;
 	}
+	OverlappedActors.AddUnique(HitActor);
+
+	//send a gameplay event to actor
+
+	FGameplayEventData EventData;
+	EventData.Instigator = GetOwningPawn();
+	EventData.Target = HitActor;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		GetOwningPawn(),
+		MorrowBoneGameplayTags::Shared_Attack_LightAttack,
+		 EventData
+		);
 }
 
 void UMorrowBoneCombatComponent::OnWeaponPulledFromFromTarget(AActor* HitActor)
 {
 	Super::OnWeaponPulledFromFromTarget(HitActor);
-	if (GEngine && HitActor)
-	{
-		GEngine->AddOnScreenDebugMessage(0,2.f,FColor::MakeRandomColor(),TEXT("The Weapon pulled from")+HitActor->GetActorNameOrLabel());
-	}
+	
 }

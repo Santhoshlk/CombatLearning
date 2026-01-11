@@ -75,7 +75,9 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool ActiveWeaponCollision, EWe
 		else
 		{
 			WeaponEquipped->GetBoxCollision()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-			
+
+			//now empty out the actors
+			OverlappedActors.Empty();
 		}
 	}
 }
