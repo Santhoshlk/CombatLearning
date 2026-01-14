@@ -30,6 +30,7 @@ namespace MorrowBoneGameplayTags
 
 	//**shared Event input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Attack_MeeleAttack,TEXT("Shared.Attack.MeeleAttack"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_SetByCaller_BaseDamage,TEXT("Shared.SetByCaller.BaseDamage"))
 
 	//** Ability Input Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Equip_Weapon_Axe,TEXT("Player.Ability.Equip.Weapon.Axe"))

@@ -27,6 +27,11 @@ public:
 
 	UFUNCTION(BlueprintPure,Category="GameplayAbility|CombatComponent")
 	UMorrowBoneCombatComponent* GetMorrowBoneCombatComponent();
+
+	//to handle the damage calculation in the gameplay abilities make an outgoing gameplay effect spec handle
+	// it is the math sandbox which contains about the info of who caused the damage and other details
+	UFUNCTION(BlueprintPure,Category="GameplayAbility|DamageEffect(")
+	FGameplayEffectSpecHandle MakeMorrowBoneDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass,float weaponBaseDamage,FGameplayTag CurrentAttackType,int32 CurrentComboCount);
 private:
 	TWeakObjectPtr<AMorrowBone> CachedCharacter;
 	TWeakObjectPtr<ACombatClassPlayerController> CachedPlayerController;

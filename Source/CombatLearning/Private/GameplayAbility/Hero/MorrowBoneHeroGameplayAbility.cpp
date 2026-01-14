@@ -2,7 +2,10 @@
 
 
 #include "GameplayAbility/Hero/MorrowBoneHeroGameplayAbility.h"
+
+#include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "Character/MorrowBone.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 #include "PlayerController/CombatClassPlayerController.h"
 
 AMorrowBone* UMorrowBoneHeroGameplayAbility::GetMorrowBoneCharacter()
@@ -27,3 +30,30 @@ UMorrowBoneCombatComponent* UMorrowBoneHeroGameplayAbility::GetMorrowBoneCombatC
 {
 	return GetMorrowBoneCharacter()->GetCombatComponent();
 }
+
+FGameplayEffectSpecHandle UMorrowBoneHeroGameplayAbility::MakeMorrowBoneDamageEffectSpecHandle(
+	TSubclassOf<UGameplayEffect> EffectClass, float weaponBaseDamage, FGameplayTag CurrentAttackType,
+	int32 CurrentComboCount)
+{
+	//check the effect class
+	checkf(EffectClass,TEXT("You must provide a valid effect class"));
+
+	// create a Effect Context Handle
+	FGameplayEffectContextHandle EffectContextHandle=GetMorrowBoneAbilitySystemComponent()->MakeEffectContext();
+	//now set some properties in the effect context handle
+	EffectContextHandle.SetAbility(this);
+	EffectContextHandle.AddSourceObject(GetAvatarActorFromActorInfo());
+	EffectContextHandle.AddInstigator(GetAvatarActorFromActorInfo(),GetAvatarActorFromActorInfo());
+
+	
+	FGameplayEffectSpecHandle EffectSpecHandle= GetMorrowBoneAbilitySystemComponent()->MakeOutgoingSpec(
+    EffectClass,
+    GetAbilityLevel(),
+    EffectContextHandle
+	);
+
+	// u have to set something's in the effect specHandle
+	EffectSpecHandle.Data->SetSetByCallerMagnitude(CurrentAttackType,CurrentComboCount);
+	EffectSpecHandle.Data->SetSetByCallerMagnitude(MorrowBoneGameplayTags::Shared_SetByCaller_BaseDamage,weaponBaseDamage);
+	return EffectSpecHandle;
+
