@@ -2,6 +2,7 @@
 
 #pragma once
 #include "GameplayTagContainer.h"
+#include "ScalableFloat.h"
 #include "WeaponStructTypes.generated.h"
 
 class UInputMappingContext;
@@ -40,4 +41,8 @@ public:
 	//To store the bindings of these abilities InputMappingContext
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	TObjectPtr<UInputMappingContext> DefaultWeaponInputMappingContext;
+
+	// to store the Weapon Base Damage
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	FScalableFloat WeaponBaseDamage;
 };

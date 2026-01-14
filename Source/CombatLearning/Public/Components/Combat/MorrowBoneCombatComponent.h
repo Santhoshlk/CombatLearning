@@ -19,6 +19,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	AWeaponMorrowBone* GetMorrowBoneWeaponCarriedByTag(FGameplayTag InInputTag) const;
 
+	UFUNCTION(BlueprintPure,Category="MorrowBoneCombatComponent|HeroEquippedWeapon")
+	AWeaponMorrowBone* GetMorrowBoneCurrentEquippedWeapon() const;
+
+	UFUNCTION(BlueprintPure,Category="MorrowBoneCombatComponent|WeaponBaseDamage")
+	float GetMorrowBoneWeaponBaseDamageByLevel(float level);
+
 	virtual void OnWeaponHitTarget(AActor* HitActor) override;
 	virtual void OnWeaponPulledFromFromTarget(AActor* HitActor) override;
+	
 };

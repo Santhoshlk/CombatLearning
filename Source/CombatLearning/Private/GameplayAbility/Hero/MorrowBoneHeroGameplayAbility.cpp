@@ -53,7 +53,11 @@ FGameplayEffectSpecHandle UMorrowBoneHeroGameplayAbility::MakeMorrowBoneDamageEf
 	);
 
 	// u have to set something's in the effect specHandle
-	EffectSpecHandle.Data->SetSetByCallerMagnitude(CurrentAttackType,CurrentComboCount);
+	if (CurrentAttackType.IsValid())
+	{
+		EffectSpecHandle.Data->SetSetByCallerMagnitude(CurrentAttackType,CurrentComboCount);
+	}
+
 	EffectSpecHandle.Data->SetSetByCallerMagnitude(MorrowBoneGameplayTags::Shared_SetByCaller_BaseDamage,weaponBaseDamage);
 	return EffectSpecHandle;
 }

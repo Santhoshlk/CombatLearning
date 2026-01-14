@@ -41,6 +41,7 @@ protected:
 
 	
 #pragma region variables
+public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="WeaponData")
 	FWeaponData WeaponData;
 

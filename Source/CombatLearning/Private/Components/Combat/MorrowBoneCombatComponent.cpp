@@ -11,6 +11,16 @@ AWeaponMorrowBone* UMorrowBoneCombatComponent::GetMorrowBoneWeaponCarriedByTag(F
 	return Cast<AWeaponMorrowBone>(GetWeaponCarriedbyTag(InInputTag));
 }
 
+AWeaponMorrowBone* UMorrowBoneCombatComponent::GetMorrowBoneCurrentEquippedWeapon() const
+{
+	return Cast<AWeaponMorrowBone>(GetEquippedWeapon());
+}
+
+float UMorrowBoneCombatComponent::GetMorrowBoneWeaponBaseDamageByLevel(float level)
+{
+	return GetMorrowBoneCurrentEquippedWeapon()->WeaponData.WeaponBaseDamage.GetValueAtLevel(level);
+}
+
 void UMorrowBoneCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 {
 	Super::OnWeaponHitTarget(HitActor);
