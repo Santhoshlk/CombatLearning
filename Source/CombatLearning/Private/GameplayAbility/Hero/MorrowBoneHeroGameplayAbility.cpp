@@ -33,7 +33,7 @@ UMorrowBoneCombatComponent* UMorrowBoneHeroGameplayAbility::GetMorrowBoneCombatC
 
 FGameplayEffectSpecHandle UMorrowBoneHeroGameplayAbility::MakeMorrowBoneDamageEffectSpecHandle(
 	TSubclassOf<UGameplayEffect> EffectClass, float weaponBaseDamage, FGameplayTag CurrentAttackType,
-	int32 CurrentComboCount)
+	int32 UsedComboCount)
 {
 	//check the effect class
 	checkf(EffectClass,TEXT("You must provide a valid effect class"));
@@ -55,7 +55,7 @@ FGameplayEffectSpecHandle UMorrowBoneHeroGameplayAbility::MakeMorrowBoneDamageEf
 	// u have to set something's in the effect specHandle
 	if (CurrentAttackType.IsValid())
 	{
-		EffectSpecHandle.Data->SetSetByCallerMagnitude(CurrentAttackType,CurrentComboCount);
+		EffectSpecHandle.Data->SetSetByCallerMagnitude(CurrentAttackType,UsedComboCount);
 	}
 
 	EffectSpecHandle.Data->SetSetByCallerMagnitude(MorrowBoneGameplayTags::Shared_SetByCaller_BaseDamage,weaponBaseDamage);

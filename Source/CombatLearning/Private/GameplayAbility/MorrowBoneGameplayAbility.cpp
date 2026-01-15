@@ -3,7 +3,8 @@
 
 #include "GameplayAbility/MorrowBoneGameplayAbility.h"
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
-
+#include "AbilitySystemBlueprintLibrary.h"
+#include "GameplayEffectTypes.h"
 
 void UMorrowBoneGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo,
 	const FGameplayAbilitySpec& Spec)
@@ -36,5 +37,22 @@ void UMorrowBoneGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Han
 UMorrowBoneAbilitySystemComponent* UMorrowBoneGameplayAbility::GetMorrowBoneAbilitySystemComponent() const
 {
 	return Cast<UMorrowBoneAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
+}
+
+FActiveGameplayEffectHandle UMorrowBoneGameplayAbility::NativeApplyGameplayEffectSpecHandleToTarget(AActor* TargetActor,
+	const FGameplayEffectSpecHandle& InputSpectHandle) 
+{
+	//u need to get the ASC of the target use func from AbilitySystemFunction Library
+
+	UAbilitySystemComponent* TargetASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+
+	checkf(TargetASC && InputSpectHandle.IsValid(),TEXT("U have Give an Valid Target Actor and a Valid GameplayEffectSpecHandle as Input"));
+	return GetMorrowBoneAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*InputSpectHandle.Data,TargetASC);
+}
+
+FActiveGameplayEffectHandle UMorrowBoneGameplayAbility::BP_ApplyGameplayEffectSpecHandleToTarget(AActor* TargetActor,
+	const FGameplayEffectSpecHandle& InputSpectHandle) 
+{
+	return NativeApplyGameplayEffectSpecHandleToTarget(TargetActor, InputSpectHandle);
 }
 

@@ -41,4 +41,10 @@ public:
 
 	UFUNCTION(BlueprintPure,Category="GameplayAbility|AbilitySystemComponent")
 	UMorrowBoneAbilitySystemComponent* GetMorrowBoneAbilitySystemComponent() const;
+
+	FActiveGameplayEffectHandle NativeApplyGameplayEffectSpecHandleToTarget(AActor* TargetActor,const FGameplayEffectSpecHandle& InputSpectHandle) ;
+
+	UFUNCTION(BlueprintCallable,Category="GameplayAbility|ApplyEffectSpecHandle",meta=(DisplayName="ApplyGameplayEffectSpecHandleToTarget"))
+	FActiveGameplayEffectHandle BP_ApplyGameplayEffectSpecHandleToTarget(AActor* TargetActor,const FGameplayEffectSpecHandle& InputSpectHandle) ;
+	
 };
