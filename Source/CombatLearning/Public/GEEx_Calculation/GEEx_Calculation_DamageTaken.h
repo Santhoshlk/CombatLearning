@@ -13,5 +13,7 @@ UCLASS()
 class COMBATLEARNING_API UGEEx_Calculation_DamageTaken : public UGameplayEffectExecutionCalculation
 {
 	GENERATED_BODY()
+public:
+	UGEEx_Calculation_DamageTaken();
 	
 };

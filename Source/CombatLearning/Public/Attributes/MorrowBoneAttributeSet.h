@@ -25,7 +25,7 @@ public:
 
 	UMorrowBoneAttributeSet();
 
-protected:
+
 
 	//now write attribute accessor to make these functions
 	UPROPERTY(BlueprintReadOnly,Category="Health")
