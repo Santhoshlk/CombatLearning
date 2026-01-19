@@ -24,7 +24,7 @@ void UDataAsset_StartupData::GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemCompon
 
 			UGameplayEffect*Effect=EffectsToGive->GetDefaultObject<UGameplayEffect>();
 
-			ASC->ApplyGameplayEffectToSelf(Effect,3,ASC->MakeEffectContext());
+			ASC->ApplyGameplayEffectToSelf(Effect,ApplyLevel,ASC->MakeEffectContext());
 		}
 	}
 }
