@@ -59,4 +59,9 @@ public:
 	UPROPERTY(BlueprintReadOnly,Category="Stamina")
 	FGameplayAttributeData  MaxStamina;
 	ATTRIBUTE_ACCESSORS(UMorrowBoneAttributeSet,MaxStamina)
+
+	// damage taken these u don't initialize here
+	UPROPERTY(BlueprintReadOnly,Category="Damage")
+	FGameplayAttributeData DamageTaken;
+	ATTRIBUTE_ACCESSORS(UMorrowBoneAttributeSet,DamageTaken)
 };
