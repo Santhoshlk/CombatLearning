@@ -2,10 +2,10 @@
 
 
 #include "GEEx_Calculation/GEEx_Calculation_DamageTaken.h"
-
 #include "StateTreeTypes.h"
 #include "Attributes/MorrowBoneAttributeSet.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
+#include "CombatDebugHelper.h"
 
 
 //create a struct for handling the declaration.
@@ -42,7 +42,8 @@ UGEEx_Calculation_DamageTaken::UGEEx_Calculation_DamageTaken()
 	// add this to relevant attributes to capture
 	RelevantAttributesToCapture.Add(GetMorrowBoneDamageDataCapture().AttackPowerDef);
 	RelevantAttributesToCapture.Add(GetMorrowBoneDamageDataCapture().DefensePowerDef);
-	
+	RelevantAttributesToCapture.Add(GetMorrowBoneDamageDataCapture().CurrentStaminaDef);
+	RelevantAttributesToCapture.Add(GetMorrowBoneDamageDataCapture().MaxStaminaDef);
 }
 
 void UGEEx_Calculation_DamageTaken::Execute_Implementation(
@@ -77,16 +78,19 @@ void UGEEx_Calculation_DamageTaken::Execute_Implementation(
 		if (TagMagnitude.Key.MatchesTagExact(MorrowBoneGameplayTags::Shared_SetByCaller_BaseDamage))
 		{
 			BaseWeaponDamage=TagMagnitude.Value;
+			Debug::PrintDebugData(TEXT("BaseWeaponDamage"),BaseWeaponDamage);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(MorrowBoneGameplayTags::Player_SetByCaller_AttackTypes_LightAttack))
 		{
 			UsedLightAttackComboCount=TagMagnitude.Value;
+			Debug::PrintDebugData(TEXT("UsedLightAttackComboCount"),UsedLightAttackComboCount);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(MorrowBoneGameplayTags::Player_SetByCaller_AttackTypes_HeavyAttack))
 		{
 			UsedHeavyAttackComboCount=TagMagnitude.Value;
+			Debug::PrintDebugData(TEXT("UsedHeavyAttackComboCount"),UsedHeavyAttackComboCount);
 		}
 	}
 	
@@ -100,7 +104,8 @@ void UGEEx_Calculation_DamageTaken::Execute_Implementation(
     ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().CurrentStaminaDef,EvaluateParameters,MorrowBoneCurrentStamina);
      float MorrowBoneMaxStamina=0.0f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().MaxStaminaDef,EvaluateParameters,MorrowBoneMaxStamina);
-	
+	Debug::PrintDebugData(TEXT("MorrowBoneAttackPower"),MorrowBoneAttackPower);
+	Debug::PrintDebugData(TEXT("EnemyDefensePower"),EnemyDefensePower);
 	//Damage Logic
 	float Damage=BaseWeaponDamage;
 	if (UsedLightAttackComboCount != 0)
@@ -127,8 +132,8 @@ void UGEEx_Calculation_DamageTaken::Execute_Implementation(
 	}
 
 	// final weapon damage
-	const float FinalDamage=Damage*(MorrowBoneAttackPower/EnemyDefensePower)*(1+0.15*(MorrowBoneCurrentStamina)/MorrowBoneMaxStamina);
-
+	const float FinalDamage=Damage*(MorrowBoneAttackPower/EnemyDefensePower)*(1+0.12*(MorrowBoneCurrentStamina/MorrowBoneMaxStamina));
+     Debug::PrintDebugData(TEXT("FinalDamage"),FinalDamage);
 	//to Send Out The Final Damage u need a PlaceHolder Health Attribute U modify and then u modify health
 	if (FinalDamage > 0.f)
 	{
