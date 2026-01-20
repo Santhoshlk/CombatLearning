@@ -38,7 +38,7 @@ FGameplayEffectSpecHandle UMorrowBoneHeroGameplayAbility::MakeMorrowBoneDamageEf
 	//check the effect class
 	checkf(EffectClass,TEXT("You must provide a valid effect class"));
 
-	// create a Effect Context Handle
+	// create  Effect Context Handle
 	FGameplayEffectContextHandle EffectContextHandle=GetMorrowBoneAbilitySystemComponent()->MakeEffectContext();
 	//now set some properties in the effect context handle
 	EffectContextHandle.SetAbility(this);

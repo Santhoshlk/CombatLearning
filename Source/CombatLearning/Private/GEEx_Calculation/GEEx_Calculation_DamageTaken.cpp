@@ -3,6 +3,7 @@
 
 #include "GEEx_Calculation/GEEx_Calculation_DamageTaken.h"
 #include "Attributes/MorrowBoneAttributeSet.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 
 //create a struct for handling the declaration.
 
@@ -16,7 +17,7 @@ struct FMorrowBoneDamageDataCapture
 	{
 		// now define them
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,AttackPower,Source,false)
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,DefensePower,Source,false)
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,DefensePower,Target,false)
 	}
 };
 
@@ -56,9 +57,33 @@ void UGEEx_Calculation_DamageTaken::Execute_Implementation(
 	EvaluateParameters.SourceTags=Spec.CapturedSourceTags.GetAggregatedTags();
 	EvaluateParameters.TargetTags=Spec.CapturedTargetTags.GetAggregatedTags();
 
+	float BaseWeaponDamage=0.0f;
+	int32 UsedLightAttackComboCount=0;
+	int32 UsedHeavyAttackComboCount=0;
+	//use Spec to get ur Base Damage to weapon and combo count
+	for (const auto& TagMagnitude :Spec.SetByCallerTagMagnitudes)
+	{
+		
+		if (TagMagnitude.Key.MatchesTagExact(MorrowBoneGameplayTags::Shared_SetByCaller_BaseDamage))
+		{
+			BaseWeaponDamage=TagMagnitude.Value;
+		}
+
+		if (TagMagnitude.Key.MatchesTagExact(MorrowBoneGameplayTags::Player_SetByCaller_AttackTypes_LightAttack))
+		{
+			UsedLightAttackComboCount=TagMagnitude.Value;
+		}
+
+		if (TagMagnitude.Key.MatchesTagExact(MorrowBoneGameplayTags::Player_SetByCaller_AttackTypes_HeavyAttack))
+		{
+			UsedHeavyAttackComboCount=TagMagnitude.Value;
+		}
+	}
+	
+
 	// u can use ur Execution Params to calculate the values
 	float MorrowBoneAttackPower=0.0f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().AttackPowerDef,EvaluateParameters,MorrowBoneAttackPower);
-	float MorrowBoneDefensePower=0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().DefensePowerDef,EvaluateParameters,MorrowBoneDefensePower);
+	float EnemyDefensePower=0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().DefensePowerDef,EvaluateParameters,EnemyDefensePower);
 }
