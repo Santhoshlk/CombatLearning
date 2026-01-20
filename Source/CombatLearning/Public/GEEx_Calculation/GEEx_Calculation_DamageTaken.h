@@ -15,5 +15,8 @@ class COMBATLEARNING_API UGEEx_Calculation_DamageTaken : public UGameplayEffectE
 	GENERATED_BODY()
 public:
 	UGEEx_Calculation_DamageTaken();
+
+	//override  execute func to actually do the  capture of attributes
+	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const override;
 	
 };

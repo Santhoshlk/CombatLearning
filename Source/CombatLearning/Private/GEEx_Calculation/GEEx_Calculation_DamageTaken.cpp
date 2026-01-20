@@ -33,3 +33,32 @@ UGEEx_Calculation_DamageTaken::UGEEx_Calculation_DamageTaken()
 	RelevantAttributesToCapture.Add(GetMorrowBoneDamageDataCapture().DefensePowerDef);
 	
 }
+
+void UGEEx_Calculation_DamageTaken::Execute_Implementation(
+	const FGameplayEffectCustomExecutionParameters& ExecutionParams,
+	FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
+{
+	Super::Execute_Implementation(ExecutionParams, OutExecutionOutput);
+   
+	
+	
+	// create get in runtime owning spec Handle
+	const FGameplayEffectSpec& Spec=ExecutionParams.GetOwningSpec();
+
+	// u can also get the  context handle
+	// Spec.GetContext().GetSourceObject()
+	// Spec.GetContext().GetInstigator()
+	// Spec.GetContext().GetAbility()
+	// Spec.GetContext().GetEffectCauser()
+	//create ur aggregate Evaluate Params
+	FAggregatorEvaluateParameters EvaluateParameters;
+	//set the source and target tags
+	EvaluateParameters.SourceTags=Spec.CapturedSourceTags.GetAggregatedTags();
+	EvaluateParameters.TargetTags=Spec.CapturedTargetTags.GetAggregatedTags();
+
+	// u can use ur Execution Params to calculate the values
+	float MorrowBoneAttackPower=0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().AttackPowerDef,EvaluateParameters,MorrowBoneAttackPower);
+	float MorrowBoneDefensePower=0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().DefensePowerDef,EvaluateParameters,MorrowBoneDefensePower);
+}
