@@ -27,6 +27,7 @@ namespace MorrowBoneGameplayTags
 	//**event input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Equip_Weapon_Axe,TEXT("Player.Event.Equip.Weapon.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_UnEquip_Weapon_Axe,TEXT("Player.Event.UnEquip.Weapon.Axe"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact,TEXT("Shared.Event.HitReact"))
 
 	//**shared Event input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Attack_MeeleAttack,TEXT("Shared.Attack.MeeleAttack"))
@@ -39,10 +40,15 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_HeavyAttack_Axe,TEXT("Player.Ability.Attack.HeavyAttack.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackTypes_LightAttack,TEXT("Player.SetByCaller.AttackTypes.LightAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackTypes_HeavyAttack,TEXT("Player.SetByCaller.AttackTypes.HeavyAttack"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact,TEXT("Shared.Ability.HitReact"))
+
+	//**Enemy Ability Tags**//
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee,TEXT("Enemy.Ability.Melee"))
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Ranged,TEXT("Enemy.Ability.Ranged"))
 
 	//** Sate Machine Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_State_JumpToFinisher_Axe,TEXT("Player.State.JumpToFinisher.Axe"))
 
-	//**Tags for Enemy Weapon**//
+	//** Enemy Weapon Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon_SpikedBat,TEXT("Enemy.Weapon.SpikedBat"))
 }
