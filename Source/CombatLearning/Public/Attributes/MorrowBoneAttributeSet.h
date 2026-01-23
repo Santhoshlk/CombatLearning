@@ -24,7 +24,7 @@ class COMBATLEARNING_API UMorrowBoneAttributeSet : public UAttributeSet
 public:
 
 	UMorrowBoneAttributeSet();
-
+	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data) override;
 
 
 	//now write attribute accessor to make these functions
