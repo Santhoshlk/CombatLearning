@@ -27,12 +27,15 @@ namespace MorrowBoneGameplayTags
 	//**event input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Equip_Weapon_Axe,TEXT("Player.Event.Equip.Weapon.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_UnEquip_Weapon_Axe,TEXT("Player.Event.UnEquip.Weapon.Axe"))
-	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact_LightAttack,TEXT("Shared.Event.HitReact.LightAttack"))
-	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact_HeavyAttack,TEXT("Shared.Event.HitReact.HeavyAttack"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_HitPause,TEXT("Player.Event.HitPause"))
+	
+
 
 	//**shared Event input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Attack_MeeleAttack,TEXT("Shared.Attack.MeeleAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_SetByCaller_BaseDamage,TEXT("Shared.SetByCaller.BaseDamage"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact_LightAttack,TEXT("Shared.Event.HitReact.LightAttack"))
+    UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact_HeavyAttack,TEXT("Shared.Event.HitReact.HeavyAttack"))
 
 	//** Ability Input Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Equip_Weapon_Axe,TEXT("Player.Ability.Equip.Weapon.Axe"))
@@ -43,6 +46,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackTypes_HeavyAttack,TEXT("Player.SetByCaller.AttackTypes.HeavyAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_HeavyAttack,TEXT("Shared.Ability.HitReact.HeavyAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_LightAttack,TEXT("Shared.Ability.HitReact.LightAttack"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_HitPause,TEXT("Player.Ability.HitPause"))
 
 	//**Enemy Ability Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee,TEXT("Enemy.Ability.Melee"))

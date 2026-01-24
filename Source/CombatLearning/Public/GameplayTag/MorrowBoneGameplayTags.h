@@ -24,6 +24,7 @@ namespace MorrowBoneGameplayTags
 	//**Tags for notifies and events**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Equip_Weapon_Axe)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_UnEquip_Weapon_Axe)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_HitPause)
 
 	//**Tags for Shared Events **//
 	
@@ -41,6 +42,7 @@ namespace MorrowBoneGameplayTags
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackTypes_HeavyAttack)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact_LightAttack)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact_HeavyAttack)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_HitPause)
 
 	//**Tags for Enemy Gameplay Abilities **//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Melee)

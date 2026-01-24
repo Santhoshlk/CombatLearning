@@ -43,11 +43,22 @@ void UMorrowBoneCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 		MorrowBoneGameplayTags::Shared_Attack_MeeleAttack,
 		 EventData
 		);
+	// we are sending the Hit Pause at the overlap Begin as Well as end Overlap
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		GetOwningPawn(),
+		MorrowBoneGameplayTags::Player_Event_HitPause,
+		FGameplayEventData()
+		);
 }
 
 
 void UMorrowBoneCombatComponent::OnWeaponPulledFromFromTarget(AActor* HitActor)
 {
 	Super::OnWeaponPulledFromFromTarget(HitActor);
-	
+	// we are sending the Hit Pause at the overlap Begin as Well as end Overlap
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		GetOwningPawn(),
+		MorrowBoneGameplayTags::Player_Event_HitPause,
+		FGameplayEventData()
+		);
 }
