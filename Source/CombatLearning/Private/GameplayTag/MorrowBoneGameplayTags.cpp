@@ -54,6 +54,7 @@ namespace MorrowBoneGameplayTags
 
 	//** Sate Machine Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_State_JumpToFinisher_Axe,TEXT("Player.State.JumpToFinisher.Axe"))
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_Invulnerability,TEXT("Enemy.State.Invulnerability"))
 
 	//** Enemy Weapon Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon_SpikedBat,TEXT("Enemy.Weapon.SpikedBat"))
