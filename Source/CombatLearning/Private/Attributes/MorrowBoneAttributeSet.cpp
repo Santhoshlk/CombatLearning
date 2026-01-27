@@ -3,6 +3,8 @@
 
 #include "Attributes/MorrowBoneAttributeSet.h"
 #include "GameplayEffectExtension.h"
+#include "MorrowBoneFunctionLibrary.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 
 
 UMorrowBoneAttributeSet::UMorrowBoneAttributeSet()
@@ -40,6 +42,12 @@ void UMorrowBoneAttributeSet::PostGameplayEffectExecute(const struct FGameplayEf
 		const float DamagedHealth=FMath::Clamp(GetCurrentHealth()-Damage,0.0f,GetMaxHealth());
 		SetCurrentHealth(DamagedHealth);
 	}
-	const FString Msg = TEXT("DamageTaken :") + FString::SanitizeFloat(GetDamageTaken()) + TEXT("CurrentHealth :") + FString::SanitizeFloat(GetCurrentHealth()); 
-	UE_LOG(LogTemp,Warning,TEXT("%s"),*Msg);
+	if (GetCurrentHealth()<= 0 )
+	{
+		// u can add a gameplay tag to call a gameplay event to set the death Montages and everything
+		//From the Data U can get the ASC of the current instance of calling of this function
+		UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Shared_Status_Death);
+		
+	}
+
 }

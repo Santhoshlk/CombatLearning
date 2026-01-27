@@ -5,7 +5,6 @@
 #include "StateTreeTypes.h"
 #include "Attributes/MorrowBoneAttributeSet.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
-#include "CombatDebugHelper.h"
 
 
 //create a struct for handling the declaration.
@@ -134,7 +133,7 @@ void UGEEx_Calculation_DamageTaken::Execute_Implementation(
 
 	// final weapon damage
 	const float FinalDamage=Damage*(MorrowBoneAttackPower/EnemyDefensePower)*(1+0.12*(MorrowBoneCurrentStamina/MorrowBoneMaxStamina));
-     Debug::PrintDebugData(TEXT("FinalDamage"),FinalDamage);
+     // Debug::PrintDebugData(TEXT("FinalDamage"),FinalDamage);
 	//to Send Out The Final Damage u need a PlaceHolder Health Attribute U modify and then u modify health
 	if (FinalDamage > 0.f)
 	{

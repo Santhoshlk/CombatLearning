@@ -40,16 +40,21 @@ namespace MorrowBoneGameplayTags
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_HeavyAttack_Axe)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackTypes_LightAttack)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackTypes_HeavyAttack)
+
+	//**Tags For Shared Abilities **//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact_LightAttack)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact_HeavyAttack)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_HitPause)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_Death)
 
 	//**Tags for Enemy Gameplay Abilities **//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Melee)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Ranged)
-	//** Tags for state Machines**//
+	//** Tags for state Machines || Status **//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_State_JumpToFinisher_Axe)
 	 COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_State_Invulnerability)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Death)
+	
 	//** Tags for Enemy Weapon**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon_SpikedBat)
 }

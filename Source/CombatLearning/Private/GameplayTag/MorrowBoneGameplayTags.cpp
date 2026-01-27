@@ -44,17 +44,22 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_HeavyAttack_Axe,TEXT("Player.Ability.Attack.HeavyAttack.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackTypes_LightAttack,TEXT("Player.SetByCaller.AttackTypes.LightAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackTypes_HeavyAttack,TEXT("Player.SetByCaller.AttackTypes.HeavyAttack"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_HitPause,TEXT("Player.Ability.HitPause"))
+	
+	//**Tags For Shared Abilities **//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_HeavyAttack,TEXT("Shared.Ability.HitReact.HeavyAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_LightAttack,TEXT("Shared.Ability.HitReact.LightAttack"))
-	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_HitPause,TEXT("Player.Ability.HitPause"))
+	
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_Death,TEXT("Shared.Ability.Death"))
 
 	//**Enemy Ability Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee,TEXT("Enemy.Ability.Melee"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Ranged,TEXT("Enemy.Ability.Ranged"))
 
-	//** Sate Machine Tags**//
+	//** Sate Machine Tags || Status**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_State_JumpToFinisher_Axe,TEXT("Player.State.JumpToFinisher.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_Invulnerability,TEXT("Enemy.State.Invulnerability"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Death,TEXT("Shared.Status.Death"))
 
 	//** Enemy Weapon Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon_SpikedBat,TEXT("Enemy.Weapon.SpikedBat"))
