@@ -29,8 +29,9 @@ public:
 
 	//function to Register the weapon
 	UFUNCTION(BlueprintCallable,Category="Weapon|Register")
- void RegisterSpawnedWeapon(FGameplayTag InInputTag,AWeaponBase* Weapon,bool IsEquipped);
+    void RegisterSpawnedWeapon(FGameplayTag InInputTag,AWeaponBase* Weapon,bool IsEquipped);
 
+	
 	//searching Function
 	UFUNCTION(BlueprintCallable,Category="Weapon|Search")
 	AWeaponBase* GetWeaponCarriedbyTag(FGameplayTag InputTag) const ;
@@ -38,9 +39,13 @@ public:
 	UFUNCTION(BlueprintCallable,Category="Weapon|Search")
 	AWeaponBase* GetEquippedWeapon() const;
 
+	
+
 	// u also need to give a current weaponTag Obviously
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category="Weapon|CurrentWeapon")
 	FGameplayTag CurrentWeaponTag;
+
+	
 
 	UFUNCTION(BlueprintCallable,Category="Combat Component|Toggle Weapon Collision")
 	void ToggleWeaponCollision(bool ActiveWeaponCollision,EWeaponEquippedTypes WeaponEquippedTypes=EWeaponEquippedTypes::CurrentWeaponEquipped);

@@ -59,6 +59,8 @@ AWeaponBase* UPawnCombatComponent::GetEquippedWeapon() const
 	
 }
 
+
+
 void UPawnCombatComponent::ToggleWeaponCollision(bool ActiveWeaponCollision, EWeaponEquippedTypes WeaponEquippedTypes)
 {
 	if (WeaponEquippedTypes==EWeaponEquippedTypes::CurrentWeaponEquipped)
