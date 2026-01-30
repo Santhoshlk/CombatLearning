@@ -9,6 +9,7 @@
 #include "Interface/PawnUIInterface.h"
 
 
+
 UMorrowBoneAttributeSet::UMorrowBoneAttributeSet()
 {
 	InitCurrentHealth(1.0F);
@@ -40,7 +41,8 @@ void UMorrowBoneAttributeSet::PostGameplayEffectExecute(const struct FGameplayEf
 	
 	// this function executes after a Gameplay effect has been done  enemy / Self Attribute Set
  	Super::PostGameplayEffectExecute(Data);
-	if (Data.EvaluatedData.Attribute == GetCurrentHealthAttribute())
+	const FGameplayAttribute& Attr=Data.EvaluatedData.Attribute;
+	if (Attr == GetCurrentHealthAttribute())
 	{
 		// now lets set the values in the form of clamping
 		const float NewCurrentHealth = FMath::Clamp(GetCurrentHealth(),0.0f,GetMaxHealth());
@@ -48,7 +50,7 @@ void UMorrowBoneAttributeSet::PostGameplayEffectExecute(const struct FGameplayEf
 		PawnUIComponent->CurrentHealthPercentage.Broadcast(GetCurrentHealth()/GetMaxHealth());
 	}
 	// do the same thing for rage
-	if (Data.EvaluatedData.Attribute == GetCurrentRageAttribute())
+	if (Attr == GetCurrentRageAttribute())
 	{
 		const float NewCurrentRage = FMath::Clamp(GetCurrentRage(),0.0f,GetMaxRage());
 		SetCurrentRage(NewCurrentRage);
@@ -61,7 +63,7 @@ void UMorrowBoneAttributeSet::PostGameplayEffectExecute(const struct FGameplayEf
 		}
 	}
 	// Now use the proxy attribute to set the current health
-	if (Data.EvaluatedData.Attribute == GetDamageTakenAttribute())
+	if (Attr == GetDamageTakenAttribute())
 	{
 		const float Damage = GetDamageTaken();
 		const float DamagedHealth=FMath::Clamp(GetCurrentHealth()-Damage,0.0f,GetMaxHealth());
