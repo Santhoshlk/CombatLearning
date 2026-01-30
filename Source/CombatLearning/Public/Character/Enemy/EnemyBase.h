@@ -6,6 +6,7 @@
 #include "Character/MorrowBoneClassBase.h"
 #include "EnemyBase.generated.h"
 
+class UEnemyUIComponent;
 class UEnemyCombatComponent;
 /**
  * 
@@ -17,9 +18,17 @@ class COMBATLEARNING_API AEnemyBase : public AMorrowBoneClassBase
 public:
 	AEnemyBase();
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
-protected:
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="CombatComponent")
+
+	//override ur PawnUI Interface Here
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+	
+private:
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true"),Category="CombatComponent")
 	TObjectPtr<UEnemyCombatComponent> EnemyCombatComponent;
+
+	//create ur Enemy UI Component
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true"),Category="UIComponent")
+	TObjectPtr<UEnemyUIComponent> EnemyUIComponent;
 
 	virtual void BeginPlay() override;
 public:
@@ -29,6 +38,13 @@ public:
 	{
 		return EnemyCombatComponent;
 	}
+
+	UFUNCTION(BlueprintCallable,Category="Enemy|UIComponent")
+	FORCEINLINE UEnemyUIComponent* GetEnemyUIComponent() const
+	{
+		return EnemyUIComponent;
+	}
+	
 
 private:
 	void AsynchronousLoadStartUpData();

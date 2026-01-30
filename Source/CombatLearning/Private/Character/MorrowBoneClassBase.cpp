@@ -33,6 +33,11 @@ UPawnCombatComponent* AMorrowBoneClassBase::GetPawnCombatComponent() const
 	return nullptr;
 }
 
+UPawnUIComponent* AMorrowBoneClassBase::GetPawnUIComponent() const
+{
+	return nullptr;
+}
+
 
 void AMorrowBoneClassBase::PossessedBy(AController* NewController)
 {

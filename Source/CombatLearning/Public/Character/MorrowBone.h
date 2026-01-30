@@ -8,6 +8,7 @@
 #include "GameplayTagContainer.h"
 #include "MorrowBone.generated.h"
 
+class UMorrowBoneUIComponent;
 class UMorrowBoneCombatComponent;
 class UInputConfig_DataAsset;
 class UCameraComponent;
@@ -29,6 +30,8 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
 	
 private:
 	//to divide into regions new trick by Vince Petrelli
@@ -49,6 +52,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,meta=(AllowPrivateAccess="true"),Category="CombatComponent")
 	TObjectPtr<UMorrowBoneCombatComponent> CombatComponent;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess="true"),Category="UIComponent")
+	TObjectPtr<UMorrowBoneUIComponent> MorrowBoneUIComponent;
 #pragma endregion
 
 public:
@@ -72,4 +78,10 @@ public:
 	{
 		return CombatComponent;
 	}
+
+	UFUNCTION(BlueprintCallable,Category="MorrowBone|UI")
+	 FORCEINLINE UMorrowBoneUIComponent* GetMorrowBoneUIComponent() const
+ {
+	 return MorrowBoneUIComponent;
+ }
 };

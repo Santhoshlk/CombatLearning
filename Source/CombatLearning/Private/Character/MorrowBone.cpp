@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/Combat/MorrowBoneCombatComponent.h"
+#include "Components/UI/MorrowBoneUIComponent.h"
 #include "DataAssets/InputConfig_DataAsset.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -40,6 +41,8 @@ AMorrowBone::AMorrowBone()
 	//Create the combat component
     CombatComponent=CreateDefaultSubobject<UMorrowBoneCombatComponent>(TEXT("CombatComponent"));
 
+	//create the UI Component
+   MorrowBoneUIComponent = CreateDefaultSubobject<UMorrowBoneUIComponent>(TEXT("UIComponent"));
 	
 	//setup Attachments of both Camera and spring Arm
 	SpringArm->SetupAttachment(Capsule);
@@ -64,6 +67,11 @@ void AMorrowBone::PossessedBy(AController* NewController)
 UPawnCombatComponent* AMorrowBone::GetPawnCombatComponent() const
 {
 	return CombatComponent;
+}
+
+UPawnUIComponent* AMorrowBone::GetPawnUIComponent() const
+{
+	return GetMorrowBoneUIComponent();
 }
 
 void AMorrowBone::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)

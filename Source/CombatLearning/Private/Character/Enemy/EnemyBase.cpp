@@ -3,6 +3,7 @@
 
 #include "Character/Enemy/EnemyBase.h"
 #include "Components/Combat/EnemyCombatComponent.h"
+#include "Components/UI/EnemyUIComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/AssetManager.h"
 #include "DataAssets/StartUpData/DataAsset_StartupDataEnemy.h"
@@ -28,11 +29,19 @@ AEnemyBase::AEnemyBase()
 
 	//creating the Subobject of Combat component
 	EnemyCombatComponent=CreateDefaultSubobject<UEnemyCombatComponent>(TEXT("EnemyCombatComponent"));
+
+	//Create the enemy UI Component
+	EnemyUIComponent=CreateDefaultSubobject<UEnemyUIComponent>(TEXT("UIComponent"));
 }
 
 UPawnCombatComponent* AEnemyBase::GetPawnCombatComponent() const
 {
 	return EnemyCombatComponent;
+}
+
+UPawnUIComponent* AEnemyBase::GetPawnUIComponent() const
+{
+	return GetEnemyUIComponent();
 }
 
 void AEnemyBase::BeginPlay()
