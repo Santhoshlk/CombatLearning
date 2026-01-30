@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/UI/MorrowBoneUIComponent.h"
 #include "UObject/Interface.h"
 #include "PawnUIInterface.generated.h"
 
@@ -24,4 +25,7 @@ class COMBATLEARNING_API IPawnUIInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual UPawnUIComponent* GetPawnUIComponent() const = 0;
+
+	// u need this for Hero Only UI things
+	virtual UMorrowBoneUIComponent* GetMorrowBoneUIComponentFromActor() const;
 };

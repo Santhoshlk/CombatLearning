@@ -32,6 +32,8 @@ public:
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 
 	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+
+	virtual UMorrowBoneUIComponent* GetMorrowBoneUIComponentFromActor() const override;
 	
 private:
 	//to divide into regions new trick by Vince Petrelli

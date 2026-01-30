@@ -74,6 +74,11 @@ UPawnUIComponent* AMorrowBone::GetPawnUIComponent() const
 	return GetMorrowBoneUIComponent();
 }
 
+UMorrowBoneUIComponent* AMorrowBone::GetMorrowBoneUIComponentFromActor() const
+{
+	return GetMorrowBoneUIComponent();
+}
+
 void AMorrowBone::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

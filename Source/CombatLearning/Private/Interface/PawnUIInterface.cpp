@@ -5,3 +5,7 @@
 
 // Add default functionality here for any IPawnUIInterface functions that are not pure virtual.
 
+UMorrowBoneUIComponent* IPawnUIInterface::GetMorrowBoneUIComponentFromActor() const
+{
+	return nullptr;
+}
