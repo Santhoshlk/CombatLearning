@@ -21,6 +21,8 @@ public:
 
 	//override ur PawnUI Interface Here
 	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+
+	virtual UEnemyUIComponent* GetEnemyUIComponentFromActor() const override;
 	
 private:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true"),Category="CombatComponent")

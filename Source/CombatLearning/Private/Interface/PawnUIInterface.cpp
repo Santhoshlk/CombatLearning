@@ -9,3 +9,8 @@ UMorrowBoneUIComponent* IPawnUIInterface::GetMorrowBoneUIComponentFromActor() co
 {
 	return nullptr;
 }
+
+UEnemyUIComponent* IPawnUIInterface::GetEnemyUIComponentFromActor() const
+{
+	return nullptr;
+}

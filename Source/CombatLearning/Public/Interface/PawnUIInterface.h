@@ -7,6 +7,7 @@
 #include "UObject/Interface.h"
 #include "PawnUIInterface.generated.h"
 
+class UEnemyUIComponent;
 class UPawnUIComponent;
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
@@ -28,4 +29,6 @@ public:
 
 	// u need this for Hero Only UI things
 	virtual UMorrowBoneUIComponent* GetMorrowBoneUIComponentFromActor() const;
+
+	virtual UEnemyUIComponent* GetEnemyUIComponentFromActor() const;
 };

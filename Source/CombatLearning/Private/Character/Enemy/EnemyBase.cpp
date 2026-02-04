@@ -44,6 +44,11 @@ UPawnUIComponent* AEnemyBase::GetPawnUIComponent() const
 	return GetEnemyUIComponent();
 }
 
+UEnemyUIComponent* AEnemyBase::GetEnemyUIComponentFromActor() const
+{
+	return GetEnemyUIComponent();
+}
+
 void AEnemyBase::BeginPlay()
 {
 	Super::BeginPlay();

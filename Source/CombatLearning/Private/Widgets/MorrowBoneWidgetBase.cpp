@@ -3,6 +3,7 @@
 
 #include "Widgets/MorrowBoneWidgetBase.h"
 
+#include "Components/UI/EnemyUIComponent.h"
 #include "Interface/PawnUIInterface.h"
 
 
@@ -16,6 +17,17 @@ void UMorrowBoneWidgetBase::NativeOnInitialized()
 		if (UMorrowBoneUIComponent* MorrowBoneUIComponent=PawnUIInterface->GetMorrowBoneUIComponentFromActor())
 		{
 			BP_GetMorrowBoneUIComponentAtInitialized(MorrowBoneUIComponent);
+		}
+	}
+}
+
+void UMorrowBoneWidgetBase::InitEnemyWidget(AActor* Enemy)
+{
+	if (IPawnUIInterface* PawnUIInterface = Cast<IPawnUIInterface>(Enemy))
+	{
+		if (UEnemyUIComponent* EnemyUIComponent = PawnUIInterface->GetEnemyUIComponentFromActor())
+		{
+			BP_GetEnemyUIComponentWhenInitialized(EnemyUIComponent);
 		}
 	}
 }
