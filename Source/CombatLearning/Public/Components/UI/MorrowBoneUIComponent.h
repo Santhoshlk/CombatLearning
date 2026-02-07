@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "PawnUIComponent.h"
 #include "MorrowBoneUIComponent.generated.h"
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeaponIconChangedDelegate,TSoftObjectPtr<UTexture2D>,Icon);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class COMBATLEARNING_API UMorrowBoneUIComponent : public UPawnUIComponent
@@ -18,6 +18,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category="MorrowBoneUIComponent")
 	FonPercentageUpdatedDelegate CurrentRagePercentage;
+
+	UPROPERTY(BlueprintCallable,BlueprintAssignable, Category="MorrowBoneUIComponent | Icon")
+	FOnWeaponIconChangedDelegate OnWeaponIcon;
 
 protected:
 	// Called when the game starts

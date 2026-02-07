@@ -45,4 +45,8 @@ public:
 	// to store the Weapon Base Damage
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	FScalableFloat WeaponBaseDamage;
+
+	// each weapon should come with its own icon
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="WeaponIcon")
+	TSoftObjectPtr<UTexture2D> WeaponIcon;
 };
