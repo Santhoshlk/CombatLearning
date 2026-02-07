@@ -2,11 +2,13 @@
 
 
 #include "Character/Enemy/EnemyBase.h"
+#include "Components/WidgetComponent.h"
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "Components/UI/EnemyUIComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/AssetManager.h"
 #include "DataAssets/StartUpData/DataAsset_StartupDataEnemy.h"
+#include "Widgets/MorrowBoneWidgetBase.h"
 
 
 AEnemyBase::AEnemyBase()
@@ -32,6 +34,11 @@ AEnemyBase::AEnemyBase()
 
 	//Create the enemy UI Component
 	EnemyUIComponent=CreateDefaultSubobject<UEnemyUIComponent>(TEXT("UIComponent"));
+
+	//Creating the Enemy Health Widget Component
+	EnemyHealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("EnemyHealthWidgetComponent"));
+
+	EnemyHealthWidgetComponent->SetupAttachment(GetMesh());
 }
 
 UPawnCombatComponent* AEnemyBase::GetPawnCombatComponent() const
@@ -78,4 +85,10 @@ void AEnemyBase::AsynchronousLoadStartUpData()
        }
 	  )
 		);
+
+	// u can add the Blueprint Implementable Event in here
+	if (UMorrowBoneWidgetBase* WidgetBase = Cast<UMorrowBoneWidgetBase>(EnemyHealthWidgetComponent->GetUserWidgetObject()))
+	{
+		WidgetBase->InitEnemyWidget(this);
+	}
 }

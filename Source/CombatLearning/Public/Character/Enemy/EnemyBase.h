@@ -6,6 +6,7 @@
 #include "Character/MorrowBoneClassBase.h"
 #include "EnemyBase.generated.h"
 
+class UWidgetComponent;
 class UEnemyUIComponent;
 class UEnemyCombatComponent;
 /**
@@ -24,13 +25,18 @@ public:
 
 	virtual UEnemyUIComponent* GetEnemyUIComponentFromActor() const override;
 	
-private:
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true"),Category="CombatComponent")
+protected:
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="CombatComponent")
 	TObjectPtr<UEnemyCombatComponent> EnemyCombatComponent;
 
 	//create ur Enemy UI Component
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true"),Category="UIComponent")
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="UIComponent")
 	TObjectPtr<UEnemyUIComponent> EnemyUIComponent;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Enemy | WidgetComponent")
+	TObjectPtr<UWidgetComponent> EnemyHealthWidgetComponent;
+
+	
 
 	virtual void BeginPlay() override;
 public:
