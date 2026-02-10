@@ -3,17 +3,14 @@
 
 #include "PlayerController/EnemyAIController.h"
 #include "Navigation/CrowdFollowingComponent.h"
-// #include "CombatDebugHelper.h"
+#include "CombatDebugHelper.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
 AEnemyAIController::AEnemyAIController(const FObjectInitializer& ObjectInitializer):
  Super(ObjectInitializer.SetDefaultSubobjectClass<UCrowdFollowingComponent>(TEXT("PathFollowingComponent")))
 {
-	if ( UCrowdFollowingComponent* CrowdFollowingComponent =Cast<UCrowdFollowingComponent>(GetPathFollowingComponent()))
-	{
-		// Debug::PrintMessage(TEXT("CrowdFollowingComponent is Valid "));
-	}
+	
 
 	//Create the Components
 	EnemyAISight=CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("EnemyAISight"));
@@ -32,8 +29,24 @@ AEnemyAIController::AEnemyAIController(const FObjectInitializer& ObjectInitializ
 	EnemyPerceptionComponent->ConfigureSense(*EnemyAISight);
 	EnemyPerceptionComponent->SetDominantSense(UAISenseConfig_Sight::StaticClass());
 	EnemyPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this,&ThisClass::AEnemyAIController::OnTargetPerceptionUpdate);
+	SetGenericTeamId(FGenericTeamId(1));
 }
+
+ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Other) const
+{
+	const APawn* PawnTobeChecked=Cast<const APawn>(&Other);
+	const IGenericTeamAgentInterface* Agent = Cast<const IGenericTeamAgentInterface>(PawnTobeChecked->GetController());
+	if (Agent && (Agent->GetGenericTeamId()!=GetGenericTeamId()))
+	{
+		return ETeamAttitude::Hostile;
+	}
+	return ETeamAttitude::Friendly;
+} 
 
 void AEnemyAIController::OnTargetPerceptionUpdate(AActor* Actor, FAIStimulus Stimulus)
 {
+	if (Stimulus.WasSuccessfullySensed() && Actor)
+	{
+		Debug::PrintMessage(Actor->GetActorNameOrLabel() + TEXT(" The Actor is Successfully sensed"));
+	}
 }

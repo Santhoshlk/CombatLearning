@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "EnemyAIController.generated.h"
 
+struct FAIStimulus;
 class UAISenseConfig_Sight;
 /**
  * 
@@ -19,6 +20,8 @@ public:
 	// I want to Change the Base Component Given by AIController
 	//Use const FObject Initializer
 	AEnemyAIController(const FObjectInitializer& ObjectInitializer );
+	virtual ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
+	
 
 protected:
 	// U need AIPerception Component and AISenseConfig_SightComponent to identify pawns
