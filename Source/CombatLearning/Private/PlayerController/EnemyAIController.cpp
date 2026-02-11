@@ -2,8 +2,9 @@
 
 
 #include "PlayerController/EnemyAIController.h"
+
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Navigation/CrowdFollowingComponent.h"
-#include "CombatDebugHelper.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
@@ -28,6 +29,7 @@ AEnemyAIController::AEnemyAIController(const FObjectInitializer& ObjectInitializ
 	EnemyPerceptionComponent=CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("EnemyPerceptionComponent"));
 	EnemyPerceptionComponent->ConfigureSense(*EnemyAISight);
 	EnemyPerceptionComponent->SetDominantSense(UAISenseConfig_Sight::StaticClass());
+	//we use a Delegate to update when the enemy character detects a hostile 
 	EnemyPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this,&ThisClass::AEnemyAIController::OnTargetPerceptionUpdate);
 	SetGenericTeamId(FGenericTeamId(1));
 }
@@ -47,6 +49,9 @@ void AEnemyAIController::OnTargetPerceptionUpdate(AActor* Actor, FAIStimulus Sti
 {
 	if (Stimulus.WasSuccessfullySensed() && Actor)
 	{
-		Debug::PrintMessage(Actor->GetActorNameOrLabel() + TEXT(" The Actor is Successfully sensed"));
+		if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
+		{
+			BlackboardComponent->SetValueAsObject(FName("TargetActorKey"),Actor);
+		}
 	}
 }
