@@ -21,9 +21,15 @@ public:
 	//Use const FObject Initializer
 	AEnemyAIController(const FObjectInitializer& ObjectInitializer );
 	virtual ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
+
 	
 
 protected:
+
+	//U can Modify Engine Components like Crowd Following Component in Begin pLay
+    virtual void BeginPlay() override;
+
+	
 	// U need AIPerception Component and AISenseConfig_SightComponent to identify pawns
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
@@ -34,4 +40,16 @@ protected:
 
 	UFUNCTION()
 	virtual void OnTargetPerceptionUpdate( AActor* Actor, FAIStimulus Stimulus);
+
+private:
+ // all the variables
+	UPROPERTY(EditDefaultsOnly,Category="AIDetourAvoidance")
+	bool bDetourAIAvoidanceActivated;
+
+	//Switch takes an int/Enum
+	UPROPERTY(EditDefaultsOnly, Category="AIDetourAvoidance", meta=(EditCondition= "bDetourAIAvoidanceActivated",UIMin="1" ,UIMax="4"))
+	int32 CrowdAvoidanceQuality;
+
+	UPROPERTY(EditDefaultsOnly, Category="AIDetourAvoidance",meta=(EditCondition= "bDetourAIAvoidanceActivated"))
+	float CrowdAvoidanceCollisionQueryRange= 500.f;
 };

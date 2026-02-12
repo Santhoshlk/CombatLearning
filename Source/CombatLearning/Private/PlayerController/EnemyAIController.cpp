@@ -43,7 +43,42 @@ ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Oth
 		return ETeamAttitude::Hostile;
 	}
 	return ETeamAttitude::Friendly;
-} 
+}
+
+void AEnemyAIController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (UCrowdFollowingComponent* CrowdFollowingComponent = Cast<UCrowdFollowingComponent>(GetPathFollowingComponent()))
+	{
+		//set some properties of AI Avoidance
+		CrowdFollowingComponent->SetCrowdSimulationState(bDetourAIAvoidanceActivated ? ECrowdSimulationState::Enabled : ECrowdSimulationState::Disabled);
+        // if u hav multiple options use switch statement
+		switch (CrowdAvoidanceQuality)
+		{
+		case 1:
+			CrowdFollowingComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Low);
+         break;
+		case 2:
+			CrowdFollowingComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Medium);
+			break;
+		case 3:
+			CrowdFollowingComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Good);
+			break;	
+		case 4:
+			CrowdFollowingComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::High);
+			break;
+		default:
+			break;
+			
+		}
+        CrowdFollowingComponent->SetAvoidanceGroup(1);
+		CrowdFollowingComponent->SetGroupsToAvoid(1);
+		CrowdFollowingComponent->SetCrowdCollisionQueryRange(CrowdAvoidanceCollisionQueryRange);
+		CrowdFollowingComponent->SetCrowdObstacleAvoidance(true);
+	}
+	
+}
 
 void AEnemyAIController::OnTargetPerceptionUpdate(AActor* Actor, FAIStimulus Stimulus)
 {
