@@ -86,7 +86,7 @@ void AEnemyAIController::OnTargetPerceptionUpdate(AActor* Actor, FAIStimulus Sti
 	{
 		if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
 		{
-			BlackboardComponent->SetValueAsObject(FName("TargetActorKey"),Actor);
+			BlackboardComponent->SetValueAsObject(FName(TEXT("TargetActorKey")),Actor);
 		}
 	}
 }
