@@ -20,9 +20,11 @@ class COMBATLEARNING_API UBTService_OrientToTarget : public UBTService
 	//1) to describe the static description.
 	//2)to initialize the Black Board Key it takes as an input
 
-	
+	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
+
 	virtual FString GetStaticDescription() const override;
 	virtual void InitializeFromAsset(UBehaviorTree& Asset) override;
+	
 
 	UPROPERTY(EditAnywhere, Category="InTargetKey")
 	FBlackboardKeySelector InTargetKey;

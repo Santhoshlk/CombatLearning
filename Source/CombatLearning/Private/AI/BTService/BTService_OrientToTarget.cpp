@@ -2,6 +2,9 @@
 
 
 #include "AI/BTService/BTService_OrientToTarget.h"
+#include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UBTService_OrientToTarget::UBTService_OrientToTarget()
 {
@@ -16,6 +19,7 @@ UBTService_OrientToTarget::UBTService_OrientToTarget()
 	InTargetKey.AddObjectFilter(this,GET_MEMBER_NAME_CHECKED(ThisClass,InTargetKey),AActor::StaticClass());
 	
 }
+
 
 FString UBTService_OrientToTarget::GetStaticDescription() const
 {
@@ -32,3 +36,19 @@ void UBTService_OrientToTarget::InitializeFromAsset(UBehaviorTree& Asset)
 		InTargetKey.ResolveSelectedKey(*BlackboardData);
 	}
 }
+
+void UBTService_OrientToTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+{
+	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
+	// job is to set Pawn rotation to smoothly lerp to character
+	UObject* TargetObject = OwnerComp.GetBlackboardComponent()->GetValueAsObject(InTargetKey.SelectedKeyName);
+	AActor* TargetActor = Cast<AActor>(TargetObject);
+	APawn* OwningPawn = OwnerComp.GetAIOwner()->GetPawn();
+	if (OwningPawn && TargetActor)
+	{
+		const FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(OwningPawn->GetActorLocation(), TargetActor->GetActorLocation());
+		const FRotator InterpRotationAngle = FMath::RInterpTo(OwningPawn->GetActorRotation(),LookAtRotation,DeltaSeconds,RotationInterpSpeed);
+		OwningPawn->SetActorRotation(InterpRotationAngle);
+	}
+}
+
