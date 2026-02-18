@@ -14,7 +14,7 @@ class COMBATLEARNING_API UMorrowBoneUIComponent : public UPawnUIComponent
 
 public:
 	// Sets default values for this component's properties
-	UMorrowBoneUIComponent();
+	UMorrowBoneUIComponent();	
 
 	UPROPERTY(BlueprintAssignable, Category="MorrowBoneUIComponent")
 	FonPercentageUpdatedDelegate CurrentRagePercentage;
