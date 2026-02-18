@@ -5,7 +5,7 @@
 
 ACombatClassPlayerController::ACombatClassPlayerController()
 {
-	MorrowBoneTeamId = FGenericTeamId(0);
+	MorrowBoneTeamId = FGenericTeamId(2);
 }
 
 FGenericTeamId ACombatClassPlayerController::GetGenericTeamId() const

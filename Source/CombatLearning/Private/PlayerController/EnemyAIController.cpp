@@ -38,11 +38,13 @@ ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Oth
 {
 	const APawn* PawnTobeChecked=Cast<const APawn>(&Other);
 	const IGenericTeamAgentInterface* Agent = Cast<const IGenericTeamAgentInterface>(PawnTobeChecked->GetController());
-	if (Agent && (Agent->GetGenericTeamId()!=GetGenericTeamId()))
+	// anything that has even team ID is an Enemy
+	if (Agent && (Agent->GetGenericTeamId()%2 == 0 ) )
 	{
 		return ETeamAttitude::Hostile;
 	}
 	return ETeamAttitude::Friendly;
+	
 }
 
 void AEnemyAIController::BeginPlay()
@@ -82,11 +84,15 @@ void AEnemyAIController::BeginPlay()
 
 void AEnemyAIController::OnTargetPerceptionUpdate(AActor* Actor, FAIStimulus Stimulus)
 {
-	if (Stimulus.WasSuccessfullySensed() && Actor)
+	if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
 	{
-		if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
+		if(!BlackboardComponent->GetValueAsObject(FName(TEXT("TargetActorKey"))))
 		{
-			BlackboardComponent->SetValueAsObject(FName(TEXT("TargetActorKey")),Actor);
+			//check stimuli and update
+			if (Stimulus.WasSuccessfullySensed() && Actor)
+			{
+				BlackboardComponent->SetValueAsObject(FName(TEXT("TargetActorKey")), Actor);
+			}
 		}
 	}
 }
