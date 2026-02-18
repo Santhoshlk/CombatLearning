@@ -50,9 +50,12 @@ namespace MorrowBoneGameplayTags
 	//**Tags for Enemy Gameplay Abilities **//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Melee)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Ranged)
+
+	
 	//** Tags for state Machines || Status **//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_State_JumpToFinisher_Axe)
 	 COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_State_Invulnerability)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_state_Straffing)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Death)
 	
 	//** Tags for Enemy Weapon**//
