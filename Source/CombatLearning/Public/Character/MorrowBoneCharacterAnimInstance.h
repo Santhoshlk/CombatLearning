@@ -33,10 +33,14 @@ public:
 
 #pragma region Variables
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Speed")
+protected:
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Properties")
 	float GroundSpeed;
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Acceleration")
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Properties")
 	bool bHasAcceleration;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category= "Properties")
+	float LocomotionDirection;
 #pragma endregion
 };

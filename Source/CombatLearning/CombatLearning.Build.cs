@@ -20,10 +20,11 @@ public class CombatLearning : ModuleRules
 			"UMG",
 			"Slate",
 			"GameplayTags",
-			"GameplayTasks", "GameplayAbilities"
+			"GameplayTasks", "GameplayAbilities",
+			"AnimGraphRuntime"
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] { });
+		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
 		PublicIncludePaths.AddRange(new string[] {
 			"CombatLearning",

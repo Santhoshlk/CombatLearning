@@ -4,6 +4,7 @@
 #include "Character/MorrowBoneCharacterAnimInstance.h"
 #include "Character/MorrowBoneClassBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "KismetAnimationLibrary.h"
 
 void UMorrowBoneCharacterAnimInstance::NativeInitializeAnimation()
 {
@@ -23,6 +24,8 @@ void UMorrowBoneCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float Del
 	{
 		GroundSpeed=OwningCharacterMovement->Velocity.Size2D();
 		bHasAcceleration=OwningCharacterMovement->GetCurrentAcceleration().SizeSquared2D()>0.f;
+		// to find the direction in float
+		LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningPtr->GetVelocity(),OwningPtr->GetActorRotation());	
 	}
 }
 
