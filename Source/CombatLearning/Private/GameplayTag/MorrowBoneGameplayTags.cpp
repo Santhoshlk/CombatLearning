@@ -20,6 +20,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_UnEquip_Axe,TEXT("InputTag.UnEquip.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_LightAttack_Axe,TEXT("InputTag.LightAttack.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_HeavyAttack_Axe,TEXT("InputTag.HeavyAttack.Axe"))
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Health_Low,TEXT("Enemy.Health.Low"))
 
 	//**weapon input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe,TEXT("Player.Weapon.Axe"))
@@ -59,7 +60,7 @@ namespace MorrowBoneGameplayTags
 	//** Sate Machine Tags || Status**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_State_JumpToFinisher_Axe,TEXT("Player.State.JumpToFinisher.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_Invulnerability,TEXT("Enemy.State.Invulnerability"))
-	UE_DEFINE_GAMEPLAY_TAG(Enemy_state_Straffing,TEXT("Enemy.state.Strafing"))
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_Straffing,TEXT("Enemy.State.Strafing"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Death,TEXT("Shared.Status.Death"))
 
 	//** Enemy Weapon Tags**//

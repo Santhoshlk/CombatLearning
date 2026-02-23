@@ -47,7 +47,10 @@ void UMorrowBoneAttributeSet::PostGameplayEffectExecute(const struct FGameplayEf
 		// now lets set the values in the form of clamping
 		const float NewCurrentHealth = FMath::Clamp(GetCurrentHealth(),0.0f,GetMaxHealth());
 		SetCurrentHealth(NewCurrentHealth);
-		PawnUIComponent->CurrentHealthPercentage.Broadcast(GetCurrentHealth()/GetMaxHealth());
+		const float HealthPercentage = GetCurrentHealth()/GetMaxHealth();
+		PawnUIComponent->CurrentHealthPercentage.Broadcast(HealthPercentage);
+		
+		
 	}
 	// do the same thing for rage
 	if (Attr == GetCurrentRageAttribute())
@@ -69,12 +72,18 @@ void UMorrowBoneAttributeSet::PostGameplayEffectExecute(const struct FGameplayEf
 		const float DamagedHealth=FMath::Clamp(GetCurrentHealth()-Damage,0.0f,GetMaxHealth());
 		SetCurrentHealth(DamagedHealth);
 		PawnUIComponent->CurrentHealthPercentage.Broadcast(GetCurrentHealth()/GetMaxHealth());
+		const float HealthPercentage = GetCurrentHealth()/GetMaxHealth();
+		if (HealthPercentage <= 0.3)
+		{
+			UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Enemy_Health_Low);
+
+		}
 		if (GetCurrentHealth()<= 0 )
 		{
 			// u can add a gameplay tag to call a gameplay event to set the death Montages and everything
 			//From the Data U can get the ASC of the current instance of calling of this function
 			UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Shared_Status_Death);
-		
+		  UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Enemy_Health_Low);
 		}
 	}
 	
