@@ -25,4 +25,7 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="ASC|WeaponData")
 	void RemoveWeaponGameplayAbilities(UPARAM(ref) TArray<FGameplayAbilitySpecHandle>& OutGrantedWeaponAbilitySpecHandle);
+	
+	UFUNCTION(BlueprintCallable,Category="ASC|EnemyActivateAbility")
+	bool TryActivateEnemyGameplayAbilities(FGameplayTag EnemyAbilityTag);
 };

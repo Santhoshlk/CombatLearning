@@ -69,5 +69,26 @@ void UMorrowBoneAbilitySystemComponent::RemoveWeaponGameplayAbilities(
 	OutGrantedWeaponAbilitySpecHandle.Empty();
 }
 
+bool UMorrowBoneAbilitySystemComponent::TryActivateEnemyGameplayAbilities(FGameplayTag EnemyAbilityTag)
+{
+	checkf(EnemyAbilityTag.IsValid(), TEXT("The GameplayTag is Not Valid"));
+
+	// it gives out all the Matching GameplayAbilitySpec Pointers
+	TArray<FGameplayAbilitySpec*> EnemyGameplayAbilitySpec;
+	GetActivatableGameplayAbilitySpecsByAllMatchingTags(EnemyAbilityTag.GetSingleTagContainer(),EnemyGameplayAbilitySpec);
+
+	if (!EnemyGameplayAbilitySpec.IsEmpty())
+	{
+		// u can activate the abilities
+		int32 RandomIndex = FMath::RandRange(0,EnemyGameplayAbilitySpec.Num()-1);
+		const FGameplayAbilitySpec* AbilityToActivate = EnemyGameplayAbilitySpec[RandomIndex];
+		if (!AbilityToActivate->IsActive())
+		{
+			return TryActivateAbility(AbilityToActivate->Handle);
+		}
+	}
+	return false;
+}
+
 
 
