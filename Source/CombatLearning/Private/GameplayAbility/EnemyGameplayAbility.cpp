@@ -17,13 +17,9 @@ AEnemyBase* UEnemyGameplayAbility::GetEnemyCharacter()
 	return CachedEnemy.Get();
 }
 
-UEnemyCombatComponent* UEnemyGameplayAbility::GetEnemyCombatComponent() const
+UEnemyCombatComponent* UEnemyGameplayAbility::GetEnemyCombatComponentFromEnemy() 
 {
-	if (CachedEnemy.IsValid())
-	{
-		return CachedEnemy->GetEnemyCombatComponent();
-	}
-	return nullptr;
+    return GetEnemyCharacter()->GetEnemyCombatComponent();
 }
 
 FGameplayEffectSpecHandle UEnemyGameplayAbility::MakeMorrowBoneDamageEffectSpecHandle(
@@ -47,3 +43,5 @@ FGameplayEffectSpecHandle UEnemyGameplayAbility::MakeMorrowBoneDamageEffectSpecH
 	}
 	return SpecHandle;
 }
+
+

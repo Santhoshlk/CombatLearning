@@ -5,6 +5,7 @@
 #include "Attributes/MorrowBoneAttributeSet.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
 #include "GEEx_Calculation/GEEx_Calculation_DamageTaken.h"
+#include "CombatDebugHelper.h"
 
 struct FEnemyDamageAttributeCapture
 {
@@ -58,11 +59,13 @@ void UGEEx_EnemyDamageGivenCalculation::Execute_Implementation(
 		if (TagMagnitudes.Key.MatchesTagExact(MorrowBoneGameplayTags::Enemy_SetByCaller_Melee))
 		{
 			BaseWeaponDamageValue = TagMagnitudes.Value;
+			Debug::PrintDebugData(TEXT("BaseWeaponDamageValue"),BaseWeaponDamageValue);
 		}
 	}
-
+	Debug::PrintDebugData(TEXT("AttackPowerValue"),AttackPowerValue);
+	Debug::PrintDebugData(TEXT("DefensePowerValue"),DefensePowerValue);
 	const float FinalDamage = BaseWeaponDamageValue * AttackPowerValue/DefensePowerValue;
-
+    Debug::PrintDebugData(TEXT("FinalDamage"),FinalDamage);
 	OutExecutionOutput.AddOutputModifier(
     FGameplayModifierEvaluatedData(
     	GetEnemyDamageAttributeCaptureDef().DamageTakenProperty,

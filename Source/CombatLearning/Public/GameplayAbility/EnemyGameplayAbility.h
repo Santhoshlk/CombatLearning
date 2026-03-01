@@ -16,13 +16,13 @@ class COMBATLEARNING_API UEnemyGameplayAbility : public UMorrowBoneGameplayAbili
 {
 	GENERATED_BODY()
 public:
-	UFUNCTION(BlueprintPure,Category="GameplayAbility|Enemy")
+	UFUNCTION(BlueprintPure,Category="EnemyGameplayAbilty|Enemy")
 	AEnemyBase* GetEnemyCharacter();
 
-	UFUNCTION(BlueprintPure,Category="GameplayAbility|Enemy")
-	UEnemyCombatComponent* GetEnemyCombatComponent() const;
+	UFUNCTION(BlueprintPure,Category="EnemyGameplayAbilty|Enemy")
+	UEnemyCombatComponent* GetEnemyCombatComponentFromEnemy() ;
 
-	UFUNCTION(BlueprintPure, Category= "GameplayAbilty|EffectSpecHndle")
+	UFUNCTION(BlueprintPure, Category= "EnemyGameplayAbilty|EffectSpecHandle")
 	FGameplayEffectSpecHandle MakeMorrowBoneDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass,float level,float WeaponDamage);
 
 private:
