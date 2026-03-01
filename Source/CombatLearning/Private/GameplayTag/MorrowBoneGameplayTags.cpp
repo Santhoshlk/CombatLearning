@@ -56,6 +56,7 @@ namespace MorrowBoneGameplayTags
 	//**Enemy Ability Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee,TEXT("Enemy.Ability.Melee"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Ranged,TEXT("Enemy.Ability.Ranged"))
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_SetByCaller_Melee,TEXT("Enemy.SetByCaller.Melee"))
 
 	//** Sate Machine Tags || Status**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_State_JumpToFinisher_Axe,TEXT("Player.State.JumpToFinisher.Axe"))

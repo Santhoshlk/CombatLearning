@@ -6,6 +6,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "Character/Enemy/EnemyBase.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 
 AEnemyBase* UEnemyGameplayAbility::GetEnemyCharacter() 
 {
@@ -39,5 +40,10 @@ FGameplayEffectSpecHandle UEnemyGameplayAbility::MakeMorrowBoneDamageEffectSpecH
 		level,
 		EffectContextHandle
 		);
+
+	if (SpecHandle.IsValid())
+	{
+		SpecHandle.Data->SetSetByCallerMagnitude(MorrowBoneGameplayTags::Enemy_SetByCaller_Melee,WeaponDamage);
+	}
 	return SpecHandle;
 }
