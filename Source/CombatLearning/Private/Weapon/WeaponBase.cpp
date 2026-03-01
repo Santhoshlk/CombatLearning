@@ -4,6 +4,7 @@
 #include "Weapon/WeaponBase.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "MorrowBoneFunctionLibrary.h"
 
 
 AWeaponBase::AWeaponBase()
@@ -43,15 +44,16 @@ void AWeaponBase::WeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, A
 	APawn* WeaponOwner=Cast<APawn>(GetInstigator());
 
 	checkf(WeaponOwner,TEXT("The instigator of the Weapon Actor Set while spawning must be valid"));
-
-	if (APawn* HitActor=Cast<APawn>(OtherActor))
+	
+	if (APawn* HitActor = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwner != HitActor)
+		if (UMorrowBoneFunctionLibrary::IsTargetPawnHostile(WeaponOwner,HitActor))
 		{
-			//now we can call the delegate to take the input and bind the functions
 			WeaponHitTarget.ExecuteIfBound(HitActor);
 		}
 	}
+	
+	
 }
 
 void AWeaponBase::WeaponEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -62,12 +64,11 @@ void AWeaponBase::WeaponEndOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 
 	checkf(WeaponOwner,TEXT("The instigator of the Weapon Actor Set while spawning must be valid"));
 
-	if (APawn* HitActor=Cast<APawn>(OtherActor))
+	if (APawn* HitActor = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwner != HitActor)
+		if (UMorrowBoneFunctionLibrary::IsTargetPawnHostile(WeaponOwner,HitActor))
 		{
-			//now we can call the delegate to take the input and bind the functions
-			 WeaponPulledFromTarget.ExecuteIfBound(HitActor);                                                                                                                                    
+			WeaponPulledFromTarget.ExecuteIfBound(HitActor);
 		}
 	}
 }

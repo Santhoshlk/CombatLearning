@@ -36,4 +36,7 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="MorrowBoneFunctionLibrary|CombatComponent",meta=(DisplayName="GetCombatComponentFromActor"))
 	static UPawnCombatComponent* BP_GetCombatComponentFromActor(AActor* InputActor);
+
+	UFUNCTION(BlueprintPure,Category="MorrowBoneFunctionLibrary|IsTargetPawnHostile")
+	static bool IsTargetPawnHostile(APawn* AskingPawn,APawn* TargetPawn);
 };

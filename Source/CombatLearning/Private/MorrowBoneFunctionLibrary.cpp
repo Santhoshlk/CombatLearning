@@ -4,6 +4,7 @@
 #include "MorrowBoneFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
+#include "GenericTeamAgentInterface.h"
 #include "Interface/PawnCombatInterface.h"
 
 UMorrowBoneAbilitySystemComponent* UMorrowBoneFunctionLibrary::NativeGetAbilitySystemComponentFromActor(AActor* InputActor)
@@ -72,4 +73,19 @@ UPawnCombatComponent* UMorrowBoneFunctionLibrary::BP_GetCombatComponentFromActor
 {
 	checkf(InputActor,TEXT("The Input Actor Needs to be valid"))
 	return NativeGetCombatComponentFromActor(InputActor);
+}
+
+bool UMorrowBoneFunctionLibrary::IsTargetPawnHostile(APawn* AskingPawn, APawn* TargetPawn)
+{
+   checkf(AskingPawn && TargetPawn,TEXT("The Pawn u want to check are not valid"));
+	IGenericTeamAgentInterface* AskingInterface = Cast<IGenericTeamAgentInterface>(AskingPawn->GetController());
+	IGenericTeamAgentInterface* TargetInterface = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
+	if (TargetInterface && AskingInterface)
+	{
+		if (TargetInterface->GetGenericTeamId() != AskingInterface->GetGenericTeamId())
+		{
+			return true;
+		}
+	}
+	return false;
 }
