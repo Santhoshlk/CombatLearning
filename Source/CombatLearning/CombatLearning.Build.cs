@@ -21,7 +21,8 @@ public class CombatLearning : ModuleRules
 			"Slate",
 			"GameplayTags",
 			"GameplayTasks", "GameplayAbilities",
-			"AnimGraphRuntime"
+			"AnimGraphRuntime",
+			"MotionWarping"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

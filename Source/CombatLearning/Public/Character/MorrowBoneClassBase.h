@@ -9,6 +9,7 @@
 #include "Interface/PawnCombatInterface.h"
 #include "MorrowBoneClassBase.generated.h"
 
+class UMotionWarpingComponent;
 class UDataAsset_StartupData;
 class UMorrowBoneAttributeSet;
 class UMorrowBoneAbilitySystemComponent;
@@ -38,6 +39,13 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly,Category="StartupData")
 	TSoftObjectPtr<UDataAsset_StartupData> StartUpData;
+
+ // u need Motion Warping in both enemies and character so do it here
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category= "Motion Warping")
+	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
+	
+	
 
 	//to make this work we need to override
 	//~ Begin APawn Interface.

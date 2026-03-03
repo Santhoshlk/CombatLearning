@@ -1,5 +1,6 @@
 
 #include "Character/MorrowBoneClassBase.h"
+#include "MotionWarpingComponent.h"
 #include "Attributes/MorrowBoneAttributeSet.h"
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 
@@ -19,7 +20,8 @@ AMorrowBoneClassBase::AMorrowBoneClassBase()
 
 	//we need to have a check for startup data if we set it to null
     ensureMsgf(!StartUpData.IsNull(),TEXT("The startup data which u are using to synchronously load the abilities is Null"));
-	
+
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 
 }
 
