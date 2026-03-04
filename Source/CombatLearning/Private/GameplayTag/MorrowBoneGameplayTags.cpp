@@ -61,6 +61,7 @@ namespace MorrowBoneGameplayTags
 	//** Sate Machine Tags || Status**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_State_JumpToFinisher_Axe,TEXT("Player.State.JumpToFinisher.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_Invulnerability,TEXT("Enemy.State.Invulnerability"))
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_UnderAttack,TEXT("Enemy.State.UnderAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_Straffing,TEXT("Enemy.State.Strafing"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Death,TEXT("Shared.Status.Death"))
 
