@@ -49,7 +49,7 @@ EBTNodeResult::Type UBTTask_RotateOrientToTarget::ExecuteTask(UBehaviorTreeCompo
 	UObject* TargetObject = OwnerComp.GetBlackboardComponent()->GetValueAsObject(InTargetKey.SelectedKeyName);
 	AActor* TargetActor = Cast<AActor>(TargetObject);
 	APawn* OwningPawn = OwnerComp.GetAIOwner()->GetPawn();
-	checkf(TargetActor && OwningPawn , TEXT("the Target Actor or the owning pawn is not valid "));
+	// checkf(TargetActor && OwningPawn , TEXT("the Target Actor or the owning pawn is not valid "));
 	FOnMemoryRotateOrientToTarget* Memory = CastInstanceNodeMemory<FOnMemoryRotateOrientToTarget>(NodeMemory);
 	check(Memory);
 	Memory->OwningPawn = OwningPawn;
