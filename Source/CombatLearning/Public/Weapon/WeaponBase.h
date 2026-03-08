@@ -31,10 +31,10 @@ public:
 protected:
 #pragma region Components
 	// we need a box collision and skeletal Mesh and maybe some scene Components
-	UPROPERTY(EditDefaultsOnly, Category="Skeletal Mesh")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly ,Category="Skeletal Mesh")
 	 TObjectPtr<UStaticMeshComponent> MeshComp;
 
-	UPROPERTY(EditDefaultsOnly, Category="BoxCollision")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category="BoxCollision")
 	TObjectPtr<UBoxComponent> BoxCollision;
 
 #pragma endregion
