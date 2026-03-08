@@ -12,8 +12,9 @@ namespace MorrowBoneGameplayTags
 	//Here the Tag name is the Literal Name you are going to see in the editor
 
 	//**normal input tags**//
-  UE_DEFINE_GAMEPLAY_TAG(InputTag_Move,TEXT("InputTag.Move"))
+    UE_DEFINE_GAMEPLAY_TAG(InputTag_Move,TEXT("InputTag.Move"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Look,TEXT("InputTag.Look"))
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_Roll,TEXT("InputTag.Roll"))
 
 	//**ability input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Equip_Axe,TEXT("InputTag.Equip.Axe"))
@@ -46,11 +47,11 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackTypes_LightAttack,TEXT("Player.SetByCaller.AttackTypes.LightAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackTypes_HeavyAttack,TEXT("Player.SetByCaller.AttackTypes.HeavyAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_HitPause,TEXT("Player.Ability.HitPause"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Roll,TEXT("Player.Ability.Roll"))
 	
 	//**Tags For Shared Abilities **//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_HeavyAttack,TEXT("Shared.Ability.HitReact.HeavyAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_LightAttack,TEXT("Shared.Ability.HitReact.LightAttack"))
-	
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_Death,TEXT("Shared.Ability.Death"))
 
 	//**Enemy Ability Tags**//
@@ -64,6 +65,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_UnderAttack,TEXT("Enemy.State.UnderAttack"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_Straffing,TEXT("Enemy.State.Strafing"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Death,TEXT("Shared.Status.Death"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rolling,TEXT("Player.Status.Rolling"))
 
 	//** Enemy Weapon Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon_SpikedBat,TEXT("Enemy.Weapon.SpikedBat"))
