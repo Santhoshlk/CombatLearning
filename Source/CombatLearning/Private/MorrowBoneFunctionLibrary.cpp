@@ -89,3 +89,8 @@ bool UMorrowBoneFunctionLibrary::IsTargetPawnHostile(APawn* AskingPawn, APawn* T
 	}
 	return false;
 }
+
+float UMorrowBoneFunctionLibrary::ScalableFloatAtLevel(const FScalableFloat& InputFloat, float Level)  
+{
+	return InputFloat.GetValueAtLevel(Level);
+}

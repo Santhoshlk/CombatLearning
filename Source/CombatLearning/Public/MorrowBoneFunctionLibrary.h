@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "ScalableFloat.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "MorrowBoneFunctionLibrary.generated.h"
 
@@ -39,4 +40,7 @@ public:
 
 	UFUNCTION(BlueprintPure,Category="MorrowBoneFunctionLibrary|IsTargetPawnHostile")
 	static bool IsTargetPawnHostile(APawn* AskingPawn,APawn* TargetPawn);
+
+	UFUNCTION(BlueprintPure,Category="MorrowBoneFunctionLibrary|GetValueAt" , meta=(CompactNodeTitle = "Get Value At"))
+	static float ScalableFloatAtLevel(const FScalableFloat& InputFloat,float Level)  ;
 };
