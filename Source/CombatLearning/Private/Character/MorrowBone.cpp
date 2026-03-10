@@ -104,6 +104,8 @@ void AMorrowBone::Looking(const FInputActionValue& Value)
 void AMorrowBone::Moving(const FInputActionValue& Value)
 {
 	const FVector2D Movement= Value.Get<FVector2D>();
+	// this is onl;y going to be considered at movement that's wht we do it here
+	// as we kept GetCharacterMovement()->bOrientRotationtoMovement = true
     FRotator CurrentRotation=GetController()->GetControlRotation();
 	FRotator YawRotation(0.0f,CurrentRotation.Yaw,0.0f);
 	FVector ForwardVector=FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
