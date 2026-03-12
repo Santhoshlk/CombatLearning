@@ -98,7 +98,7 @@ float UMorrowBoneFunctionLibrary::ScalableFloatAtLevel(const FScalableFloat& Inp
 	return InputFloat.GetValueAtLevel(Level);
 }
 
-FGameplayTag UMorrowBoneFunctionLibrary::ComputeHitReactDirection(AActor* InVictimActor, AActor* InAttackActor,
+FGameplayTag UMorrowBoneFunctionLibrary::ComputeHitReactDirection(const AActor* InVictimActor,const  AActor* InAttackActor,
 	float& OutDirectionalAngle)
 {
    checkf(InVictimActor && InAttackActor,TEXT("The victim or the Attacker Provided is not valid"));
@@ -114,7 +114,7 @@ FGameplayTag UMorrowBoneFunctionLibrary::ComputeHitReactDirection(AActor* InVict
 		OutDirectionalAngle*= -1;
 	}
 
-    if (OutDirectionalAngle <= 45.f && OutDirectionalAngle >= -45.f)
+	 if (OutDirectionalAngle <= 45.f && OutDirectionalAngle >= -45.f)
     {
 	    return MorrowBoneGameplayTags::Shared_Status_HitReact_Front;
     }

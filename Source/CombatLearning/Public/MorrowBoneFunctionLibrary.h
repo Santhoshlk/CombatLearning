@@ -45,5 +45,5 @@ public:
 	static float ScalableFloatAtLevel(const FScalableFloat& InputFloat,float Level)  ;
 
 	UFUNCTION(BlueprintPure,Category="MorrowBoneFunctionLibrary|HitReactDirection")
-	static FGameplayTag ComputeHitReactDirection(AActor* InVictimActor , AActor* InAttackActor , float& OutDirectionalAngle);
+	static FGameplayTag ComputeHitReactDirection(const AActor* InVictimActor , const  AActor* InAttackActor , float& OutDirectionalAngle);
 };
