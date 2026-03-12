@@ -68,6 +68,10 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_State_Straffing,TEXT("Enemy.State.Strafing"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Death,TEXT("Shared.Status.Death"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rolling,TEXT("Player.Status.Rolling"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Front,TEXT("Shared.Status.HitReact.Front"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Back,TEXT("Shared.Status.HitReact.Back"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Left,TEXT("Shared.Status.HitReact.Left"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Right,TEXT("Shared.Status.HitReact.Right"))
 
 	//** Enemy Weapon Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon_SpikedBat,TEXT("Enemy.Weapon.SpikedBat"))

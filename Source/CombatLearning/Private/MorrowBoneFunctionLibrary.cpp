@@ -5,8 +5,10 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "GenericTeamAgentInterface.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 #include "Interface/PawnCombatInterface.h"
 #include "Kismet/KismetMathLibrary.h"
+
 
 UMorrowBoneAbilitySystemComponent* UMorrowBoneFunctionLibrary::NativeGetAbilitySystemComponentFromActor(AActor* InputActor)
 {
@@ -110,6 +112,23 @@ FGameplayTag UMorrowBoneFunctionLibrary::ComputeHitReactDirection(AActor* InVict
 	if (CrossProduct.Z < 0.f)
 	{
 		OutDirectionalAngle*= -1;
+	}
+
+    if (OutDirectionalAngle <= 45.f && OutDirectionalAngle >= -45.f)
+    {
+	    return MorrowBoneGameplayTags::Shared_Status_HitReact_Front;
+    }
+   if (OutDirectionalAngle >45.f && OutDirectionalAngle <=135.f)
+   {
+   	return MorrowBoneGameplayTags::Shared_Status_HitReact_Right;
+   }
+	if (OutDirectionalAngle < -45.f && OutDirectionalAngle >=-135.f)
+	{
+		return MorrowBoneGameplayTags::Shared_Status_HitReact_Left;
+	}
+	if ( (OutDirectionalAngle < -135 && OutDirectionalAngle >=-180) || (OutDirectionalAngle >135 && OutDirectionalAngle <=180))
+	{
+		return MorrowBoneGameplayTags::Shared_Status_HitReact_Back;
 	}
 	return FGameplayTag();
 }
