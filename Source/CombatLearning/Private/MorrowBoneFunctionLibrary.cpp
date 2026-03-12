@@ -6,6 +6,7 @@
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "GenericTeamAgentInterface.h"
 #include "Interface/PawnCombatInterface.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UMorrowBoneAbilitySystemComponent* UMorrowBoneFunctionLibrary::NativeGetAbilitySystemComponentFromActor(AActor* InputActor)
 {
@@ -93,4 +94,22 @@ bool UMorrowBoneFunctionLibrary::IsTargetPawnHostile(APawn* AskingPawn, APawn* T
 float UMorrowBoneFunctionLibrary::ScalableFloatAtLevel(const FScalableFloat& InputFloat, float Level)  
 {
 	return InputFloat.GetValueAtLevel(Level);
+}
+
+FGameplayTag UMorrowBoneFunctionLibrary::ComputeHitReactDirection(AActor* InVictimActor, AActor* InAttackActor,
+	float& OutDirectionalAngle)
+{
+   checkf(InVictimActor && InAttackActor,TEXT("The victim or the Attacker Provided is not valid"));
+
+	const FVector VictimForwardVector = InVictimActor->GetActorForwardVector();
+	const FVector VictimToAttackerVector = (InAttackActor->GetActorLocation() - InVictimActor->GetActorLocation()).GetSafeNormal();
+	float DotProduct =  FVector::DotProduct(VictimForwardVector,VictimToAttackerVector);
+	OutDirectionalAngle = UKismetMathLibrary::DegAcos(DotProduct);
+    const FVector CrossProduct = FVector::CrossProduct(VictimForwardVector,VictimToAttackerVector);
+
+	if (CrossProduct.Z < 0.f)
+	{
+		OutDirectionalAngle*= -1;
+	}
+	return FGameplayTag();
 }
