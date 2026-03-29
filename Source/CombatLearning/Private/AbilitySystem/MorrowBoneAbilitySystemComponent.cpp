@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "GameplayAbility/MorrowBoneGameplayAbility.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 
 void UMorrowBoneAbilitySystemComponent::OnPressed(FGameplayTag InInputTag)
 {
@@ -23,7 +24,18 @@ void UMorrowBoneAbilitySystemComponent::OnPressed(FGameplayTag InInputTag)
 
 void UMorrowBoneAbilitySystemComponent::OnReleased(FGameplayTag InInputTag)
 {
-	
+	if (!InInputTag.IsValid())
+	{
+		return;
+	}
+	// when to actually cancel the ability
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.IsActive() && InInputTag.MatchesTag(MorrowBoneGameplayTags::InputTag_MustBeHeld))
+		{
+			CancelAbilityHandle(AbilitySpec.Handle);
+		}
+	}
 }
 
 void UMorrowBoneAbilitySystemComponent::GiveWeaponAbilitiestoASC(const 

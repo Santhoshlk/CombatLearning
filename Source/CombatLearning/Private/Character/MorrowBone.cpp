@@ -121,6 +121,7 @@ void AMorrowBone::AbilityInputAction_Pressed(FGameplayTag InInputTag)
 
 void AMorrowBone::AbilityInputAction_Released(FGameplayTag InInputTag)
 {
+	AbilitySystemComponent->OnReleased(InInputTag);
 }
 
 

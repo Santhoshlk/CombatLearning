@@ -22,6 +22,8 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_LightAttack_Axe,TEXT("InputTag.LightAttack.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_HeavyAttack_Axe,TEXT("InputTag.HeavyAttack.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Health_Low,TEXT("Enemy.Health.Low"))
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_MustBeHeld,TEXT("InputTag.MustBeHeld"))
+    UE_DEFINE_GAMEPLAY_TAG(InputTag_MustBeHeld_Block,TEXT("InputTag.MustBeHeld.Block"))
 
 	//**weapon input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe,TEXT("Player.Weapon.Axe"))
@@ -50,6 +52,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_HitPause,TEXT("Player.Ability.HitPause"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Roll,TEXT("Player.Ability.Roll"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_HitReact,TEXT("Player.Ability.HitReact"))
+    UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Block,TEXT("Player.Ability.Block"))
 	
 	//**Tags For Shared Abilities **//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_HeavyAttack,TEXT("Shared.Ability.HitReact.HeavyAttack"))
@@ -72,6 +75,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Back,TEXT("Shared.Status.HitReact.Back"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Left,TEXT("Shared.Status.HitReact.Left"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Right,TEXT("Shared.Status.HitReact.Right"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Block,TEXT("Player.Status.Block"))
 
 	//** Enemy Weapon Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon_SpikedBat,TEXT("Enemy.Weapon.SpikedBat"))
