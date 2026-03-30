@@ -31,6 +31,7 @@ namespace MorrowBoneGameplayTags
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_UnEquip_Weapon_Axe)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_HitPause)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_HitReact)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_SuccessfulBlock)
 
 	//**Tags for Shared Events **//
 	

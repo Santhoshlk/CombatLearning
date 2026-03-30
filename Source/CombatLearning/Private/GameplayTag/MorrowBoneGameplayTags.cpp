@@ -33,6 +33,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_UnEquip_Weapon_Axe,TEXT("Player.Event.UnEquip.Weapon.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_HitPause,TEXT("Player.Event.HitPause"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_HitReact,TEXT("Player.Event.HitReact"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SuccessfulBlock,TEXT("Player.Event.SuccessfulBlock"))
 	
 
 

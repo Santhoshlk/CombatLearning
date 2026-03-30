@@ -3,7 +3,7 @@
 
 #include "MorrowBoneFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
-#include "CombatDebugHelper.h"
+
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "GenericTeamAgentInterface.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
@@ -141,18 +141,12 @@ bool UMorrowBoneFunctionLibrary::ValidBlock(const AActor* InAttacker, AActor* In
   const FVector VictimFwd = InVictim->GetActorForwardVector();
 
 	double Angle =FVector::DotProduct(AttackerFwd,VictimFwd);
-
-   
 	
 	if (Angle < 0.f)
 	{
-		const FString Message = TEXT("Is a Valid Block  Angle : ")  +FString::SanitizeFloat(Angle);
-		Debug::PrintMessage(Message);
 		return true;
 	}
 	
-	const FString Message = TEXT("Is a Not a Valid  Block  Angle : ")  +FString::SanitizeFloat(Angle);
-	Debug::PrintMessage(Message);
 	return false;
 	
 }

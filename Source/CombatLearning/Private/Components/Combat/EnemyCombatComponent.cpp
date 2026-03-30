@@ -18,7 +18,7 @@ void UEnemyCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 
 	OverlappedActors.AddUnique(HitActor);
 
-	bool bIsPlayerBlocking = false;
+	bool bIsPlayerBlocking;
 	bool bIsValidBlock = false;
 	bool bIsUnBlockable = false;
 	bool IsaPerfectBlock = false;
@@ -34,13 +34,22 @@ void UEnemyCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 
 	if (bIsValidBlock)
 	{
-		// handle the sucessful block
+		// handle the successful block
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+			HitActor,
+			MorrowBoneGameplayTags::Player_Event_SuccessfulBlock,
+			Event
+			);
+		
+	}
+	else
+	{
+		// non-successful block send gameplay event to enemy
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(),
+		MorrowBoneGameplayTags::Shared_Attack_MeeleAttack,
+		Event
+		);
 	}
 	
-	// now actually do the logic of sending gameplay event
-    UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(),
-    MorrowBoneGameplayTags::Shared_Attack_MeeleAttack,
-    Event
-    );
 	
 }
