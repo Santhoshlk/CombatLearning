@@ -14,9 +14,10 @@ void UEnemyCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 	FGameplayEventData Event;
 	Event.Instigator = GetOwningPawn();
 	Event.Target = HitActor;
+
+	OverlappedActors.AddUnique(HitActor);
 	
 	// now actually do the logic of sending gameplay event
-	OverlappedActors.AddUnique(HitActor);
     UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(),
     MorrowBoneGameplayTags::Shared_Attack_MeeleAttack,
     Event
