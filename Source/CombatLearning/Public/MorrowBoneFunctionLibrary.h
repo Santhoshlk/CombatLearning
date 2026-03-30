@@ -46,4 +46,7 @@ public:
 
 	UFUNCTION(BlueprintPure,Category="MorrowBoneFunctionLibrary|HitReactDirection")
 	static FGameplayTag ComputeHitReactDirection(const AActor* InVictimActor , const  AActor* InAttackActor , float& OutDirectionalAngle);
+
+	UFUNCTION(BlueprintPure,Category="MorrowBoneFunctionLibrary|BlockCheck")
+	static bool ValidBlock(const AActor* InAttacker,AActor* InVictim);
 };

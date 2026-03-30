@@ -3,6 +3,7 @@
 
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "MorrowBoneFunctionLibrary.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
 
 void UEnemyCombatComponent::OnWeaponHitTarget(AActor* HitActor)
@@ -16,6 +17,25 @@ void UEnemyCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 	Event.Target = HitActor;
 
 	OverlappedActors.AddUnique(HitActor);
+
+	bool bIsPlayerBlocking = false;
+	bool bIsValidBlock = false;
+	bool bIsUnBlockable = false;
+	bool IsaPerfectBlock = false;
+
+	// is player Blocking
+	bIsPlayerBlocking = UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(HitActor,MorrowBoneGameplayTags::Player_Status_Block);
+
+	if (bIsPlayerBlocking && !bIsUnBlockable)
+	{
+		  // now u can check if it is a valid block
+		bIsValidBlock = UMorrowBoneFunctionLibrary::ValidBlock(GetOwningPawn(),HitActor);
+	}
+
+	if (bIsValidBlock)
+	{
+		// handle the sucessful block
+	}
 	
 	// now actually do the logic of sending gameplay event
     UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(),

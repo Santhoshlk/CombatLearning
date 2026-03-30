@@ -3,6 +3,7 @@
 
 #include "MorrowBoneFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "CombatDebugHelper.h"
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "GenericTeamAgentInterface.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
@@ -131,4 +132,27 @@ FGameplayTag UMorrowBoneFunctionLibrary::ComputeHitReactDirection(const AActor* 
 		return MorrowBoneGameplayTags::Shared_Status_HitReact_Back;
 	}
 	return FGameplayTag();
+}
+
+bool UMorrowBoneFunctionLibrary::ValidBlock(const AActor* InAttacker, AActor* InVictim)
+{
+   checkf(InAttacker && InVictim,TEXT("The Attacker and the victim actors should be valid"));
+  const FVector AttackerFwd = InAttacker->GetActorForwardVector();
+  const FVector VictimFwd = InVictim->GetActorForwardVector();
+
+	double Angle =FVector::DotProduct(AttackerFwd,VictimFwd);
+
+   
+	
+	if (Angle < 0.f)
+	{
+		const FString Message = TEXT("Is a Valid Block  Angle : ")  +FString::SanitizeFloat(Angle);
+		Debug::PrintMessage(Message);
+		return true;
+	}
+	
+	const FString Message = TEXT("Is a Not a Valid  Block  Angle : ")  +FString::SanitizeFloat(Angle);
+	Debug::PrintMessage(Message);
+	return false;
+	
 }
