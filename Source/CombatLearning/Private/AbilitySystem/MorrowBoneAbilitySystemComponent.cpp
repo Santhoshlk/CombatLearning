@@ -18,7 +18,23 @@ void UMorrowBoneAbilitySystemComponent::OnPressed(FGameplayTag InInputTag)
 
 		//next if it has the Tag
 		// u Activate The Abilities
-		TryActivateAbility(AbilitySpec.Handle);
+      if (InInputTag.MatchesTag(MorrowBoneGameplayTags::InputTag_ToggleAbility))
+      {
+	      // toggling as try to activate ability is an infinite loop
+      	   if (!AbilitySpec.IsActive())
+      	   {
+	      	   TryActivateAbility(AbilitySpec.Handle);
+      	   }
+           else
+           {
+           	   CancelAbilityHandle(AbilitySpec.Handle);
+           }
+      }
+      else
+      {
+      	TryActivateAbility(AbilitySpec.Handle);
+      }
+		
 	}
 }
 
