@@ -5,6 +5,7 @@
 #include "Character/MorrowBone.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "CombatDebugHelper.h"
+#include "DrawDebugHelpers.h"
 
 
 void UMBHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -26,12 +27,23 @@ void UMBHeroGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHan
 
 void UMBHeroGameplayAbility_TargetLock::TargetLockOn()
 {
+	float MinDistance = 10000.f;
+	AActor* NearestActor = nullptr;
 	// u can get the available target
 	GetAvailableTargets();
-	for (AActor*& HitActors:TraceOutHitActors)
+	for (AActor*& HitActors : TraceOutHitActors)
 	{
-	   Debug::PrintMessage(HitActors->GetActorNameOrLabel());	
+		// now u find the nearest actor
+		FVector DistanceVector = HitActors->GetActorLocation() - GetMorrowBoneCharacter()->GetActorLocation();
+		float Distance =  DistanceVector.Size2D();
+		if (Distance < MinDistance)
+		{
+			MinDistance = Distance;
+			NearestActor = HitActors;
+		}
 	}
+	Debug::PrintMessage(NearestActor->GetActorNameOrLabel());
+    DrawDebugLine(GetWorld(),GetMorrowBoneCharacter()->GetActorLocation(),NearestActor->GetActorLocation(),FColor::Green,true); 
 }
 
 void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()
@@ -54,6 +66,8 @@ void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()
      TraceHitResults,
      true
 	);
+
+	
 
    // now search it to have no self trace and store it
 	for (const FHitResult& HitActors : TraceHitResults)
