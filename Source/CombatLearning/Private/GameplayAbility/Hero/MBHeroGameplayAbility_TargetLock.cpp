@@ -27,23 +27,14 @@ void UMBHeroGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHan
 
 void UMBHeroGameplayAbility_TargetLock::TargetLockOn()
 {
-	float MinDistance = 10000.f;
-	AActor* NearestActor = nullptr;
 	// u can get the available target
 	GetAvailableTargets();
-	for (AActor*& HitActors : TraceOutHitActors)
+	if (TraceOutHitActors.IsEmpty())
 	{
-		// now u find the nearest actor
-		FVector DistanceVector = HitActors->GetActorLocation() - GetMorrowBoneCharacter()->GetActorLocation();
-		float Distance =  DistanceVector.Size2D();
-		if (Distance < MinDistance)
-		{
-			MinDistance = Distance;
-			NearestActor = HitActors;
-		}
+		CancelTargetLock();
+		return;
 	}
-	Debug::PrintMessage(NearestActor->GetActorNameOrLabel());
-    DrawDebugLine(GetWorld(),GetMorrowBoneCharacter()->GetActorLocation(),NearestActor->GetActorLocation(),FColor::Green,true); 
+	CurrentTargetLockActor = GetNearestTarget(TraceOutHitActors);
 }
 
 void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()
@@ -81,4 +72,30 @@ void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()
 		}
 	}
 	
+}
+
+void UMBHeroGameplayAbility_TargetLock::CancelTargetLock()
+{
+	// if any lock goes wrong eliminate the Gameplay Ability Persistent State
+	CancelAbility(GetCurrentAbilitySpecHandle(),GetCurrentActorInfo(),GetCurrentActivationInfo(),true);
+	
+}
+
+AActor* UMBHeroGameplayAbility_TargetLock::GetNearestTarget(const TArray<AActor*> GetAvailableActors)
+{
+	float MinDistance = 10000.f;
+	AActor* NearestActor = nullptr;
+	for (AActor*& HitActors : TraceOutHitActors)
+	{
+		// now u find the nearest actor
+		FVector DistanceVector = HitActors->GetActorLocation() - GetMorrowBoneCharacter()->GetActorLocation();
+		float Distance =  DistanceVector.Size2D();
+		if (Distance < MinDistance)
+		{
+			MinDistance = Distance;
+			NearestActor = HitActors;
+		}
+	}
+	Debug::PrintMessage(NearestActor->GetActorNameOrLabel());
+	return NearestActor;
 }

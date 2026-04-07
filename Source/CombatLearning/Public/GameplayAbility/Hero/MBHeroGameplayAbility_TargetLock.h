@@ -25,6 +25,13 @@ private:
 	void TargetLockOn();
 	void GetAvailableTargets();
 
+	void CancelTargetLock();
+	
+	
+	AActor* GetNearestTarget( const TArray<AActor*> GetAvailableActors);
+	
+	
+
 	UPROPERTY(EditDefaultsOnly,Category= "TargetLock")
 	float TraceLength = 5000.f;
 
@@ -39,4 +46,7 @@ private:
 
 	UPROPERTY()
 	TArray<AActor*> TraceOutHitActors;
+
+	UPROPERTY()
+	AActor* CurrentTargetLockActor = nullptr;
 };
