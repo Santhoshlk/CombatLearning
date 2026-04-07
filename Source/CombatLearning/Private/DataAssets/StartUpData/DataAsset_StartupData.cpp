@@ -37,7 +37,7 @@ void UDataAsset_StartupData::GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplay
 		return;
 	}
 	//Now Loop through the Data and Give THe Ability To your ASC
-	for (const auto& Ability : InitialAbilities)
+	for (const TSubclassOf<UMorrowBoneGameplayAbility>& Ability : InitialAbilities)
 	{
 		//always do the safety check
 		if (!IsValid(Ability))
@@ -45,10 +45,11 @@ void UDataAsset_StartupData::GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplay
 			continue;
 		}
 		// The Function to register an Ability to your ASC
-		FGameplayAbilitySpec AbilityToGive(Ability);
-		AbilityToGive.Level=ApplyLevel;
-		AbilityToGive.SourceObject=ASC->GetAvatarActor();
-		ASC->GiveAbility(AbilityToGive);
+		FGameplayAbilitySpec AbilityToGrant(Ability);
+		AbilityToGrant.SourceObject = ASC->GetAvatarActor();
+		AbilityToGrant.Level = ApplyLevel;
+		ASC->GiveAbility(AbilityToGrant);
+		
 	}
 
 }

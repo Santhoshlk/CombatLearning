@@ -24,6 +24,8 @@ protected:
 private:
 	// now we are creating the actual Logic for lock on
 	void TargetLockOn();
+
+	void SetWidgetLocation();
 	void GetAvailableTargets();
 
 	void Cleanup();

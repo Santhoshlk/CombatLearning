@@ -20,7 +20,7 @@ struct FMorrowBoneInputMappingConfig
 
 	//Now We can Add the Variables For Mapping Context Generally Input Action
 	//Here it is GameplayTags
-public:
+
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,meta=(Category="InputTag"))
 	FGameplayTag InputTag;
 
@@ -30,7 +30,7 @@ public:
 
 	bool IsValid() const
 	{
-		return InputTag.IsValid() &&  InputAction!=nullptr;
+		return  InputTag.IsValid() && InputAction ;
 	}
 	
 };
@@ -39,7 +39,7 @@ class COMBATLEARNING_API UInputConfig_DataAsset : public UDataAsset
 {
 	GENERATED_BODY()
 
-public:
+   public:
 	//what we are trying to do is Completely Separate
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	 TObjectPtr<UInputMappingContext> InputMappingContext;

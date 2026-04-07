@@ -8,7 +8,7 @@
 #include "Widgets/MorrowBoneWidgetBase.h"
 #include "PlayerController/CombatClassPlayerController.h"
 #include "CombatDebugHelper.h"
-
+#include "Blueprint/WidgetLayoutLibrary.h"
 
 
 void UMBHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -43,9 +43,28 @@ void UMBHeroGameplayAbility_TargetLock::TargetLockOn()
 	if (CurrentTargetLockActor)
 	{
 		CreateTargetLockWidget();
+		SetWidgetLocation();
+	}
+	else
+	{
+		  CancelTargetLock();
 	}
 	
 	
+}
+
+void UMBHeroGameplayAbility_TargetLock::SetWidgetLocation()
+{
+	FVector2D ScreenPosition;
+	UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition(
+		GetMorrowBonePlayerController(),
+		 CurrentTargetLockActor->GetActorLocation(),
+         ScreenPosition,
+		 true
+		);
+
+	// u can Set tHe Screen Position of the Widget
+	TargetLockWidget->SetPositionInViewport(ScreenPosition,false);
 }
 
 void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()

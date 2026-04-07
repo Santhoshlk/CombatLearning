@@ -6,12 +6,13 @@
 
 UInputAction* UInputConfig_DataAsset::FindInputActionInGameplayTag(const FGameplayTag& InInputTag)
 {
-	for (const auto& GameTag : NativeInputActions)
+	// this is only for Native Inputs
+	for (const FMorrowBoneInputMappingConfig& CurrentInputActions : NativeInputActions)
 	{
-		
-		if (GameTag.InputTag==InInputTag)
+		if (!CurrentInputActions.IsValid()) continue;
+		if (CurrentInputActions.InputTag == InInputTag)
 		{
-			return GameTag.InputAction;
+			return CurrentInputActions.InputAction;
 		}
 	}
 	return nullptr;

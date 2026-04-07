@@ -19,7 +19,8 @@ class COMBATLEARNING_API UDataAsset_StartupDataMorrowBone : public UDataAsset_St
 public:
 	virtual void GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemComponent> & ASC,int32 ApplyLevel=1) override;
 
+private:
    // this u to search by input Tags
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,meta=(TitleProperty="InputTag"))
+	UPROPERTY(EditDefaultsOnly,meta=(TitleProperty="InputTag"))
 	TArray<FMorrowBoneAbilitySet> HeroGameplayAbilities;
 };

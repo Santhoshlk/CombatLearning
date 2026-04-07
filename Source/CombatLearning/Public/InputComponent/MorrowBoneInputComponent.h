@@ -18,17 +18,17 @@ class COMBATLEARNING_API UMorrowBoneInputComponent : public UEnhancedInputCompon
 public:
 
 	template<class UserObject,typename CallBackFunc>
-	void BindingInputs( TObjectPtr<UInputConfig_DataAsset> &InInputConfig,const FGameplayTag& InInputTag,ETriggerEvent TriggerEvent,UserObject* ContextObject,CallBackFunc Func);
+	void BindingInputs( const TObjectPtr<UInputConfig_DataAsset> &InInputConfig,const FGameplayTag& InInputTag,ETriggerEvent TriggerEvent,UserObject* ContextObject,CallBackFunc Func);
 
 	// u need a new template class to have the logic for AbilityInput Bindings
 	template<class  UserObject,typename CallBackFunc>
-	void BindAbilityInputAction(TObjectPtr<UInputConfig_DataAsset> &InInputConfig,UserObject object,CallBackFunc StartedFunc,CallBackFunc ReleasedFunc);
+	void BindAbilityInputAction(const TObjectPtr<UInputConfig_DataAsset> &InInputConfig,UserObject object,CallBackFunc StartedFunc,CallBackFunc ReleasedFunc);
 
 
 };
 
 template <class UserObject, typename CallBackFunc>
-void UMorrowBoneInputComponent::BindingInputs(TObjectPtr<UInputConfig_DataAsset>& InInputConfig,
+void UMorrowBoneInputComponent::BindingInputs(const TObjectPtr<UInputConfig_DataAsset>& InInputConfig,
 	const FGameplayTag& InInputTag, ETriggerEvent TriggerEvent, UserObject* ContextObject, CallBackFunc Func)
 {
 	//to check the Input Config
@@ -41,7 +41,7 @@ void UMorrowBoneInputComponent::BindingInputs(TObjectPtr<UInputConfig_DataAsset>
 }
 
 template <class UserObject, typename CallBackFunc>
-void UMorrowBoneInputComponent::BindAbilityInputAction(TObjectPtr<UInputConfig_DataAsset>& InInputConfig,
+void UMorrowBoneInputComponent::BindAbilityInputAction(const TObjectPtr<UInputConfig_DataAsset>& InInputConfig,
 	UserObject object, CallBackFunc StartedFunc, CallBackFunc ReleasedFunc)
 {
 	// first of all u need to check the Data Asset
@@ -49,7 +49,7 @@ void UMorrowBoneInputComponent::BindAbilityInputAction(TObjectPtr<UInputConfig_D
 
 	for (const auto& InputAbilityAction : InInputConfig->AbilityInputActions)
 	{
-		// always if you are adding a value in TArrays or using it check the nullptr;
+		// u can add Variable arguments to the Bind Action as we go through it
 		if (!InputAbilityAction.IsValid()) continue;
 		BindAction(InputAbilityAction.InputAction,ETriggerEvent::Started,object,StartedFunc,InputAbilityAction.InputTag);
 		BindAction(InputAbilityAction.InputAction,ETriggerEvent::Completed,object,ReleasedFunc,InputAbilityAction.InputTag);

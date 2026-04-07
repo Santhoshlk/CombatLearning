@@ -16,8 +16,8 @@ class COMBATLEARNING_API UDataAsset_StartupDataEnemy : public UDataAsset_Startup
 	GENERATED_BODY()
 public:
  virtual void GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemComponent>& ASC, int32 ApplyLevel = 1) override;
-	
-protected:
+
+private:
 	UPROPERTY(EditDefaultsOnly,Category="StartupData|EnemyGameplayAbilities")
 	TArray<TSubclassOf<UEnemyGameplayAbility>> EnemyGameplayAbilities;
 };
