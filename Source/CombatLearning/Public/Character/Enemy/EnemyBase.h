@@ -37,7 +37,7 @@ protected:
 	TObjectPtr<UWidgetComponent> EnemyHealthWidgetComponent;
 
 	
-
+	
 	virtual void BeginPlay() override;
 public:
 	//have a seter and getter for our combat component

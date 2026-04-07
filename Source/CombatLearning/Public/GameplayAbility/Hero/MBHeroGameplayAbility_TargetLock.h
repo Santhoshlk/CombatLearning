@@ -6,6 +6,7 @@
 #include "GameplayAbility/Hero/MorrowBoneHeroGameplayAbility.h"
 #include "MBHeroGameplayAbility_TargetLock.generated.h"
 
+class UMorrowBoneWidgetBase;
 /**
  * 
  */
@@ -24,6 +25,10 @@ private:
 	// now we are creating the actual Logic for lock on
 	void TargetLockOn();
 	void GetAvailableTargets();
+
+	void Cleanup();
+
+	void CreateTargetLockWidget();
 
 	void CancelTargetLock();
 	
@@ -47,6 +52,14 @@ private:
 	UPROPERTY()
 	TArray<AActor*> TraceOutHitActors;
 
+	
+
 	UPROPERTY()
 	AActor* CurrentTargetLockActor = nullptr;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,meta=(AllowPrivateAccess = "true"),Category="TargetLock | TargetLockWidget")
+	TSubclassOf<UMorrowBoneWidgetBase> TargetLockWidgetClass;
+
+	UPROPERTY()
+	UMorrowBoneWidgetBase* TargetLockWidget = nullptr;
 };

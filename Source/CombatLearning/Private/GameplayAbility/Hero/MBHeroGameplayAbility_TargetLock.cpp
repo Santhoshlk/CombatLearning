@@ -4,8 +4,11 @@
 #include "GameplayAbility/Hero/MBHeroGameplayAbility_TargetLock.h"
 #include "Character/MorrowBone.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Blueprint/UserWidget.h"
+#include "Widgets/MorrowBoneWidgetBase.h"
+#include "PlayerController/CombatClassPlayerController.h"
 #include "CombatDebugHelper.h"
-#include "DrawDebugHelpers.h"
+
 
 
 void UMBHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -22,6 +25,7 @@ void UMBHeroGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHan
                                                    const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                                    bool bReplicateEndAbility, bool bWasCancelled)
 {
+	Cleanup();
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
@@ -34,7 +38,14 @@ void UMBHeroGameplayAbility_TargetLock::TargetLockOn()
 		CancelTargetLock();
 		return;
 	}
+	Debug::PrintMessage(TEXT("TargetLockOnActivated"));
 	CurrentTargetLockActor = GetNearestTarget(TraceOutHitActors);
+	if (CurrentTargetLockActor)
+	{
+		CreateTargetLockWidget();
+	}
+	
+	
 }
 
 void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()
@@ -74,6 +85,8 @@ void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()
 	
 }
 
+
+
 void UMBHeroGameplayAbility_TargetLock::CancelTargetLock()
 {
 	// if any lock goes wrong eliminate the Gameplay Ability Persistent State
@@ -96,6 +109,30 @@ AActor* UMBHeroGameplayAbility_TargetLock::GetNearestTarget(const TArray<AActor*
 			NearestActor = HitActors;
 		}
 	}
-	Debug::PrintMessage(NearestActor->GetActorNameOrLabel());
+	
 	return NearestActor;
+}
+
+void UMBHeroGameplayAbility_TargetLock::Cleanup()
+{
+	TraceOutHitActors.Empty();
+	CurrentTargetLockActor = nullptr;
+	TargetLockWidget->RemoveFromParent();
+	TargetLockWidget = nullptr;	
+}
+
+void UMBHeroGameplayAbility_TargetLock::CreateTargetLockWidget()
+{
+	checkf(TargetLockWidgetClass,TEXT("u forgot to Assign the TSubClassOf for the Widget "));
+	if (!TargetLockWidget)
+	{
+
+	
+		TargetLockWidget = Cast<UMorrowBoneWidgetBase> (CreateWidget(GetMorrowBonePlayerController(),TargetLockWidgetClass));
+
+		checkf(TargetLockWidget,TEXT("The Widget is Not Valid"));
+
+		TargetLockWidget->AddToViewport();
+	}
+   
 }
