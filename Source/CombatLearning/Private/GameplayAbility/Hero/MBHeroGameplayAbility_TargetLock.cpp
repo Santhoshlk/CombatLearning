@@ -9,6 +9,8 @@
 #include "PlayerController/CombatClassPlayerController.h"
 #include "CombatDebugHelper.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Blueprint/WidgetTree.h"
+#include "Components/SizeBox.h"
 
 
 void UMBHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -63,6 +65,24 @@ void UMBHeroGameplayAbility_TargetLock::SetWidgetLocation()
 		 true
 		);
 
+
+	if (WidgetBoxSize == FVector2d::ZeroVector)
+	{
+		// u need to find the size of widget box
+		TargetLockWidget->WidgetTree->ForEachWidget(
+         [this](UWidget* TargetLockWidget)
+         {
+	        if (USizeBox* SizeBox = Cast<USizeBox>(TargetLockWidget)) 
+	        {
+		        WidgetBoxSize.X = SizeBox->GetWidthOverride();
+	        	WidgetBoxSize.Y = SizeBox->GetHeightOverride();
+	        }
+         }
+		);
+		
+	}
+	ScreenPosition-=WidgetBoxSize/2.0;
+	
 	// u can Set tHe Screen Position of the Widget
 	TargetLockWidget->SetPositionInViewport(ScreenPosition,false);
 }
@@ -132,12 +152,14 @@ AActor* UMBHeroGameplayAbility_TargetLock::GetNearestTarget(const TArray<AActor*
 	return NearestActor;
 }
 
+
 void UMBHeroGameplayAbility_TargetLock::Cleanup()
 {
 	TraceOutHitActors.Empty();
 	CurrentTargetLockActor = nullptr;
 	TargetLockWidget->RemoveFromParent();
-	TargetLockWidget = nullptr;	
+	TargetLockWidget = nullptr;
+	WidgetBoxSize = FVector2D::ZeroVector;
 }
 
 void UMBHeroGameplayAbility_TargetLock::CreateTargetLockWidget()

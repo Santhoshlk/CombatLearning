@@ -6,6 +6,7 @@
 #include "GameplayAbility/Hero/MorrowBoneHeroGameplayAbility.h"
 #include "MBHeroGameplayAbility_TargetLock.generated.h"
 
+class USizeBox;
 class UMorrowBoneWidgetBase;
 /**
  * 
@@ -64,4 +65,9 @@ private:
 
 	UPROPERTY()
 	UMorrowBoneWidgetBase* TargetLockWidget = nullptr;
+
+	UPROPERTY()
+	FVector2D WidgetBoxSize = FVector2D::ZeroVector;
+
+	
 };
