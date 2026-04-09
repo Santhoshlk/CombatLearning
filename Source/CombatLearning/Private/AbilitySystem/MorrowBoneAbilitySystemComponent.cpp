@@ -47,9 +47,9 @@ void UMorrowBoneAbilitySystemComponent::OnReleased(FGameplayTag InInputTag)
 	// // when to actually cancel the ability
 	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-		if (AbilitySpec.IsActive() 
-	&& AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InInputTag)
-	&& InInputTag.MatchesTag(MorrowBoneGameplayTags::InputTag_MustBeHeld))
+		if (!AbilitySpec.IsActive()) continue;
+		if (!AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InInputTag)) continue;
+		if (InInputTag.MatchesTag(MorrowBoneGameplayTags::InputTag_MustBeHeld))
 		{
 			CancelAbilityHandle(AbilitySpec.Handle);
 		}
