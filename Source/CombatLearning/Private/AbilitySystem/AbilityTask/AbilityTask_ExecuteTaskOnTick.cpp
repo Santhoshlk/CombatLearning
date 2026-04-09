@@ -21,7 +21,15 @@ void UAbilityTask_ExecuteTaskOnTick::TickTask(float DeltaTime)
 {
 	Super::TickTask(DeltaTime);
 	// The output is the Broadcasted value
-   TickTaskDelegate.Broadcast(DeltaTime);
+   if (ShouldBroadcastAbilityTaskDelegates())
+   {
+	   TickTaskDelegate.Broadcast(DeltaTime);
+   }
+   else
+   {
+	  // the ability is ended so the task also should be ended
+   	   EndTask();
+   }
 	
 }
 

@@ -35,6 +35,9 @@ private:
 
 	void CancelTargetLock();
 	
+	UFUNCTION(BlueprintCallable , Category = "TargetLock")
+	void TargetLockTickTask(float DeltaTime);
+
 	
 	AActor* GetNearestTarget( const TArray<AActor*> GetAvailableActors);
 	

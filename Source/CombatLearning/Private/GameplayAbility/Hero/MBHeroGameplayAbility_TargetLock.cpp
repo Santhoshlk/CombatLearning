@@ -8,9 +8,12 @@
 #include "Widgets/MorrowBoneWidgetBase.h"
 #include "PlayerController/CombatClassPlayerController.h"
 #include "CombatDebugHelper.h"
+#include "MorrowBoneFunctionLibrary.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/SizeBox.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
+#include "Tests/AutomationTestSettings.h"
 
 
 void UMBHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -131,6 +134,18 @@ void UMBHeroGameplayAbility_TargetLock::CancelTargetLock()
 	// if any lock goes wrong eliminate the Gameplay Ability Persistent State
 	CancelAbility(GetCurrentAbilitySpecHandle(),GetCurrentActorInfo(),GetCurrentActivationInfo(),true);
 	
+}
+
+void UMBHeroGameplayAbility_TargetLock::TargetLockTickTask(float DeltaTime)
+{
+	if (!CurrentTargetLockActor || (UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(CurrentTargetLockActor,MorrowBoneGameplayTags::Shared_Status_Death))
+		|| (UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(GetMorrowBoneCharacter(),MorrowBoneGameplayTags::Shared_Status_Death)))
+		{
+		   // u need to cancel the Task
+		  CancelTargetLock();
+		return;
+		}
+	SetWidgetLocation();
 }
 
 AActor* UMBHeroGameplayAbility_TargetLock::GetNearestTarget(const TArray<AActor*> GetAvailableActors)

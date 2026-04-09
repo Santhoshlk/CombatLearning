@@ -24,6 +24,8 @@ public:
 	
 	UAbilityTask_ExecuteTaskOnTick();
 
+	
+
 	// Generate the Static function which Calls the Ability Task
 	UFUNCTION(BlueprintCallable,Category = "Ability Task ",meta=(HidePin = "OwningGameplayAbility",DisplayName = "ExecuteTaskOnTick",DefaultToSelf = "OwningGameplayAbility",BlueprintInternalUseOnly = "true"))
 	static UAbilityTask_ExecuteTaskOnTick* ExecuteTaskOnTick(UGameplayAbility* OwningGameplayAbility);
