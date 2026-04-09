@@ -19,7 +19,7 @@ AMorrowBoneClassBase::AMorrowBoneClassBase()
 	AttributeSet=CreateDefaultSubobject<UMorrowBoneAttributeSet>(TEXT("AttributeSet"));
 
 	//we need to have a check for startup data if we set it to null
-    ensureMsgf(!StartUpData.IsNull(),TEXT("The startup data which u are using to synchronously load the abilities is Null"));
+    // ensureMsgf(!StartUpData.IsNull(),TEXT("The startup data which u are using to synchronously load the abilities is Null"));
 
 	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 

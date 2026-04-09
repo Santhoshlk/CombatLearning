@@ -13,7 +13,8 @@
 #include "Blueprint/WidgetTree.h"
 #include "Components/SizeBox.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
-#include "Tests/AutomationTestSettings.h"
+#include "Kismet/KismetMathLibrary.h"
+
 
 
 void UMBHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -132,6 +133,7 @@ void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()
 void UMBHeroGameplayAbility_TargetLock::CancelTargetLock()
 {
 	// if any lock goes wrong eliminate the Gameplay Ability Persistent State
+	Debug::PrintMessage(TEXT("Ability Canceled"));
 	CancelAbility(GetCurrentAbilitySpecHandle(),GetCurrentActorInfo(),GetCurrentActivationInfo(),true);
 	
 }
@@ -143,9 +145,32 @@ void UMBHeroGameplayAbility_TargetLock::TargetLockTickTask(float DeltaTime)
 		{
 		   // u need to cancel the Task
 		  CancelTargetLock();
-		return;
+		 return;
 		}
 	SetWidgetLocation();
+	SetRotationToCurrentLockedActor(DeltaTime);
+}
+
+void UMBHeroGameplayAbility_TargetLock::SetRotationToCurrentLockedActor(float DeltaTime)
+{
+	bool bShouldInterpolate =true;
+
+   if (UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(GetMorrowBoneCharacter(),MorrowBoneGameplayTags::Player_Status_Rolling) || UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(GetMorrowBoneCharacter(),MorrowBoneGameplayTags::Player_Status_Block))
+   	{
+   		bShouldInterpolate =false;
+   	}
+	
+
+	if (bShouldInterpolate)
+	{
+		// now set the look at rotation and also for the camera
+		const FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(GetMorrowBoneCharacter()->GetActorLocation(),CurrentTargetLockActor->GetActorLocation());
+		const FRotator InterpRotation =FMath::RInterpTo(GetMorrowBonePlayerController()->GetControlRotation(),TargetRotation,DeltaTime,RotationInterpSpeed);
+
+		  GetMorrowBonePlayerController()->SetControlRotation(FRotator(InterpRotation.Pitch,InterpRotation.Yaw,0.0));
+		GetMorrowBoneCharacter()->SetActorRotation(FRotator(0.0,InterpRotation.Yaw,0.0));
+	}
+
 }
 
 AActor* UMBHeroGameplayAbility_TargetLock::GetNearestTarget(const TArray<AActor*> GetAvailableActors)
@@ -170,6 +195,10 @@ AActor* UMBHeroGameplayAbility_TargetLock::GetNearestTarget(const TArray<AActor*
 
 void UMBHeroGameplayAbility_TargetLock::Cleanup()
 {
+	Debug::PrintMessage(TEXT("Cleanup Triggered"));
+	
+	// print call stack
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *FFrame::GetScriptCallstack());
 	TraceOutHitActors.Empty();
 	CurrentTargetLockActor = nullptr;
 	TargetLockWidget->RemoveFromParent();

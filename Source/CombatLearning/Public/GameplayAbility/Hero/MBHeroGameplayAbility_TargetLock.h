@@ -38,6 +38,9 @@ private:
 	UFUNCTION(BlueprintCallable , Category = "TargetLock")
 	void TargetLockTickTask(float DeltaTime);
 
+   UFUNCTION(BlueprintCallable , Category = "TargetLock")
+	void SetRotationToCurrentLockedActor(float DeltaTime);
+	
 	
 	AActor* GetNearestTarget( const TArray<AActor*> GetAvailableActors);
 	
@@ -72,5 +75,7 @@ private:
 	UPROPERTY()
 	FVector2D WidgetBoxSize = FVector2D::ZeroVector;
 
+	UPROPERTY(EditDefaultsOnly , Category = "TargetLock")
+    float RotationInterpSpeed = 5.0f;
 	
 };
