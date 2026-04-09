@@ -61,6 +61,8 @@ private:
 	UPROPERTY()
 	TArray<AActor*> TraceOutHitActors;
 
+	void SetTargetLockWalkSpeed();
+	void ResetWalkSpeed();
 	
 
 	UPROPERTY()
@@ -77,5 +79,11 @@ private:
 
 	UPROPERTY(EditDefaultsOnly , Category = "TargetLock")
     float RotationInterpSpeed = 5.0f;
+
+	UPROPERTY(EditDefaultsOnly , Category = "TargetLock")
+	float MaxWalkSpeed = 200.f;
+
+	UPROPERTY()
+	float CachedWalkSpeed = 0.f;
 	
 };

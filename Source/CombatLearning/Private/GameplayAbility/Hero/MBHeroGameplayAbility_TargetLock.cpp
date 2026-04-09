@@ -12,6 +12,7 @@
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/SizeBox.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -23,6 +24,7 @@ void UMBHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySp
 {
 	// u need to add the whole logic function in here
 	TargetLockOn();
+	SetTargetLockWalkSpeed();
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	
 }
@@ -31,6 +33,7 @@ void UMBHeroGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHan
                                                    const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                                    bool bReplicateEndAbility, bool bWasCancelled)
 {
+	ResetWalkSpeed();
 	Cleanup();
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
@@ -192,18 +195,36 @@ AActor* UMBHeroGameplayAbility_TargetLock::GetNearestTarget(const TArray<AActor*
 	return NearestActor;
 }
 
+void UMBHeroGameplayAbility_TargetLock::SetTargetLockWalkSpeed()
+{
+	CachedWalkSpeed = GetMorrowBoneCharacter()->GetCharacterMovement()->GetMaxSpeed();
+     GetMorrowBoneCharacter()->GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed;
+}
+
+void UMBHeroGameplayAbility_TargetLock::ResetWalkSpeed()
+{
+	if (CachedWalkSpeed!=0.0f)
+	{
+		GetMorrowBoneCharacter()->GetCharacterMovement()->MaxWalkSpeed = CachedWalkSpeed;
+	}
+	
+}
+
 
 void UMBHeroGameplayAbility_TargetLock::Cleanup()
 {
-	Debug::PrintMessage(TEXT("Cleanup Triggered"));
 	
-	// print call stack
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *FFrame::GetScriptCallstack());
+	
+	
 	TraceOutHitActors.Empty();
 	CurrentTargetLockActor = nullptr;
 	TargetLockWidget->RemoveFromParent();
 	TargetLockWidget = nullptr;
 	WidgetBoxSize = FVector2D::ZeroVector;
+	if (CachedWalkSpeed!=0.f)
+	{
+		CachedWalkSpeed =0.f;
+	}
 }
 
 void UMBHeroGameplayAbility_TargetLock::CreateTargetLockWidget()
