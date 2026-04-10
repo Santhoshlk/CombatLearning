@@ -8,6 +8,7 @@
 #include "Widgets/MorrowBoneWidgetBase.h"
 #include "PlayerController/CombatClassPlayerController.h"
 #include "CombatDebugHelper.h"
+#include "EnhancedInputSubsystems.h"
 #include "MorrowBoneFunctionLibrary.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Blueprint/WidgetTree.h"
@@ -25,6 +26,7 @@ void UMBHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySp
 	// u need to add the whole logic function in here
 	TargetLockOn();
 	SetTargetLockWalkSpeed();
+	AddTargetSwitchIMC();
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	
 }
@@ -33,6 +35,7 @@ void UMBHeroGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHan
                                                    const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                                    bool bReplicateEndAbility, bool bWasCancelled)
 {
+	RemoveTargetSwitchIMC();
 	ResetWalkSpeed();
 	Cleanup();
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
@@ -208,6 +211,30 @@ void UMBHeroGameplayAbility_TargetLock::ResetWalkSpeed()
 		GetMorrowBoneCharacter()->GetCharacterMovement()->MaxWalkSpeed = CachedWalkSpeed;
 	}
 	
+}
+
+void UMBHeroGameplayAbility_TargetLock::AddTargetSwitchIMC()
+{
+	 ULocalPlayer* LocalPlayer = GetMorrowBonePlayerController()->GetLocalPlayer();
+	UEnhancedInputLocalPlayerSubsystem* SubSystem =ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
+
+	checkf(SubSystem,TEXT("Subsystem is not valid as Local player is not valid"));
+     SubSystem->AddMappingContext(TargetIMC,1);
+	
+}
+
+void UMBHeroGameplayAbility_TargetLock::RemoveTargetSwitchIMC()
+{
+	if (!GetMorrowBonePlayerController())
+	{
+		 return;
+	}
+	ULocalPlayer* LocalPlayer = GetMorrowBonePlayerController()->GetLocalPlayer();
+	UEnhancedInputLocalPlayerSubsystem* SubSystem =ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
+
+	checkf(SubSystem,TEXT("Subsystem is not valid as Local player is not valid"));
+	
+	SubSystem->RemoveMappingContext(TargetIMC);
 }
 
 

@@ -2,6 +2,8 @@
 
 
 #include "Character/MorrowBone.h"
+
+#include "CombatDebugHelper.h"
 #include "EnhancedInputSubsystems.h"
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
@@ -91,6 +93,8 @@ void AMorrowBone::SetupPlayerInputComponent(class UInputComponent* PlayerInputCo
 	UMorrowBoneInputComponent* PlayerComponent=CastChecked<UMorrowBoneInputComponent>(PlayerInputComponent);
 	PlayerComponent->BindingInputs(InputConfig,MorrowBoneGameplayTags::InputTag_Look,ETriggerEvent::Triggered,this,&AMorrowBone::Looking);
 	PlayerComponent->BindingInputs(InputConfig,MorrowBoneGameplayTags::InputTag_Move,ETriggerEvent::Triggered,this,&AMorrowBone::Moving);
+	PlayerComponent->BindingInputs(InputConfig,MorrowBoneGameplayTags::InputTag_SwitchTargets,ETriggerEvent::Triggered,this,&ThisClass::SwitchTargetsTriggered);
+	PlayerComponent->BindingInputs(InputConfig,MorrowBoneGameplayTags::InputTag_SwitchTargets,ETriggerEvent::Completed,this,&ThisClass::SwitchTargetsCompleted);
 	PlayerComponent->BindAbilityInputAction(InputConfig,this,&AMorrowBone::AbilityInputAction_Pressed,&AMorrowBone::AbilityInputAction_Released);
 }
 
@@ -112,6 +116,15 @@ void AMorrowBone::Moving(const FInputActionValue& Value)
 	AddMovementInput(ForwardVector,Movement.Y);
 	FVector RightVector=FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	AddMovementInput(RightVector,Movement.X);
+}
+
+void AMorrowBone::SwitchTargetsTriggered(const FInputActionValue& value)
+{
+	Debug::PrintMessage(TEXT("Started"));
+}
+
+void AMorrowBone::SwitchTargetsCompleted(const FInputActionValue& value)
+{
 }
 
 void AMorrowBone::AbilityInputAction_Pressed(FGameplayTag InInputTag)

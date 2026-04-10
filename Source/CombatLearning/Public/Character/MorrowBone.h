@@ -71,6 +71,9 @@ public:
   void Looking(const FInputActionValue& Value );
 	void Moving(const FInputActionValue& Value );
 
+	void SwitchTargetsTriggered(const FInputActionValue& value);
+	void SwitchTargetsCompleted(const FInputActionValue& value);
+
 	//create functions for input Binding
 	void AbilityInputAction_Pressed(FGameplayTag InInputTag);
 	void AbilityInputAction_Released(FGameplayTag InInputTag);

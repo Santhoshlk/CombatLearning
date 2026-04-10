@@ -15,6 +15,7 @@ namespace MorrowBoneGameplayTags
     UE_DEFINE_GAMEPLAY_TAG(InputTag_Move,TEXT("InputTag.Move"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Look,TEXT("InputTag.Look"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Roll,TEXT("InputTag.Roll"))
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_SwitchTargets,TEXT("InputTag.SwitchTargets"))
 
 	//**ability input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Equip_Axe,TEXT("InputTag.Equip.Axe"))

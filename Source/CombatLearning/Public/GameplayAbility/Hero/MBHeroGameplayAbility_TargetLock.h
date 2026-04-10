@@ -6,6 +6,7 @@
 #include "GameplayAbility/Hero/MorrowBoneHeroGameplayAbility.h"
 #include "MBHeroGameplayAbility_TargetLock.generated.h"
 
+class UInputMappingContext;
 class USizeBox;
 class UMorrowBoneWidgetBase;
 /**
@@ -44,7 +45,8 @@ private:
 	
 	AActor* GetNearestTarget( const TArray<AActor*> GetAvailableActors);
 	
-	
+	UPROPERTY(EditDefaultsOnly,Category = "TargetLock")
+	UInputMappingContext* TargetIMC;
 
 	UPROPERTY(EditDefaultsOnly,Category= "TargetLock")
 	float TraceLength = 5000.f;
@@ -64,7 +66,9 @@ private:
 	void SetTargetLockWalkSpeed();
 	void ResetWalkSpeed();
 	
-
+    void AddTargetSwitchIMC();
+	void RemoveTargetSwitchIMC();
+	
 	UPROPERTY()
 	AActor* CurrentTargetLockActor = nullptr;
 
