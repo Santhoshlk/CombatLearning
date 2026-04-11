@@ -37,6 +37,8 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_HitPause,TEXT("Player.Event.HitPause"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_HitReact,TEXT("Player.Event.HitReact"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SuccessfulBlock,TEXT("Player.Event.SuccessfulBlock"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SwitchTarget_Right,TEXT("Player.Event.SwitchTarget.Right"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SwitchTarget_Left,TEXT("Player.Event.SwitchTarget.Left"))
 	
 
 

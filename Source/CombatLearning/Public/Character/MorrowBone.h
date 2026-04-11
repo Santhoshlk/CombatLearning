@@ -37,6 +37,9 @@ public:
 	
 private:
 	//to divide into regions new trick by Vince Petrelli
+	 FVector2D SwitchInput = FVector2D::ZeroVector;
+
+	
 #pragma region component
 
 	//now add all ur components in that region
@@ -64,7 +67,7 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,meta=(AllowPrivateAccess="true"),Category="Input")
 	TObjectPtr<UInputConfig_DataAsset> InputConfig;
 
-public:
+
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 #pragma region Functions

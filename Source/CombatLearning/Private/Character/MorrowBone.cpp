@@ -3,7 +3,7 @@
 
 #include "Character/MorrowBone.h"
 
-#include "CombatDebugHelper.h"
+#include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
@@ -120,11 +120,19 @@ void AMorrowBone::Moving(const FInputActionValue& Value)
 
 void AMorrowBone::SwitchTargetsTriggered(const FInputActionValue& value)
 {
-	Debug::PrintMessage(TEXT("Started"));
+	SwitchInput = value.Get<FVector2D>();
+	
 }
 
 void AMorrowBone::SwitchTargetsCompleted(const FInputActionValue& value)
 {
+	FGameplayEventData Data;
+	// once input is complete u can send a gameplay event to the actor
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		 SwitchInput.X > 0.f ? MorrowBoneGameplayTags::Player_Event_SwitchTarget_Right : MorrowBoneGameplayTags::Player_Event_SwitchTarget_Left ,
+		Data
+		);
 }
 
 void AMorrowBone::AbilityInputAction_Pressed(FGameplayTag InInputTag)
