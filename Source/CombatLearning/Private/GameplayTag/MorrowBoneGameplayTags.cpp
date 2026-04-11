@@ -87,4 +87,5 @@ namespace MorrowBoneGameplayTags
 
 	//** Enemy Weapon Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon_SpikedBat,TEXT("Enemy.Weapon.SpikedBat"))
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon_Wand,TEXT("Enemy.Weapon.Wand"))
 }

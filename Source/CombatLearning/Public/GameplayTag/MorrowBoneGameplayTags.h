@@ -87,4 +87,5 @@ namespace MorrowBoneGameplayTags
 	
 	//** Tags for Enemy Weapon**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon_SpikedBat)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon_Wand)
 }
