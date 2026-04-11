@@ -83,7 +83,7 @@ void UMorrowBoneAttributeSet::PostGameplayEffectExecute(const struct FGameplayEf
 			// u can add a gameplay tag to call a gameplay event to set the death Montages and everything
 			//From the Data U can get the ASC of the current instance of calling of this function
 			UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Shared_Status_Death);
-		  UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Enemy_Health_Low);
+		  
 		}
 	}
 	
