@@ -47,6 +47,7 @@ void UMBHeroGameplayAbility_TargetLock::TargetLockOn()
 	GetAvailableTargets();
 	if (TraceOutHitActors.IsEmpty())
 	{
+		
 		CancelTargetLock();
 		return;
 	}
@@ -59,6 +60,7 @@ void UMBHeroGameplayAbility_TargetLock::TargetLockOn()
 	}
 	else
 	{
+		
 		  CancelTargetLock();
 	}
 	
@@ -101,6 +103,9 @@ void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()
 {
 	// to get multiple targets u need to trace
 	// so box trace Multiple objects
+	TraceOutHitActors.Empty();
+ // Now this will refresh everything 
+	
     const FVector EndTrace = GetMorrowBoneCharacter()->GetActorLocation() + GetMorrowBoneCharacter()->GetActorForwardVector()* TraceLength;
    TArray<FHitResult> TraceHitResults;
 	
@@ -150,6 +155,7 @@ void UMBHeroGameplayAbility_TargetLock::TargetLockTickTask(float DeltaTime)
 		|| (UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(GetMorrowBoneCharacter(),MorrowBoneGameplayTags::Shared_Status_Death)))
 		{
 		   // u need to cancel the Task
+		
 		  CancelTargetLock();
 		 return;
 		}
@@ -179,11 +185,16 @@ void UMBHeroGameplayAbility_TargetLock::SetRotationToCurrentLockedActor(float De
 
 }
 
-AActor* UMBHeroGameplayAbility_TargetLock::GetNearestTarget(const TArray<AActor*> GetAvailableActors)
+AActor* UMBHeroGameplayAbility_TargetLock::GetNearestTarget( TArray<AActor*>  AvailableActors)
 {
+	
+	if (AvailableActors.IsEmpty())
+	{
+		return nullptr;
+	}
 	float MinDistance = 10000.f;
 	AActor* NearestActor = nullptr;
-	for (AActor*& HitActors : TraceOutHitActors)
+	for (AActor*& HitActors : AvailableActors)
 	{
 		// now u find the nearest actor
 		FVector DistanceVector = HitActors->GetActorLocation() - GetMorrowBoneCharacter()->GetActorLocation();
@@ -209,6 +220,65 @@ void UMBHeroGameplayAbility_TargetLock::ResetWalkSpeed()
 	if (CachedWalkSpeed!=0.0f)
 	{
 		GetMorrowBoneCharacter()->GetCharacterMovement()->MaxWalkSpeed = CachedWalkSpeed;
+	}
+	
+}
+
+void UMBHeroGameplayAbility_TargetLock::SetSwitchTarget(const FGameplayTag& InInputTag)
+{
+   TArray<AActor*> LeftActors;
+	TArray<AActor*> RightActors;
+   AActor* NearestTarget = nullptr;
+	SortIntoRightLeftTargets(LeftActors,RightActors);
+	if (InInputTag.MatchesTagExact(MorrowBoneGameplayTags::Player_Event_SwitchTarget_Left))
+	{
+		
+		NearestTarget = GetNearestTarget(LeftActors);
+	}
+	if (InInputTag.MatchesTagExact(MorrowBoneGameplayTags::Player_Event_SwitchTarget_Right))
+	{
+		NearestTarget = GetNearestTarget(RightActors);
+	}
+
+   if (NearestTarget)
+   {
+	   CurrentTargetLockActor = NearestTarget;
+   }
+	
+}
+
+void UMBHeroGameplayAbility_TargetLock::SortIntoRightLeftTargets(TArray<AActor*>& LeftActors,
+	TArray<AActor*>& RightActors)
+{
+	LeftActors.Empty();
+	RightActors.Empty();
+	GetAvailableTargets();
+   if (!CurrentTargetLockActor || TraceOutHitActors.IsEmpty() )
+   {
+   	
+	   CancelTargetLock();
+   	    return;
+   }
+   // start to sort them out
+	const FVector PlayerToCurrentEnemyNorm = (CurrentTargetLockActor->GetActorLocation() - GetMorrowBoneCharacter()->GetActorLocation()).GetSafeNormal();
+	for ( AActor* AvailableActors : TraceOutHitActors)
+	{
+		if (!AvailableActors || AvailableActors == CurrentTargetLockActor) continue;
+      const FVector PlayerToEnemyNorm = (AvailableActors->GetActorLocation() - GetMorrowBoneCharacter()->GetActorLocation()).GetSafeNormal();
+		const FVector Cross = FVector::CrossProduct(PlayerToEnemyNorm,PlayerToCurrentEnemyNorm);
+
+		if (Cross.Z > 0.0f)
+		{
+			// left direction
+			LeftActors.AddUnique(AvailableActors);
+		}
+		else
+		{
+			// Right Direction
+			RightActors.AddUnique(AvailableActors);
+		}
+		
+		
 	}
 	
 }
