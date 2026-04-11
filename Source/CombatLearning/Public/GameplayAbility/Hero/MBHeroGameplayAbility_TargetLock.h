@@ -43,7 +43,7 @@ private:
 	void SetRotationToCurrentLockedActor(float DeltaTime);
 	
 	
-	AActor* GetNearestTarget( const TArray<AActor*> GetAvailableActors);
+	AActor* GetNearestTarget(TArray<AActor*> AvailableActors);
 	
 	UPROPERTY(EditDefaultsOnly,Category = "TargetLock")
 	UInputMappingContext* TargetIMC;
@@ -65,6 +65,12 @@ private:
 
 	void SetTargetLockWalkSpeed();
 	void ResetWalkSpeed();
+
+	UFUNCTION(BlueprintCallable ,Category = "TargetLock")
+   void SetSwitchTarget(const  FGameplayTag& InInputTag);
+	
+	void SortIntoRightLeftTargets(TArray<AActor*>& LeftActors,TArray<AActor*>& RightActors);
+	
 	
     void AddTargetSwitchIMC();
 	void RemoveTargetSwitchIMC();
