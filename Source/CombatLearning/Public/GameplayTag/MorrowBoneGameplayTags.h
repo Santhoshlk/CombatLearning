@@ -45,6 +45,7 @@ namespace MorrowBoneGameplayTags
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_SetByCaller_BaseDamage)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact_LightAttack)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact_HeavyAttack)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_SpawnProjectile)
 
 	//**Tags for Abilities Itself**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Weapon_Axe)

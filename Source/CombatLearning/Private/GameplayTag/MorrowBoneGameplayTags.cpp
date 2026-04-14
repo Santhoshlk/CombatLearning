@@ -47,7 +47,8 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Shared_SetByCaller_BaseDamage,TEXT("Shared.SetByCaller.BaseDamage"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact_LightAttack,TEXT("Shared.Event.HitReact.LightAttack"))
     UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact_HeavyAttack,TEXT("Shared.Event.HitReact.HeavyAttack"))
-
+   UE_DEFINE_GAMEPLAY_TAG(Shared_Event_SpawnProjectile,TEXT("Shared.Event.SpawnProjectile"))
+	
 	//** Ability Input Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Equip_Weapon_Axe,TEXT("Player.Ability.Equip.Weapon.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_UnEquip_Weapon_Axe,TEXT("Player.Ability.UnEquip.Weapon.Axe"))
