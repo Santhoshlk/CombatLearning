@@ -23,7 +23,7 @@ UEnemyCombatComponent* UEnemyGameplayAbility::GetEnemyCombatComponentFromEnemy()
 }
 
 FGameplayEffectSpecHandle UEnemyGameplayAbility::MakeMorrowBoneDamageEffectSpecHandle(
-	TSubclassOf<UGameplayEffect> EffectClass,float level, float WeaponDamage)
+	TSubclassOf<UGameplayEffect> EffectClass,float level, float Damage)
 {
 	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
 	checkf(ASC,TEXT("The ASC of the Instigator should be valid"));
@@ -39,7 +39,7 @@ FGameplayEffectSpecHandle UEnemyGameplayAbility::MakeMorrowBoneDamageEffectSpecH
 
 	if (SpecHandle.IsValid())
 	{
-		SpecHandle.Data->SetSetByCallerMagnitude(MorrowBoneGameplayTags::Enemy_SetByCaller_Melee,WeaponDamage);
+		SpecHandle.Data->SetSetByCallerMagnitude(MorrowBoneGameplayTags::Enemy_SetByCaller_Melee,Damage);
 	}
 	return SpecHandle;
 }

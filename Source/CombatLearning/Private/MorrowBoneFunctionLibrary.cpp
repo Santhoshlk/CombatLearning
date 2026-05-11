@@ -159,10 +159,5 @@ bool UMorrowBoneFunctionLibrary::ApplyGameplayEffectSpecHandleToTarget(AActor* I
 	UMorrowBoneAbilitySystemComponent* TargetASC =  NativeGetAbilitySystemComponentFromActor(InTarget);
 
 	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data,TargetASC);
-
-	if (ActiveGameplayEffectHandle.IsValid())
-	{
 		return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
-	}
-	return false;
 }

@@ -3,6 +3,7 @@
 
 #include "Projecile/MorrowBoneProjectileBase.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "CombatDebugHelper.h"
 #include "MorrowBoneFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "Components/BoxComponent.h"
@@ -83,9 +84,6 @@ void AMorrowBoneProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponen
 	Data.Target = HitTarget;
    if (IsValidBlock)
    {
-
-   	
-   	
 	   UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
         HitTarget,
         MorrowBoneGameplayTags::Player_Event_SuccessfulBlock,
@@ -114,6 +112,7 @@ void AMorrowBoneProjectileBase::HandleApplyGameplayEffectSpecHandle(APawn* InPaw
 	Data.Target = InPawn;
 	if (ApplyHandle)
 	{
+		
 		// now apply HitReact
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
 			InPawn,
@@ -121,6 +120,7 @@ void AMorrowBoneProjectileBase::HandleApplyGameplayEffectSpecHandle(APawn* InPaw
            Data
 			);
 	}
+	
 }
 
 

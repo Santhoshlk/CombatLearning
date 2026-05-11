@@ -23,7 +23,7 @@ public:
 	UEnemyCombatComponent* GetEnemyCombatComponentFromEnemy() ;
 
 	UFUNCTION(BlueprintPure, Category= "EnemyGameplayAbilty|EffectSpecHandle")
-	FGameplayEffectSpecHandle MakeMorrowBoneDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass,float level,float WeaponDamage);
+	FGameplayEffectSpecHandle MakeMorrowBoneDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass,float level,float Damage);
 
 private:
 	TWeakObjectPtr<AEnemyBase> CachedEnemy;
