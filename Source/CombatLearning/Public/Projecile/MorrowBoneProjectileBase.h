@@ -15,7 +15,7 @@ UENUM(BlueprintType)
 enum class EProjectileActivationPolicy : uint8
 {
 	onHit,
-	onOverlap,
+	onOverlap
 };
 
 UCLASS()
@@ -32,7 +32,7 @@ protected:
 	virtual void BeginPlay() override;
 
 #pragma region Components	
-  UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = "Projectile")
+  UPROPERTY(VisibleAnywhere ,BlueprintReadOnly,Category = " Box Collision")
 	TObjectPtr<UBoxComponent> ProjectileBoxCollision;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = "Projectile")
@@ -47,10 +47,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category = "Projectile")
 	EProjectileActivationPolicy ActivationPolicy = EProjectileActivationPolicy::onHit;
 
-private:
+protected:
 	UFUNCTION()
 	void OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	UFUNCTION()
 	void OnProjectileOverlap( UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
+
+	UFUNCTION(BlueprintImplementableEvent, DisplayName="ProjectileImpactFx")
+	void BP_ProjectileImpactFx(const FVector &HitLocation);
 };

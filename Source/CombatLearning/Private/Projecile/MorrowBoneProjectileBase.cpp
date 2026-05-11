@@ -2,11 +2,13 @@
 
 
 #include "Projecile/MorrowBoneProjectileBase.h"
-
-#include "CombatDebugHelper.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "MorrowBoneFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameplayAbility/MorrowBoneGameplayAbility.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 
 
 AMorrowBoneProjectileBase::AMorrowBoneProjectileBase()
@@ -46,30 +48,61 @@ void AMorrowBoneProjectileBase::BeginPlay()
 	Super::BeginPlay();
 	if (ActivationPolicy == EProjectileActivationPolicy::onOverlap)
 	{
-		ProjectileBoxCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn,ECR_Overlap);
+		ProjectileBoxCollision->SetCollisionResponseToChannel(ECC_Pawn,ECR_Overlap);
 	}
 }
 
 void AMorrowBoneProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor)
+	// this is when u have overlapped object has hit
+
+	BP_ProjectileImpactFx(Hit.ImpactPoint);
+	// to check hit for all actors lets do the logic in hit
+	APawn* HitTarget = Cast<APawn>(OtherActor);
+
+	if (!HitTarget)
 	{
-		Debug::PrintMessage(OtherActor->GetActorNameOrLabel());
+		Destroy();
+		return;
 	}
-	// after the Interaction with Projectile
+
+	bool IsValidBlock = false;
+	bool IsBlocking = false;
+	bool IsTargetHostile = UMorrowBoneFunctionLibrary::IsTargetPawnHostile(GetInstigator(),HitTarget);
+	if (IsTargetHostile)
+	{
+		IsBlocking = UMorrowBoneFunctionLibrary::NativeDoesActorHaveTag(HitTarget,MorrowBoneGameplayTags::Player_Status_Block);
+	}
+	if (IsBlocking)
+	{
+		IsValidBlock = UMorrowBoneFunctionLibrary::ValidBlock(this,HitTarget);
+	}
+	FGameplayEventData Data;
+	Data.Instigator = GetInstigator();
+	Data.Target = HitTarget;
+   if (IsValidBlock)
+   {
+
+   	
+   	
+	   UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+        HitTarget,
+        MorrowBoneGameplayTags::Player_Event_SuccessfulBlock,
+        Data
+	   );
+   }
+   else
+   {
+	   // apply damage
+   }
 	Destroy();
 }
 
 void AMorrowBoneProjectileBase::OnProjectileOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor)
-	{
-		Debug::PrintMessage(OtherActor->GetActorNameOrLabel());
-	}
-	// after the Interaction with Projectile
-	Destroy();
+	
 }
 
 
