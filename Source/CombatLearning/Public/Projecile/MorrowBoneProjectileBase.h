@@ -3,12 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayEffectTypes.h"
 #include "GameFramework/Actor.h"
 #include "MorrowBoneProjectileBase.generated.h"
 
 class UNiagaraComponent;
 class UProjectileMovementComponent;
 class UBoxComponent;
+struct FGameplayEffectSpecHandle;
+
 
 // Enum for Activation policy
 UENUM(BlueprintType)
@@ -47,6 +50,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category = "Projectile")
 	EProjectileActivationPolicy ActivationPolicy = EProjectileActivationPolicy::onHit;
 
+	UPROPERTY(BlueprintReadOnly,meta=(ExposeOnSpawn = "true"))
+	FGameplayEffectSpecHandle ProjectileDamageSpecHandle;
+
 protected:
 	UFUNCTION()
 	void OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
@@ -56,4 +62,6 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, DisplayName="ProjectileImpactFx")
 	void BP_ProjectileImpactFx(const FVector &HitLocation);
+
+	void HandleApplyGameplayEffectSpecHandle( APawn* InPawn);
 };

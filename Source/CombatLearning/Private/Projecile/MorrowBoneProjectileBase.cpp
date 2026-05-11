@@ -95,6 +95,7 @@ void AMorrowBoneProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponen
    else
    {
 	   // apply damage
+   	  HandleApplyGameplayEffectSpecHandle(HitTarget);
    }
 	Destroy();
 }
@@ -104,5 +105,24 @@ void AMorrowBoneProjectileBase::OnProjectileOverlap(UPrimitiveComponent* Overlap
 {
 	
 }
+
+void AMorrowBoneProjectileBase::HandleApplyGameplayEffectSpecHandle(APawn* InPawn)
+{
+	bool ApplyHandle = UMorrowBoneFunctionLibrary::ApplyGameplayEffectSpecHandleToTarget(GetInstigator(),InPawn,ProjectileDamageSpecHandle);
+	FGameplayEventData Data;
+	Data.Instigator = GetInstigator();
+	Data.Target = InPawn;
+	if (ApplyHandle)
+	{
+		// now apply HitReact
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+			InPawn,
+			MorrowBoneGameplayTags::Player_Event_HitReact,
+           Data
+			);
+	}
+}
+
+
 
 

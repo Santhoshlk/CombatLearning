@@ -8,6 +8,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "MorrowBoneFunctionLibrary.generated.h"
 
+struct FGameplayEffectSpecHandle;
 class UPawnCombatComponent;
 class UMorrowBoneAbilitySystemComponent;
 /**
@@ -49,4 +50,7 @@ public:
 
 	UFUNCTION(BlueprintPure,Category="MorrowBoneFunctionLibrary|BlockCheck")
 	static bool ValidBlock(const AActor* InAttacker,AActor* InVictim);
+
+	UFUNCTION(BlueprintCallable,Category = "MorrowBoneFunctionLibrary|ApplyGameplayEffectSpecHandleToTarget")
+	static bool ApplyGameplayEffectSpecHandleToTarget(AActor* InSource,AActor* InTarget,const FGameplayEffectSpecHandle& SpecHandle);
 };

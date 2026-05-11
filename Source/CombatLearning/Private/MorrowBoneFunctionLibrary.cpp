@@ -150,3 +150,19 @@ bool UMorrowBoneFunctionLibrary::ValidBlock(const AActor* InAttacker, AActor* In
 	return false;
 	
 }
+
+bool UMorrowBoneFunctionLibrary::ApplyGameplayEffectSpecHandleToTarget(AActor* InSource, AActor* InTarget,
+	const FGameplayEffectSpecHandle& SpecHandle)
+{
+	checkf(SpecHandle.IsValid() && InTarget && InSource,TEXT("The Source,Target,Spec Handle Should be valid"));
+	UMorrowBoneAbilitySystemComponent* SourceASC =  NativeGetAbilitySystemComponentFromActor(InSource);
+	UMorrowBoneAbilitySystemComponent* TargetASC =  NativeGetAbilitySystemComponentFromActor(InTarget);
+
+	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data,TargetASC);
+
+	if (ActiveGameplayEffectHandle.IsValid())
+	{
+		return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
+	}
+	return false;
+}
