@@ -20,8 +20,8 @@ void UEnemyCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 
 	bool bIsPlayerBlocking;
 	bool bIsValidBlock = false;
-	bool bIsUnBlockable = false;
-	bool IsaPerfectBlock = false;
+	bool bIsUnBlockable = UMorrowBoneFunctionLibrary::NativeDoesActorHaveTag(GetOwningPawn(),MorrowBoneGameplayTags::Enemy_Attack_UnBlockable);
+	
 
 	// is player Blocking
 	bIsPlayerBlocking = UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(HitActor,MorrowBoneGameplayTags::Player_Status_Block);
