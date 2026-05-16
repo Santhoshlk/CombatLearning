@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "Components/PawnHelperComponent.h"
 #include "PawnUIComponent.generated.h"
+
+class UMorrowBoneWidgetBase;
+
 //for BroadCasting use Dynamic Multicast delegates
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FonPercentageUpdatedDelegate,float,percentage);
 /**
@@ -19,4 +22,13 @@ public:
 	//use Blueprint Assignable for MultiCast Delegates 
 	UPROPERTY(BlueprintAssignable)
 	FonPercentageUpdatedDelegate CurrentHealthPercentage;
+
+protected:
+	TArray<TObjectPtr<UMorrowBoneWidgetBase>> DrawnWidgets;
+
+	UFUNCTION(BlueprintCallable)
+	void RegisterDrawnWidgets(UMorrowBoneWidgetBase* Widget);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveWidgets();
 };
