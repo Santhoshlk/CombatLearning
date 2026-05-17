@@ -75,6 +75,12 @@ void AMorrowBoneProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponen
 	{
 		IsBlocking = UMorrowBoneFunctionLibrary::NativeDoesActorHaveTag(HitTarget,MorrowBoneGameplayTags::Player_Status_Block);
 	}
+	else
+	{
+		
+		Destroy();
+		return;
+	}
 	if (IsBlocking)
 	{
 		IsValidBlock = UMorrowBoneFunctionLibrary::ValidBlock(this,HitTarget);
@@ -93,7 +99,8 @@ void AMorrowBoneProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponen
    else
    {
 	   // apply damage
-   	  HandleApplyGameplayEffectSpecHandle(HitTarget);
+   		HandleApplyGameplayEffectSpecHandle(HitTarget);
+   	
    }
 	Destroy();
 }
