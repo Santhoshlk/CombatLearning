@@ -6,9 +6,11 @@
 #include "Character/MorrowBoneClassBase.h"
 #include "EnemyBase.generated.h"
 
+
 class UWidgetComponent;
 class UEnemyUIComponent;
 class UEnemyCombatComponent;
+class UBoxComponent;
 /**
  * 
  */
@@ -36,9 +38,17 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Enemy | WidgetComponent")
 	TObjectPtr<UWidgetComponent> EnemyHealthWidgetComponent;
 
-	
+	UPROPERTY(VisibleAnywhere,Category = "Enemy | Melee")
+	TObjectPtr<UBoxComponent> LeftHandCollisionBox;
+
+	UPROPERTY(VisibleAnywhere,Category = "Enemy | Melee")
+	TObjectPtr<UBoxComponent> RightHandCollisionBox;
 	
 	virtual void BeginPlay() override;
+
+  UFUNCTION()
+ virtual void OnCollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
+	
 public:
 	//have a seter and getter for our combat component
 	UFUNCTION(BlueprintCallable,Category="Enemy|CombatComponent")

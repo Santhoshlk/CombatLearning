@@ -2,6 +2,8 @@
 
 
 #include "Character/Enemy/EnemyBase.h"
+
+#include "Components/BoxComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "Components/UI/EnemyUIComponent.h"
@@ -39,6 +41,15 @@ AEnemyBase::AEnemyBase()
 	EnemyHealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("EnemyHealthWidgetComponent"));
 
 	EnemyHealthWidgetComponent->SetupAttachment(GetMesh());
+
+   LeftHandCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftHandCollisionBox"));
+   LeftHandCollisionBox->SetupAttachment(GetMesh());
+	LeftHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this,&ThisClass::AEnemyBase::OnCollisionBoxOverlap);
+
+	RightHandCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("RightHandCollisionBox"));
+	RightHandCollisionBox->SetupAttachment(GetMesh());
+	RightHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this,&ThisClass::AEnemyBase::OnCollisionBoxOverlap);
+	
 }
 
 UPawnCombatComponent* AEnemyBase::GetPawnCombatComponent() const
@@ -62,6 +73,11 @@ void AEnemyBase::BeginPlay()
 
 	// call the asynchronous Loading
 	AsynchronousLoadStartUpData();
+}
+
+void AEnemyBase::OnCollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
 }
 
 void AEnemyBase::AsynchronousLoadStartUpData()
