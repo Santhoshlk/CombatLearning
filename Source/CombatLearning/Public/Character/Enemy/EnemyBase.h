@@ -43,12 +43,22 @@ protected:
 
 	UPROPERTY(VisibleAnywhere,Category = "Enemy | Melee")
 	TObjectPtr<UBoxComponent> RightHandCollisionBox;
+
+	UPROPERTY(EditDefaultsOnly,Category = "Enemy | CollisionBox")
+	FName LeftCollisionBox;
+
+	UPROPERTY(EditDefaultsOnly,Category = "Enemy | CollisionBox")
+	FName RightCollisionBox;
+	
 	
 	virtual void BeginPlay() override;
 
   UFUNCTION()
  virtual void OnCollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
-	
+
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty( struct FPropertyChangedEvent& PropertyChangedEvent) override;
+#endif	
 public:
 	//have a seter and getter for our combat component
 	UFUNCTION(BlueprintCallable,Category="Enemy|CombatComponent")
@@ -63,7 +73,20 @@ public:
 		return EnemyUIComponent;
 	}
 	
+	UFUNCTION(BlueprintCallable,Category="Enemy|CombatComponent")
+	FORCEINLINE UBoxComponent* GetLeftBoxCollision() const
+	{
+		return LeftHandCollisionBox;
+	}
 
+	UFUNCTION(BlueprintCallable,Category="Enemy|CombatComponent")
+	FORCEINLINE UBoxComponent* GetRightBoxCollision() const
+	{
+		return RightHandCollisionBox ;
+	}
+
+
+	
 private:
 	void AsynchronousLoadStartUpData();
 };

@@ -2,7 +2,6 @@
 
 
 #include "Character/Enemy/EnemyBase.h"
-
 #include "Components/BoxComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Components/Combat/EnemyCombatComponent.h"
@@ -44,10 +43,12 @@ AEnemyBase::AEnemyBase()
 
    LeftHandCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftHandCollisionBox"));
    LeftHandCollisionBox->SetupAttachment(GetMesh());
-	LeftHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this,&ThisClass::AEnemyBase::OnCollisionBoxOverlap);
+   LeftHandCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+   LeftHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this,&ThisClass::AEnemyBase::OnCollisionBoxOverlap);	
 
 	RightHandCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("RightHandCollisionBox"));
 	RightHandCollisionBox->SetupAttachment(GetMesh());
+	RightHandCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	RightHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this,&ThisClass::AEnemyBase::OnCollisionBoxOverlap);
 	
 }
@@ -79,6 +80,29 @@ void AEnemyBase::OnCollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 }
+
+#if WITH_EDITOR
+void AEnemyBase::PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent)
+{
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+ 
+
+
+	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass,RightCollisionBox))
+	{
+		RightHandCollisionBox->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale,RightCollisionBox);
+ 	
+	}
+
+
+	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass,LeftCollisionBox))
+	{
+		LeftHandCollisionBox->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale,LeftCollisionBox);
+ 	
+	}
+	
+}
+#endif
 
 void AEnemyBase::AsynchronousLoadStartUpData()
 {
