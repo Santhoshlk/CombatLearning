@@ -82,6 +82,10 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool ActiveWeaponCollision, EWe
 			OverlappedActors.Empty();
 		}
 	}
+	else
+	{
+		ToggleBodyWeaponCollision(ActiveWeaponCollision,WeaponEquippedTypes);
+	}
 }
 
 void UPawnCombatComponent::OnWeaponHitTarget(AActor* HitActor)
@@ -93,6 +97,11 @@ void UPawnCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 void UPawnCombatComponent::OnWeaponPulledFromFromTarget(AActor* HitActor)
 {
 	//we bound this to delegate which calls when any weapon has an overlap
+}
+
+void UPawnCombatComponent::ToggleBodyWeaponCollision(bool ActivateWeaponCollision, EWeaponEquippedTypes EquippedWeapon)
+{
+	// we will override it in enemy collision as hero don't need it
 }
 
 

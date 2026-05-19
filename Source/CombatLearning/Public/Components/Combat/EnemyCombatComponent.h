@@ -13,8 +13,9 @@ UCLASS()
 class COMBATLEARNING_API UEnemyCombatComponent : public UPawnCombatComponent
 {
 	GENERATED_BODY()
-
-protected:
+public:
 	virtual void OnWeaponHitTarget(AActor* HitActor) override;
+
+	void ToggleBodyWeaponCollision(bool ActivateWeaponCollision,EWeaponEquippedTypes EquippedWeapon) override;
 	
 };

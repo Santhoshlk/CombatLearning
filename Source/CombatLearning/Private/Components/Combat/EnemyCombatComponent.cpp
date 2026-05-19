@@ -4,6 +4,8 @@
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "MorrowBoneFunctionLibrary.h"
+#include "Character/Enemy/EnemyBase.h"
+#include "Components/BoxComponent.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
 
 void UEnemyCombatComponent::OnWeaponHitTarget(AActor* HitActor)
@@ -51,5 +53,36 @@ void UEnemyCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 		);
 	}
 	
+	
+}
+
+void UEnemyCombatComponent::ToggleBodyWeaponCollision(bool ActivateWeaponCollision, EWeaponEquippedTypes EquippedWeapon)
+{
+   // u need to get the Hit Boxes
+	AEnemyBase* Enemy = Cast<AEnemyBase>(GetOwner());
+
+	checkf(Enemy,TEXT("The Enemy which owns the Combat Component is not valid."))
+
+	UBoxComponent* LeftCollisionBox = Enemy->GetLeftBoxCollision();
+	UBoxComponent* RightCollisionBox = Enemy->GetRightBoxCollision();
+
+	checkf(LeftCollisionBox && RightCollisionBox ,TEXT("The Collision Boxes which u are using are not valid."))
+   switch (EquippedWeapon)
+   {
+	case EWeaponEquippedTypes::LeftHanded :
+   	ActivateWeaponCollision ? LeftCollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly) :  LeftCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+   	break;
+   	
+	case EWeaponEquippedTypes::RightHanded:
+   	ActivateWeaponCollision ? RightCollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly) :  RightCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+   	break;
+
+	default:
+   	break;
+   }// Now for the Second Part Empty out the Array
+	if (!ActivateWeaponCollision)
+	{
+		OverlappedActors.Empty();
+	}
 	
 }
