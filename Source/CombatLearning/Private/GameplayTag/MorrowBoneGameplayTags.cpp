@@ -71,6 +71,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee,TEXT("Enemy.Ability.Melee"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee_1,TEXT("Enemy.Ability.Melee.1"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee_2,TEXT("Enemy.Ability.Melee.2"))
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee_3,TEXT("Enemy.Ability.Melee.3"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Ranged,TEXT("Enemy.Ability.Ranged"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_SetByCaller_Melee,TEXT("Enemy.SetByCaller.Melee"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Attack_Blockable,TEXT("Enemy.Attack.Blockable"))
