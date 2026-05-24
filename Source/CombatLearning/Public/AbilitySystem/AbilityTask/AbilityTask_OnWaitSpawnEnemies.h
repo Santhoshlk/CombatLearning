@@ -46,4 +46,11 @@ private:
 	int32 CachedNumToSpawn;
 	 FVector CachedSpawnLocation;
 	 FRotator CachedSpawnRotation;
+   FDelegateHandle DelegateHandle;
+	
+	virtual void Activate() override;
+	virtual void OnDestroy(bool bInOwnerFinished) override;
+
+
+	void OnGameplayEventTagReceived( const FGameplayEventData* Data);
 };
