@@ -72,10 +72,15 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee_1,TEXT("Enemy.Ability.Melee.1"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee_2,TEXT("Enemy.Ability.Melee.2"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Melee_3,TEXT("Enemy.Ability.Melee.3"))
+	 UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_SummonEnemies,TEXT("Enemy.Ability.SummonEnemies"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Ability_Ranged,TEXT("Enemy.Ability.Ranged"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_SetByCaller_Melee,TEXT("Enemy.SetByCaller.Melee"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Attack_Blockable,TEXT("Enemy.Attack.Blockable"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Attack_UnBlockable,TEXT("Enemy.Attack.UnBlockable"))
+
+	//**Tags for Enemies Events**//
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Event_SummonEnemies,TEXT("Enemy.Event.SummonEnemies"))
+	
 
 	//** Sate Machine Tags || Status**//
 	UE_DEFINE_GAMEPLAY_TAG(Player_State_JumpToFinisher_Axe,TEXT("Player.State.JumpToFinisher.Axe"))
