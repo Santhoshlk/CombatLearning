@@ -84,6 +84,7 @@ void UAbilityTask_OnWaitSpawnEnemies::OnEnemyAsyncLoad()
 		 const FRotator SpawnRotation = AbilitySystemComponent->GetAvatarActor()->GetActorForwardVector().ToOrientationRotator();
 		
 		AEnemyBase* SpawnedEnemy = 	LoadedWorld->SpawnActor<AEnemyBase>(LoadedClass,RandomLocation,SpawnRotation,Parameters);
+			
 			SpawnedEnemy->SetActorRotation(SpawnRotation);
 		
 			if (SpawnedEnemy)

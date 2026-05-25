@@ -27,7 +27,7 @@ AEnemyBase::AEnemyBase()
 
 	//to set up the free camera and other properties
 	GetCharacterMovement()->bUseControllerDesiredRotation=false;
-	GetCharacterMovement()->bOrientRotationToMovement=true;
+	GetCharacterMovement()->bOrientRotationToMovement=false;
 	GetCharacterMovement()->RotationRate=FRotator(0.f,180.f,0.f);
 	GetCharacterMovement()->MaxWalkSpeed=400.f;
 	GetCharacterMovement()->BrakingDecelerationWalking=1000.f;
