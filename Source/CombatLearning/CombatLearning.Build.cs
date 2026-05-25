@@ -23,7 +23,8 @@ public class CombatLearning : ModuleRules
 			"GameplayTasks", "GameplayAbilities",
 			"AnimGraphRuntime",
 			"MotionWarping",
-			"Niagara"
+			"Niagara",
+			"NavigationSystem"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

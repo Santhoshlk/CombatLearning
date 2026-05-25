@@ -27,13 +27,14 @@ public:
 		TSoftClassPtr<AEnemyBase> EnemiesSpawnClass,
 		FGameplayTag InputTag,
 		int32 NumToSpawn ,
-		const FVector& SpawnLocation,
+		const FVector& SpawnOrigin,
+		float RadiusToSpawn,
 		const FRotator& SpawnRotation
 		);
 
 	// Output Should be delegates
 	UPROPERTY(BlueprintAssignable)
-	FOnWaitSpawnEnemiesDelegate SpawnedEnemies;
+	FOnWaitSpawnEnemiesDelegate OnEnemiesSpawnFinished;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnWaitSpawnEnemiesDelegate NotSpawnedEnemies;
@@ -44,13 +45,16 @@ private:
 	FGameplayTag CachedTag;
 	TSoftClassPtr<AEnemyBase> CachedEnemiesSpawnClass;
 	int32 CachedNumToSpawn;
-	 FVector CachedSpawnLocation;
+	 FVector CachedSpawnOrigin;
 	 FRotator CachedSpawnRotation;
    FDelegateHandle DelegateHandle;
+	float CachedRadiusToSpawn;
 	
 	virtual void Activate() override;
 	virtual void OnDestroy(bool bInOwnerFinished) override;
 
 
 	void OnGameplayEventTagReceived( const FGameplayEventData* Data);
+
+	void OnEnemyAsyncLoad();
 };
