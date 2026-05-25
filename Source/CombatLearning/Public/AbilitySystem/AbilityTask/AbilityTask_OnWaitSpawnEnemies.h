@@ -28,8 +28,7 @@ public:
 		FGameplayTag InputTag,
 		int32 NumToSpawn ,
 		const FVector& SpawnOrigin,
-		float RadiusToSpawn,
-		const FRotator& SpawnRotation
+		float RadiusToSpawn
 		);
 
 	// Output Should be delegates
@@ -46,7 +45,7 @@ private:
 	TSoftClassPtr<AEnemyBase> CachedEnemiesSpawnClass;
 	int32 CachedNumToSpawn;
 	 FVector CachedSpawnOrigin;
-	 FRotator CachedSpawnRotation;
+	
    FDelegateHandle DelegateHandle;
 	float CachedRadiusToSpawn;
 	

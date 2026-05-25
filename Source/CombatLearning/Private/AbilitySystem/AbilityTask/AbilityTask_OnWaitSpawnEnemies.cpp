@@ -8,10 +8,11 @@
 #include "NavigationSystem.h"
 #include "Character/Enemy/EnemyBase.h"
 #include "Engine/AssetManager.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 UAbilityTask_OnWaitSpawnEnemies* UAbilityTask_OnWaitSpawnEnemies::WaitSpawnEnemies(UGameplayAbility* OwningAbility,
-                                                                                   TSoftClassPtr<AEnemyBase> EnemiesSpawnClass, FGameplayTag InputTag, int32 NumToSpawn, const FVector& SpawnOrigin,float RadiusToSpawn,
-                                                                                   const FRotator& SpawnRotation)
+                                                                                   TSoftClassPtr<AEnemyBase> EnemiesSpawnClass, FGameplayTag InputTag, int32 NumToSpawn, const FVector& SpawnOrigin,float RadiusToSpawn
+)
 {
 	 UAbilityTask_OnWaitSpawnEnemies* AbilityTask =   NewAbilityTask<UAbilityTask_OnWaitSpawnEnemies>(OwningAbility);
 
@@ -20,7 +21,6 @@ UAbilityTask_OnWaitSpawnEnemies* UAbilityTask_OnWaitSpawnEnemies::WaitSpawnEnemi
 	AbilityTask->CachedTag = InputTag;
 	AbilityTask->CachedNumToSpawn = NumToSpawn;
 	AbilityTask->CachedSpawnOrigin = SpawnOrigin;
-	AbilityTask->CachedSpawnRotation = SpawnRotation;
 	AbilityTask->CachedRadiusToSpawn = RadiusToSpawn;
 	return AbilityTask;
 }
@@ -50,6 +50,7 @@ void UAbilityTask_OnWaitSpawnEnemies::OnGameplayEventTagReceived(const FGameplay
    		NotSpawnedEnemies.Broadcast(TArray<AEnemyBase*>());
    	}
    	EndTask();
+   	 return;
    }
 	
    //Now we do async loading of enemies
@@ -78,7 +79,13 @@ void UAbilityTask_OnWaitSpawnEnemies::OnEnemyAsyncLoad()
 
 			FActorSpawnParameters Parameters;
 			Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-		AEnemyBase* SpawnedEnemy = 	LoadedWorld->SpawnActor<AEnemyBase>(LoadedClass,RandomLocation,CachedSpawnRotation,Parameters);
+
+			//U have the Access to ASC of the GameplayAbility that uses it
+		 const FRotator SpawnRotation = AbilitySystemComponent->GetAvatarActor()->GetActorForwardVector().ToOrientationRotator();
+		
+		AEnemyBase* SpawnedEnemy = 	LoadedWorld->SpawnActor<AEnemyBase>(LoadedClass,RandomLocation,SpawnRotation,Parameters);
+			SpawnedEnemy->SetActorRotation(SpawnRotation);
+		
 			if (SpawnedEnemy)
 			{
 				SpawnedEnemies.Add(SpawnedEnemy);
