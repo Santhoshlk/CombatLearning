@@ -7,7 +7,6 @@
 #include "Blueprint/UserWidget.h"
 #include "Widgets/MorrowBoneWidgetBase.h"
 #include "PlayerController/CombatClassPlayerController.h"
-#include "CombatDebugHelper.h"
 #include "EnhancedInputSubsystems.h"
 #include "MorrowBoneFunctionLibrary.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
@@ -51,7 +50,7 @@ void UMBHeroGameplayAbility_TargetLock::TargetLockOn()
 		CancelTargetLock();
 		return;
 	}
-	Debug::PrintMessage(TEXT("TargetLockOnActivated"));
+	
 	CurrentTargetLockActor = GetNearestTarget(TraceOutHitActors);
 	if (CurrentTargetLockActor)
 	{
@@ -144,7 +143,7 @@ void UMBHeroGameplayAbility_TargetLock::GetAvailableTargets()
 void UMBHeroGameplayAbility_TargetLock::CancelTargetLock()
 {
 	// if any lock goes wrong eliminate the Gameplay Ability Persistent State
-	Debug::PrintMessage(TEXT("Ability Canceled"));
+
 	CancelAbility(GetCurrentAbilitySpecHandle(),GetCurrentActorInfo(),GetCurrentActivationInfo(),true);
 	
 }
