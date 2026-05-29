@@ -58,7 +58,21 @@ void UMorrowBoneAttributeSet::PostGameplayEffectExecute(const struct FGameplayEf
 	{
 		const float NewCurrentRage = FMath::Clamp(GetCurrentRage(),0.0f,GetMaxRage());
 		SetCurrentRage(NewCurrentRage);
-
+      if (GetCurrentRage() == GetMaxRage())
+      {
+	      UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Player_Status_Rage_Full);
+      }
+	  else if (GetCurrentRage() == 0.f)
+	  {
+	  	UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Player_Status_Rage_None);
+	  }
+	  else
+	  {
+	  	// if neither cases then remove the both tags this works for activation and startup
+	  	UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(	Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Player_Status_Rage_Full);
+	  	UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Player_Status_Rage_None);
+	  }	
+		
 		//now as ur MorrowBone Character will have this but not enemy just don't do a check
 		if (UMorrowBoneUIComponent*MorrowBoneUIComponent=CachedUIInterface->GetMorrowBoneUIComponentFromActor())
 		{

@@ -101,7 +101,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_TargetLock,TEXT("Player.Status.TargetLock"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rage_Activating,TEXT("Player.Status.Rage.Activating"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rage_Active,TEXT("Player.Status.Rage.Active"))
-	UE_DEFINE_GAMEPLAY_TAG(Player_Staus_Rage_Full,TEXT("Player.Status.Rage.Full"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rage_Full,TEXT("Player.Status.Rage.Full"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rage_None,TEXT("Player.Status.Rage.None"))
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Invincibility,TEXT("Shared.Status.Invincibility"))
 
