@@ -16,6 +16,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Look,TEXT("InputTag.Look"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Roll,TEXT("InputTag.Roll"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_SwitchTargets,TEXT("InputTag.SwitchTargets"))
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_ToggleAbility_Rage,TEXT("InputTag.ToggleAbility.Rage"))
 
 	//**ability input tags**//
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Equip_Axe,TEXT("InputTag.Equip.Axe"))
@@ -39,6 +40,10 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SuccessfulBlock,TEXT("Player.Event.SuccessfulBlock"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SwitchTarget_Right,TEXT("Player.Event.SwitchTarget.Right"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SwitchTarget_Left,TEXT("Player.Event.SwitchTarget.Left"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Rage_Activating,TEXT("Player.Event.Rage.Activating"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Rage_Active,TEXT("Player.Event.Rage.Active"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Rage_Full,TEXT("Player.Event.Rage.Full"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Rage_None,TEXT("Player.Event.Rage.None"))
 	
 
 
@@ -61,6 +66,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_HitReact,TEXT("Player.Ability.HitReact"))
     UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Block,TEXT("Player.Ability.Block"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_TargetLock,TEXT("Player.Ability.TargetLock"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Rage,TEXT("Player.Ability.Rage"))
 	
 	//**Tags For Shared Abilities **//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_HeavyAttack,TEXT("Shared.Ability.HitReact.HeavyAttack"))
