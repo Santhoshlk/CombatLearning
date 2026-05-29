@@ -40,6 +40,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SuccessfulBlock,TEXT("Player.Event.SuccessfulBlock"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SwitchTarget_Right,TEXT("Player.Event.SwitchTarget.Right"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SwitchTarget_Left,TEXT("Player.Event.SwitchTarget.Left"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_RageActivation,TEXT("Player.Event.RageActivation"))
 	
 	
 
@@ -102,6 +103,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rage_Active,TEXT("Player.Status.Rage.Active"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Staus_Rage_Full,TEXT("Player.Status.Rage.Full"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Rage_None,TEXT("Player.Status.Rage.None"))
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Invincibility,TEXT("Shared.Status.Invincibility"))
 
 	//** Enemy Weapon Tags**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon_SpikedBat,TEXT("Enemy.Weapon.SpikedBat"))
