@@ -23,6 +23,8 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_UnEquip_Axe,TEXT("InputTag.UnEquip.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_LightAttack_Axe,TEXT("InputTag.LightAttack.Axe"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_HeavyAttack_Axe,TEXT("InputTag.HeavyAttack.Axe"))
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_SpecialWeaponAbility_Light,TEXT("InputTag.SpecialWeaponAbility.Light"))
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_SpecialWeaponAbility_Heavy,TEXT("InputTag.SpecialWeaponAbility.Heavy"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Health_Low,TEXT("Enemy.Health.Low"))
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_MustBeHeld,TEXT("InputTag.MustBeHeld"))
     UE_DEFINE_GAMEPLAY_TAG(InputTag_MustBeHeld_Block,TEXT("InputTag.MustBeHeld.Block"))
@@ -65,6 +67,8 @@ namespace MorrowBoneGameplayTags
     UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Block,TEXT("Player.Ability.Block"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_TargetLock,TEXT("Player.Ability.TargetLock"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Rage,TEXT("Player.Ability.Rage"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_SpecialWeapon_Light,TEXT("Player.Ability.SpecialWeapon.Light"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_SpecialWeapon_Heavy,TEXT("Player.Ability.SpecialWeapon.Heavy"))
 	
 	//**Tags For Shared Abilities **//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_HeavyAttack,TEXT("Shared.Ability.HitReact.HeavyAttack"))
