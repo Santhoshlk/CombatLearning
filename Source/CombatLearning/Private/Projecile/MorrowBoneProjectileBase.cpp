@@ -107,7 +107,20 @@ void AMorrowBoneProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponen
 void AMorrowBoneProjectileBase::OnProjectileOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	
+	if (APawn* HitPawn = Cast<APawn>(OtherActor))
+	{
+		// Impact FX and Sound are Still valid
+		BP_ProjectileImpactFx(SweepResult.ImpactPoint);
+
+		// Apply the Damage by Gameplay Effect Spec Handle
+		if (GetInstigator() != HitPawn)
+		HandleApplyGameplayEffectSpecHandle(HitPawn);
+		
+	}
+	else
+	{
+		return;
+	}
 }
 
 void AMorrowBoneProjectileBase::HandleApplyGameplayEffectSpecHandle(APawn* InPawn)
@@ -122,7 +135,7 @@ void AMorrowBoneProjectileBase::HandleApplyGameplayEffectSpecHandle(APawn* InPaw
 		// now apply HitReact
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
 			InPawn,
-			MorrowBoneGameplayTags::Player_Event_HitReact,
+			MorrowBoneGameplayTags::Shared_Event_HitReact_LightAttack,
            Data
 			);
 	}
