@@ -21,7 +21,7 @@ public:
 
 	//create a function to give the asc by taking GameplayAbilities input
 	UFUNCTION(BlueprintCallable,Category="ASC|WeaponData",meta=(ApplyLevel="1"))
-	void GiveWeaponAbilitiestoASC(const  TArray<FMorrowBoneAbilitySet>& WeaponGameplayAbilities,int32 ApplyLevel,TArray<FGameplayAbilitySpecHandle>& OutGrantedSpecHandle) ;
+	void GiveWeaponAbilitiestoASC(const  TArray<FMorrowBoneAbilitySet>& WeaponGameplayAbilities,const TArray<FMorrowBoneSpecialWeaponAbilitySet>& SpecialWeaponAbilities,int32 ApplyLevel,TArray<FGameplayAbilitySpecHandle>& OutGrantedSpecHandle) ;
 
 	UFUNCTION(BlueprintCallable,Category="ASC|WeaponData")
 	void RemoveWeaponGameplayAbilities(UPARAM(ref) TArray<FGameplayAbilitySpecHandle>& OutGrantedWeaponAbilitySpecHandle);

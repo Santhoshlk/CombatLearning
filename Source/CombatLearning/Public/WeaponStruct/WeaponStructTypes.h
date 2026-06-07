@@ -25,11 +25,26 @@ struct FMorrowBoneAbilitySet
 
 	bool IsValid() const;
 };
+
+// Structs can also inherit
+
+USTRUCT(BlueprintType)
+struct FMorrowBoneSpecialWeaponAbilitySet : public FMorrowBoneAbilitySet
+{
+	GENERATED_BODY();
+	// we can give icon and gameplay tag
+  UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,meta=(Category = "Player.Cooldown"))
+	FGameplayTag AbilityCooldown;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
+	TSoftObjectPtr<UMaterialInterface> SpecialWeaponAbilityIcon;
+};
+
 USTRUCT(BlueprintType)
 struct FWeaponData
 {
 	GENERATED_BODY()
-public:
+
 	// we are using this to store our Linked Anim Layer and any other data weapon need
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="WeaponData")
 	TSubclassOf<UMorrowBoneLinkedAnimLayer> WeaponAnimLayer;
@@ -37,6 +52,10 @@ public:
 	// the place where weapon stores all of its data
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,meta=(TitleProperty="InputTag"))
 	TArray<FMorrowBoneAbilitySet> DefaultWeaponAbilities;
+
+	// the array where it stores special weapon abilities
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category = "WeaponData")
+	TArray<FMorrowBoneSpecialWeaponAbilitySet> SpecialWeaponAbilities;
 
 	//To store the bindings of these abilities InputMappingContext
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)

@@ -68,7 +68,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_TargetLock,TEXT("Player.Ability.TargetLock"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Rage,TEXT("Player.Ability.Rage"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_SpecialWeapon_Light,TEXT("Player.Ability.SpecialWeapon.Light"))
-	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_SpecialWeapon_Heavy,TEXT("Player.Ability.SpecialWeapon.Heavy"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_SpecialWeapon_Heavy,TEXT("PlayerAbility.SpecialWeapon.Heavy"))
 	
 	//**Tags For Shared Abilities **//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_HeavyAttack,TEXT("Shared.Ability.HitReact.HeavyAttack"))
@@ -85,6 +85,10 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_SetByCaller_Melee,TEXT("Enemy.SetByCaller.Melee"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Attack_Blockable,TEXT("Enemy.Attack.Blockable"))
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Attack_UnBlockable,TEXT("Enemy.Attack.UnBlockable"))
+
+	//** Tags for special Situations i.e (Cooldowns) **//
+	UE_DEFINE_GAMEPLAY_TAG(Player_Cooldown_SpecialWeaponAbility_Light,TEXT("Player.Cooldown.SpecialWeaponAbility.Light"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Cooldown_SpecialWeaponAbility_Heavy,TEXT("Player.Cooldown.SpecialWeaponAbility.Heavy"))
 
 	//**Tags for Enemies Events**//
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Event_SummonEnemies,TEXT("Enemy.Event.SummonEnemies"))

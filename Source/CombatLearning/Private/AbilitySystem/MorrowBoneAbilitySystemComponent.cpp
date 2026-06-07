@@ -57,7 +57,7 @@ void UMorrowBoneAbilitySystemComponent::OnReleased(FGameplayTag InInputTag)
 }
 
 void UMorrowBoneAbilitySystemComponent::GiveWeaponAbilitiestoASC(const 
-	TArray<FMorrowBoneAbilitySet>& WeaponGameplayAbilities, int32 ApplyLevel,TArray<FGameplayAbilitySpecHandle>& OutGrantedSpecHandle)
+	TArray<FMorrowBoneAbilitySet>& WeaponGameplayAbilities,const TArray<FMorrowBoneSpecialWeaponAbilitySet>& SpecialWeaponAbilities, int32 ApplyLevel,TArray<FGameplayAbilitySpecHandle>& OutGrantedSpecHandle)
 {
 	if (WeaponGameplayAbilities.IsEmpty())
 	{
@@ -79,6 +79,20 @@ void UMorrowBoneAbilitySystemComponent::GiveWeaponAbilitiestoASC(const
 
 		//give the ability and store the return value in Ability spec handle
 		OutGrantedSpecHandle.AddUnique(GiveAbility(AbilitySpec));
+	}
+
+	for (const auto& AbilitiesToGrant : SpecialWeaponAbilities)
+	{
+		if (!AbilitiesToGrant.IsValid()) continue;
+
+		FGameplayAbilitySpec AbilitySpec(AbilitiesToGrant.HeroInputGameplayAbility);
+
+		AbilitySpec.SourceObject = GetAvatarActor();
+		AbilitySpec.Level = ApplyLevel;
+		AbilitySpec.GetDynamicSpecSourceTags().AddTag(AbilitiesToGrant.InputTag);
+
+		// next give to asc
+		GiveAbility(AbilitySpec);
 	}
 }
 
