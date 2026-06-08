@@ -65,6 +65,9 @@ struct FWeaponData
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	FScalableFloat WeaponBaseDamage;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat SpecialWeaponAbilityDamage;
+
 	// each weapon should come with its own icon
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="WeaponIcon")
 	TSoftObjectPtr<UTexture2D> WeaponIcon;
