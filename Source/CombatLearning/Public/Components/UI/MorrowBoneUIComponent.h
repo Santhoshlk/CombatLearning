@@ -26,10 +26,9 @@ public:
 	FOnWeaponIconChangedDelegate OnWeaponIcon;
 
 	UPROPERTY(BlueprintCallable,BlueprintAssignable,Category="MorrowwBoneUIComponent | Delegates")
-	FonAbilityIconUpdated LightAbilityIcon;
+	FonAbilityIconUpdated onAbilityIcon;
 
-	UPROPERTY(BlueprintCallable,BlueprintAssignable,Category="MorrowwBoneUIComponent | Delegates")
-	FonAbilityIconUpdated HeavyAbilityIcon;
+
 
 
 };
