@@ -3,9 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "PawnUIComponent.h"
 #include "MorrowBoneUIComponent.generated.h"
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeaponIconChangedDelegate,TSoftObjectPtr<UTexture2D>,Icon);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FonAbilityIconUpdated,FGameplayTag,AbilityInputTag,TSoftObjectPtr<UMaterialInterface>,AbilityIconMaterialIntterface);
+
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class COMBATLEARNING_API UMorrowBoneUIComponent : public UPawnUIComponent
@@ -19,15 +22,14 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="MorrowBoneUIComponent")
 	FonPercentageUpdatedDelegate CurrentRagePercentage;
 
-	UPROPERTY(BlueprintCallable,BlueprintAssignable, Category="MorrowBoneUIComponent | Icon")
+	UPROPERTY(BlueprintCallable,BlueprintAssignable, Category="MorrowBoneUIComponent | Delegates")
 	FOnWeaponIconChangedDelegate OnWeaponIcon;
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	UPROPERTY(BlueprintCallable,BlueprintAssignable,Category="MorrowwBoneUIComponent | Delegates")
+	FonAbilityIconUpdated LightAbilityIcon;
 
-public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-	                           FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY(BlueprintCallable,BlueprintAssignable,Category="MorrowwBoneUIComponent | Delegates")
+	FonAbilityIconUpdated HeavyAbilityIcon;
+
+
 };
