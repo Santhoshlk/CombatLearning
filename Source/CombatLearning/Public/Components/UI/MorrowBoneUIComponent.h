@@ -8,7 +8,7 @@
 #include "MorrowBoneUIComponent.generated.h"
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeaponIconChangedDelegate,TSoftObjectPtr<UTexture2D>,Icon);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FonAbilityIconUpdated,FGameplayTag,AbilityInputTag,TSoftObjectPtr<UMaterialInterface>,AbilityIconMaterialIntterface);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FonAbilityCooldownUpdate,FGameplayTag,InInputTag,float,TotalCooldown,float,RemainingCooldown);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class COMBATLEARNING_API UMorrowBoneUIComponent : public UPawnUIComponent
@@ -28,7 +28,8 @@ public:
 	UPROPERTY(BlueprintCallable,BlueprintAssignable,Category="MorrowwBoneUIComponent | Delegates")
 	FonAbilityIconUpdated onAbilityIcon;
 
-
+	UPROPERTY(BlueprintCallable,BlueprintAssignable,Category="MorrowwBoneUIComponent | Delegates")
+    FonAbilityCooldownUpdate onAbilityCooldownUpdate;
 
 
 };
