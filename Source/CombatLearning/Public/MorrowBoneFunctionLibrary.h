@@ -6,6 +6,7 @@
 #include "GameplayTagContainer.h"
 #include "ScalableFloat.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "MorrowBoneEnums.h"
 #include "MorrowBoneFunctionLibrary.generated.h"
 
 struct FGameplayEffectSpecHandle;
@@ -53,4 +54,7 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category = "MorrowBoneFunctionLibrary|ApplyGameplayEffectSpecHandleToTarget")
 	static bool ApplyGameplayEffectSpecHandleToTarget(AActor* InSource,AActor* InTarget,const FGameplayEffectSpecHandle& SpecHandle);
+
+	UFUNCTION(BlueprintCallable,Category="MorrowBoneFunctionLibrary|Cooldown" ,meta=(Latent,WorldContext = "WorldContextObject",LatentInfo = "LatentInfo",ExpandEnumAsExecs = "CooldownActionsInput|CooldownActionsOutput",TotalCooldownTime = "5",UpdateTimeAt = "0.1"))
+	static void Cooldown(UObject* WorldContextObject,float TotalCooldownTime,float UpdateTimeAt,float& RemainingTime,ECooldownActionsInput CooldownActionsInput, UPARAM(DisplayName = "Output")ECooldownActionsOutput& CooldownActionsOutput,FLatentActionInfo LatentInfo);
 };

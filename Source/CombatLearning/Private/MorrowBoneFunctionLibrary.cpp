@@ -161,3 +161,9 @@ bool UMorrowBoneFunctionLibrary::ApplyGameplayEffectSpecHandleToTarget(AActor* I
 	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data,TargetASC);
 		return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
 }
+
+void UMorrowBoneFunctionLibrary::Cooldown(UObject* WorldContextObject, float TotalCooldownTime, float UpdateTimeAt,
+	float& RemainingTime, ECooldownActionsInput CooldownActionsInput, ECooldownActionsOutput& CooldownActionsOutput,
+	FLatentActionInfo LatentInfo)
+{
+}
