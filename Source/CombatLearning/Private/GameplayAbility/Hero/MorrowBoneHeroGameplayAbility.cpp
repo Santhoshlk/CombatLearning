@@ -31,6 +31,23 @@ UMorrowBoneCombatComponent* UMorrowBoneHeroGameplayAbility::GetMorrowBoneCombatC
 	return GetMorrowBoneCharacter()->GetCombatComponent();
 }
 
+bool UMorrowBoneHeroGameplayAbility::GetRemainingAbilityCooldownFromTag(FGameplayTag InCooldownTag,
+	float& TotalCooldownTime, float& RemainingCooldownTime)
+{
+  checkf(InCooldownTag.IsValid(),TEXT("The Cooldown tag provided needs to be valid"));
+
+	FGameplayEffectQuery Query = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(InCooldownTag.GetSingleTagContainer());
+	TArray<TPair<float,float>> TotalCooldownTimeAndDuration = GetMorrowBoneAbilitySystemComponent()->GetActiveEffectsTimeRemainingAndDuration(Query);
+	if (TotalCooldownTimeAndDuration.IsEmpty())
+	{
+		return false;
+	}
+	RemainingCooldownTime = TotalCooldownTimeAndDuration[0].Key;
+	TotalCooldownTime = TotalCooldownTimeAndDuration[0].Value;
+
+	return RemainingCooldownTime > 0.f;
+}
+
 FGameplayEffectSpecHandle UMorrowBoneHeroGameplayAbility::MakeMorrowBoneDamageEffectSpecHandle(
 	TSubclassOf<UGameplayEffect> EffectClass, float weaponBaseDamage, FGameplayTag CurrentAttackType,
 	int32 UsedComboCount)

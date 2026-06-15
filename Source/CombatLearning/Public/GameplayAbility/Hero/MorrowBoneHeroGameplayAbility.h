@@ -27,6 +27,9 @@ public:
 
 	UFUNCTION(BlueprintPure,Category="GameplayAbility|CombatComponent")
 	UMorrowBoneCombatComponent* GetMorrowBoneCombatComponent();
+    UFUNCTION(BlueprintCallable,Category= "GameplayAbility|GetCooldownTime")
+	bool GetRemainingAbilityCooldownFromTag(FGameplayTag InCooldownTag,float& TotalCooldownTime,float& RemainingCooldownTime);
+	
 
 	//to handle the damage calculation in the gameplay abilities make an outgoing gameplay effect spec handle
 	// it is the math sandbox which contains about the info of who caused the damage and other details
