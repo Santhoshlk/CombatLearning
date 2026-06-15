@@ -32,4 +32,7 @@ public:
 		
 	}
 
+void Cancel();
+	
+	virtual void UpdateOperation(FLatentResponse& Response) override;
 };

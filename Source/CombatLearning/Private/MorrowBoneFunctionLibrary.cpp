@@ -3,12 +3,12 @@
 
 #include "MorrowBoneFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
-
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "GenericTeamAgentInterface.h"
 #include "GameplayTag/MorrowBoneGameplayTags.h"
 #include "Interface/PawnCombatInterface.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "LatentAction/MorrowBoneCooldownLatentAction.h"
 
 
 UMorrowBoneAbilitySystemComponent* UMorrowBoneFunctionLibrary::NativeGetAbilitySystemComponentFromActor(AActor* InputActor)
@@ -166,4 +166,35 @@ void UMorrowBoneFunctionLibrary::Cooldown(UObject* WorldContextObject, float Tot
 	float& RemainingTime, ECooldownActionsInput CooldownActionsInput, ECooldownActionsOutput& CooldownActionsOutput,
 	FLatentActionInfo LatentInfo)
 {
+	UWorld* World = nullptr;
+	if (GEngine)
+	{
+		World = GEngine->GetWorldFromContextObject(WorldContextObject,EGetWorldErrorMode::LogAndReturnNull);
+	}
+
+   if (!World)
+   {
+	   return;
+   }
+	
+	FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+
+	FNativeCooldownLatentAction* LatentAction = LatentActionManager.FindExistingAction<FNativeCooldownLatentAction>(LatentInfo.CallbackTarget,LatentInfo.UUID);
+	if (CooldownActionsInput == ECooldownActionsInput::Start)
+	{
+		// u do is ki create a new action
+		if (!LatentAction)
+		{
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget,LatentInfo.UUID,
+				new FNativeCooldownLatentAction(TotalCooldownTime,UpdateTimeAt,RemainingTime, CooldownActionsOutput,LatentInfo));
+			
+		}
+	}
+	if (CooldownActionsInput == ECooldownActionsInput::Cancel)
+	{
+		  if (LatentAction)
+		  {
+			 LatentAction->Cancel();
+		  }
+	}
 }
