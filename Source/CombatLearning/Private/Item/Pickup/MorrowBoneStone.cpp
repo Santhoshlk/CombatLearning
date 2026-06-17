@@ -3,24 +3,17 @@
 
 #include "Item/Pickup/MorrowBoneStone.h"
 
+#include "NiagaraComponent.h"
+
 
 // Sets default values
 AMorrowBoneStone::AMorrowBoneStone()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-}
-
-// Called when the game starts or when spawned
-void AMorrowBoneStone::BeginPlay()
-{
-	Super::BeginPlay();
 	
+	PrimaryActorTick.bCanEverTick = false;
+	StoneNiagara = CreateDefaultSubobject<UNiagaraComponent>(TEXT("StoneMesh"));
+	StoneNiagara->SetupAttachment(RootComponent);
 }
 
-// Called every frame
-void AMorrowBoneStone::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
+
 

@@ -6,6 +6,8 @@
 #include "MorrowBonePickup.h"
 #include "MorrowBoneStone.generated.h"
 
+class UNiagaraComponent;
+
 UCLASS()
 class COMBATLEARNING_API AMorrowBoneStone : public AMorrowBonePickup
 {
@@ -14,12 +16,8 @@ class COMBATLEARNING_API AMorrowBoneStone : public AMorrowBonePickup
 public:
 	// Sets default values for this actor's properties
 	AMorrowBoneStone();
-
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = "Stone")
+	TObjectPtr<UNiagaraComponent> StoneNiagara;
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 };
