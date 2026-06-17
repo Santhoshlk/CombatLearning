@@ -46,5 +46,9 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="GameplayAbility|ApplyEffectSpecHandle",meta=(DisplayName="ApplyGameplayEffectSpecHandleToTarget"))
 	FActiveGameplayEffectHandle BP_ApplyGameplayEffectSpecHandleToTarget(AActor* TargetActor,const FGameplayEffectSpecHandle& InputSpectHandle) ;
+
+
+	UFUNCTION(BlueprintCallable,Category="GameplayAbility|Apply Spec Handle To Hit Result")
+	void ApplyGameplayEffectSpecHandleToHitResult(const FGameplayEffectSpecHandle& SpecHandle,const TArray<FHitResult>& HitResult);
 	
 };

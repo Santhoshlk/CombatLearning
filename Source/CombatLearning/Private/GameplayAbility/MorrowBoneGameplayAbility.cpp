@@ -5,9 +5,11 @@
 #include "AbilitySystem/MorrowBoneAbilitySystemComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GameplayEffectTypes.h"
+#include "MorrowBoneFunctionLibrary.h"
+#include "GameplayTag/MorrowBoneGameplayTags.h"
 
 void UMorrowBoneGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo,
-	const FGameplayAbilitySpec& Spec)
+                                               const FGameplayAbilitySpec& Spec)
 {
 	Super::OnGiveAbility(ActorInfo, Spec);
 	//FGameplayAbilityActorInfo is a great struct which can have a lot of Info about our actor
@@ -54,5 +56,38 @@ FActiveGameplayEffectHandle UMorrowBoneGameplayAbility::BP_ApplyGameplayEffectSp
 	const FGameplayEffectSpecHandle& InputSpectHandle) 
 {
 	return NativeApplyGameplayEffectSpecHandleToTarget(TargetActor, InputSpectHandle);
+}
+
+void UMorrowBoneGameplayAbility::ApplyGameplayEffectSpecHandleToHitResult(const FGameplayEffectSpecHandle& SpecHandle,
+	const TArray<FHitResult>& HitResult)
+{
+	if (HitResult.IsEmpty())
+	{
+		return;
+	}
+	checkf(SpecHandle.IsValid(),TEXT("The specified Gameplay Effect Spec Handle should be valid"));
+	for (const auto& Hit :HitResult)
+	{
+		if (APawn* HitPawn = Cast<APawn>(Hit.GetActor()))
+		{
+			if (APawn* OwningPawn = Cast<APawn>(GetAvatarActorFromActorInfo()))
+			{
+				//check if it is hostile
+				FGameplayEventData Data;
+				Data.Instigator = OwningPawn;
+				Data.Target = HitPawn;
+				if (UMorrowBoneFunctionLibrary::IsTargetPawnHostile(OwningPawn,HitPawn))
+				{
+					// u can apply gameplay effect damage spec handle and call teh hit react
+					NativeApplyGameplayEffectSpecHandleToTarget(HitPawn,SpecHandle);
+					UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+                     HitPawn,
+                     MorrowBoneGameplayTags::Shared_Event_HitReact_LightAttack,
+                     Data
+					);
+				}
+			}
+		}
+	}
 }
 
