@@ -79,12 +79,16 @@ void UMorrowBoneGameplayAbility::ApplyGameplayEffectSpecHandleToHitResult(const 
 				if (UMorrowBoneFunctionLibrary::IsTargetPawnHostile(OwningPawn,HitPawn))
 				{
 					// u can apply gameplay effect damage spec handle and call teh hit react
-					NativeApplyGameplayEffectSpecHandleToTarget(HitPawn,SpecHandle);
-					UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
-                     HitPawn,
-                     MorrowBoneGameplayTags::Shared_Event_HitReact_LightAttack,
-                     Data
+					FActiveGameplayEffectHandle ActiveGameplayEffect =   NativeApplyGameplayEffectSpecHandleToTarget(HitPawn,SpecHandle);
+					if (ActiveGameplayEffect.WasSuccessfullyApplied())
+					{
+						UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+					 HitPawn,
+					 MorrowBoneGameplayTags::Shared_Event_HitReact_LightAttack,
+					 Data
 					);
+					}
+					
 				}
 			}
 		}

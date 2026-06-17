@@ -43,7 +43,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SwitchTarget_Right,TEXT("Player.Event.SwitchTarget.Right"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_SwitchTarget_Left,TEXT("Player.Event.SwitchTarget.Left"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_RageActivation,TEXT("Player.Event.RageActivation"))
-	
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_AOE,TEXT("Player.Event.AOE"))
 	
 
 
