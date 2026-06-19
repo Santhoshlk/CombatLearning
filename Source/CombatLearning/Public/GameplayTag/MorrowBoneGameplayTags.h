@@ -65,6 +65,7 @@ namespace MorrowBoneGameplayTags
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Rage)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_SpecialWeapon_Light)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_SpecialWeapon_Heavy)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Pickup_Stones)
 
 
 	//** Tags for special Situations i.e (Cooldowns) **//

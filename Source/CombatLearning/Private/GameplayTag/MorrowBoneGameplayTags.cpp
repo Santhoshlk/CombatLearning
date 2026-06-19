@@ -69,6 +69,7 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Rage,TEXT("Player.Ability.Rage"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_SpecialWeapon_Light,TEXT("Player.Ability.SpecialWeapon.Light"))
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_SpecialWeapon_Heavy,TEXT("Player.Ability.SpecialWeapon.Heavy"))
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Pickup_Stones,TEXT("Player.Ability.Pickup.Stones"));
 	
 	//**Tags For Shared Abilities **//
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_HeavyAttack,TEXT("Shared.Ability.HitReact.HeavyAttack"))
