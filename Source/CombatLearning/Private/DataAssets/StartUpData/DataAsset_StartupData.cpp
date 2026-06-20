@@ -8,29 +8,29 @@
 void UDataAsset_StartupData::GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemComponent>& ASC, int32 ApplyLevel)
 {
 	//it is important to check your ASC
-	checkf(ASC,TEXT("The AbilitySystem Component is Not Valid for the Avatar Actor u want to give the Ability "));
-	GrantAbility(CommonStartupAbility,ASC);
-	GrantAbility(ReactiveAbility,ASC);
+	checkf(ASC, TEXT("The AbilitySystem Component is Not Valid for the Avatar Actor u want to give the Ability "));
+	GrantAbility(CommonStartupAbility, ASC);
+	GrantAbility(ReactiveAbility, ASC);
 
 	//set the applyLevel to be 3
-	
+
 	// u can grant the gameplay effects to ability system component
 	if (!GameplayEffect_Startup.IsEmpty())
 	{
 		// now we give each effect
-		for (const auto& EffectsToGive: GameplayEffect_Startup )
+		for (const auto& EffectsToGive : GameplayEffect_Startup)
 		{
 			if (!EffectsToGive) continue;
 
-			UGameplayEffect*Effect=EffectsToGive->GetDefaultObject<UGameplayEffect>();
+			UGameplayEffect* Effect = EffectsToGive->GetDefaultObject<UGameplayEffect>();
 
-			ASC->ApplyGameplayEffectToSelf(Effect,ApplyLevel,ASC->MakeEffectContext());
+			ASC->ApplyGameplayEffectToSelf(Effect, ApplyLevel, ASC->MakeEffectContext());
 		}
 	}
 }
 
-void UDataAsset_StartupData::GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplayAbility>> &InitialAbilities,
-	TObjectPtr<UMorrowBoneAbilitySystemComponent>& ASC, int32 ApplyLevel)
+void UDataAsset_StartupData::GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplayAbility>>& InitialAbilities,
+                                          TObjectPtr<UMorrowBoneAbilitySystemComponent>& ASC, int32 ApplyLevel)
 {
 	if (InitialAbilities.IsEmpty())
 	{
@@ -49,7 +49,5 @@ void UDataAsset_StartupData::GrantAbility(TArray<TSubclassOf<UMorrowBoneGameplay
 		AbilityToGrant.SourceObject = ASC->GetAvatarActor();
 		AbilityToGrant.Level = ApplyLevel;
 		ASC->GiveAbility(AbilityToGrant);
-		
 	}
-
 }

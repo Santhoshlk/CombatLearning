@@ -9,24 +9,23 @@
 
 struct FEnemyDamageAttributeCapture
 {
-	
 	DECLARE_ATTRIBUTE_CAPTUREDEF(AttackPower)
 	DECLARE_ATTRIBUTE_CAPTUREDEF(DefensePower)
 	DECLARE_ATTRIBUTE_CAPTUREDEF(DamageTaken)
+
 	FEnemyDamageAttributeCapture()
 	{
-		
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,AttackPower,Source,false);
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,DefensePower,Target,false);
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,DamageTaken,Target,false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet, AttackPower, Source, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet, DefensePower, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet, DamageTaken, Target, false);
 	}
 };
+
 // to prevent multiple declerations use static variable and a static function
-static const FEnemyDamageAttributeCapture GetEnemyDamageAttributeCaptureDef() 
+static const FEnemyDamageAttributeCapture GetEnemyDamageAttributeCaptureDef()
 {
 	static FEnemyDamageAttributeCapture DamageData;
 	return DamageData;
-	
 }
 
 UGEEx_EnemyDamageGivenCalculation::UGEEx_EnemyDamageGivenCalculation()
@@ -42,8 +41,8 @@ void UGEEx_EnemyDamageGivenCalculation::Execute_Implementation(
 {
 	Super::Execute_Implementation(ExecutionParams, OutExecutionOutput);
 
-     const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
-	
+	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+
 	FAggregatorEvaluateParameters EvaluationParams;
 
 	EvaluationParams.SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
@@ -51,10 +50,16 @@ void UGEEx_EnemyDamageGivenCalculation::Execute_Implementation(
 
 	float AttackPowerValue = 0.0f;
 	float DefensePowerValue = 0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetEnemyDamageAttributeCaptureDef().AttackPowerDef,EvaluationParams,AttackPowerValue);
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetEnemyDamageAttributeCaptureDef().DefensePowerDef,EvaluationParams,DefensePowerValue);
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(
+		GetEnemyDamageAttributeCaptureDef().AttackPowerDef,
+		EvaluationParams,
+		AttackPowerValue);
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(
+		GetEnemyDamageAttributeCaptureDef().DefensePowerDef,
+		EvaluationParams,
+		DefensePowerValue);
 	float BaseWeaponDamageValue = 0.f;
-	for (const TPair<FGameplayTag,float> TagMagnitudes :Spec.SetByCallerTagMagnitudes)
+	for (const TPair<FGameplayTag, float> TagMagnitudes : Spec.SetByCallerTagMagnitudes)
 	{
 		if (TagMagnitudes.Key.MatchesTagExact(MorrowBoneGameplayTags::Enemy_SetByCaller_Melee))
 		{
@@ -64,14 +69,13 @@ void UGEEx_EnemyDamageGivenCalculation::Execute_Implementation(
 	}
 	// Debug::PrintDebugData(TEXT("AttackPowerValue"),AttackPowerValue);
 	// Debug::PrintDebugData(TEXT("DefensePowerValue"),DefensePowerValue);
-	const float FinalDamage = BaseWeaponDamageValue * AttackPowerValue/DefensePowerValue;
-    // Debug::PrintDebugData(TEXT("FinalDamage"),FinalDamage);
+	const float FinalDamage = BaseWeaponDamageValue * AttackPowerValue / DefensePowerValue;
+	// Debug::PrintDebugData(TEXT("FinalDamage"),FinalDamage);
 	OutExecutionOutput.AddOutputModifier(
-    FGameplayModifierEvaluatedData(
-    	GetEnemyDamageAttributeCaptureDef().DamageTakenProperty,
-    	EGameplayModOp::Override,
-    	FinalDamage
-    	)
+		FGameplayModifierEvaluatedData(
+			GetEnemyDamageAttributeCaptureDef().DamageTakenProperty,
+			EGameplayModOp::Override,
+			FinalDamage
+		)
 	);
-	
 }

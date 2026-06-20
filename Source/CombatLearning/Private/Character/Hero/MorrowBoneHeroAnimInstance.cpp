@@ -11,10 +11,8 @@ void UMorrowBoneHeroAnimInstance::NativeInitializeAnimation()
 	//we need a current reference to our actual ptr
 	if (OwningPtr)
 	{
-		OwningPlayerCharacter=Cast<AMorrowBone>(OwningPtr);
-		
+		OwningPlayerCharacter = Cast<AMorrowBone>(OwningPtr);
 	}
-	
 }
 
 void UMorrowBoneHeroAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaTime)
@@ -22,12 +20,12 @@ void UMorrowBoneHeroAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaTim
 	Super::NativeThreadSafeUpdateAnimation(DeltaTime);
 	if (bHasAcceleration)
 	{
-		IdleElapsedTime=0.f;
-		bShouldEnterRelaxedState=false;
+		IdleElapsedTime = 0.f;
+		bShouldEnterRelaxedState = false;
 	}
 	else
 	{
-		IdleElapsedTime+=DeltaTime;
-		bShouldEnterRelaxedState=(IdleElapsedTime>=EnterRelaxedStateThreshold);
+		IdleElapsedTime += DeltaTime;
+		bShouldEnterRelaxedState = (IdleElapsedTime >= EnterRelaxedStateThreshold);
 	}
 }

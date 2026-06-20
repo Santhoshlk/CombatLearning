@@ -9,7 +9,6 @@
 #include "Interface/PawnUIInterface.h"
 
 
-
 UMorrowBoneAttributeSet::UMorrowBoneAttributeSet()
 {
 	InitCurrentHealth(1.0F);
@@ -24,83 +23,92 @@ UMorrowBoneAttributeSet::UMorrowBoneAttributeSet()
 
 void UMorrowBoneAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
 {
+	//Now what ur Going to Do is Bring the UI Component To PostGameplayEffect as the value of the UI Widget will be Given Here.
+	if (!CachedUIInterface.IsValid())
+	{
+		//instead of using cast u can also use the Pointers
+		CachedUIInterface = TWeakInterfacePtr<IPawnUIInterface>(Data.Target.GetAvatarActor());
+	}
 
-	 
- 	//Now what ur Going to Do is Bring the UI Component To PostGameplayEffect as the value of the UI Widget will be Given Here.
-	 if (!CachedUIInterface.IsValid())
-	 {
-	 	//instead of using cast u can also use the Pointers
-		 CachedUIInterface=TWeakInterfacePtr<IPawnUIInterface>(Data.Target.GetAvatarActor());
-	 }
+	checkf(
+		CachedUIInterface.IsValid(),
+		TEXT(" %s The Actor Did not Implement the Interface Properly"),
+		*Data.Target.GetAvatarActor()->GetActorNameOrLabel());
+	UPawnUIComponent* PawnUIComponent = CachedUIInterface->GetPawnUIComponent();
 
-    checkf(CachedUIInterface.IsValid(),TEXT(" %s The Actor Did not Implement the Interface Properly"),*Data.Target.GetAvatarActor()->GetActorNameOrLabel());
-     UPawnUIComponent* PawnUIComponent= CachedUIInterface->GetPawnUIComponent();
+	checkf(
+		PawnUIComponent,
+		TEXT("%s The Actor Did not Provide the UI Component"),
+		*Data.Target.GetAvatarActor()->GetActorNameOrLabel());
 
-	checkf(PawnUIComponent,TEXT("%s The Actor Did not Provide the UI Component"),*Data.Target.GetAvatarActor()->GetActorNameOrLabel());
 
-	
-	
 	// this function executes after a Gameplay effect has been done  enemy / Self Attribute Set
- 	Super::PostGameplayEffectExecute(Data);
-	const FGameplayAttribute& Attr=Data.EvaluatedData.Attribute;
+	Super::PostGameplayEffectExecute(Data);
+	const FGameplayAttribute& Attr = Data.EvaluatedData.Attribute;
 	if (Attr == GetCurrentHealthAttribute())
 	{
 		// now lets set the values in the form of clamping
-		const float NewCurrentHealth = FMath::Clamp(GetCurrentHealth(),0.0f,GetMaxHealth());
+		const float NewCurrentHealth = FMath::Clamp(GetCurrentHealth(), 0.0f, GetMaxHealth());
 		SetCurrentHealth(NewCurrentHealth);
-		const float HealthPercentage = GetCurrentHealth()/GetMaxHealth();
+		const float HealthPercentage = GetCurrentHealth() / GetMaxHealth();
 		PawnUIComponent->CurrentHealthPercentage.Broadcast(HealthPercentage);
-		
-		
 	}
 	// do the same thing for rage
 	if (Attr == GetCurrentRageAttribute())
 	{
-		const float NewCurrentRage = FMath::Clamp(GetCurrentRage(),0.0f,GetMaxRage());
+		const float NewCurrentRage = FMath::Clamp(GetCurrentRage(), 0.0f, GetMaxRage());
 		SetCurrentRage(NewCurrentRage);
-      if (GetCurrentRage() == GetMaxRage())
-      {
-	      UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Player_Status_Rage_Full);
-      }
-	  else if (GetCurrentRage() == 0.f)
-	  {
-	  	UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Player_Status_Rage_None);
-	  }
-	  else
-	  {
-	  	// if neither cases then remove the both tags this works for activation and startup
-	  	UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(	Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Player_Status_Rage_Full);
-	  	UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Player_Status_Rage_None);
-	  }	
-		
+		if (GetCurrentRage() == GetMaxRage())
+		{
+			UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(
+				Data.Target.GetAvatarActor(),
+				MorrowBoneGameplayTags::Player_Status_Rage_Full);
+		}
+		else if (GetCurrentRage() == 0.f)
+		{
+			UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(
+				Data.Target.GetAvatarActor(),
+				MorrowBoneGameplayTags::Player_Status_Rage_None);
+		}
+		else
+		{
+			// if neither cases then remove the both tags this works for activation and startup
+			UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(
+				Data.Target.GetAvatarActor(),
+				MorrowBoneGameplayTags::Player_Status_Rage_Full);
+			UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(
+				Data.Target.GetAvatarActor(),
+				MorrowBoneGameplayTags::Player_Status_Rage_None);
+		}
+
 		//now as ur MorrowBone Character will have this but not enemy just don't do a check
-		if (UMorrowBoneUIComponent*MorrowBoneUIComponent=CachedUIInterface->GetMorrowBoneUIComponentFromActor())
+		if (UMorrowBoneUIComponent* MorrowBoneUIComponent = CachedUIInterface->GetMorrowBoneUIComponentFromActor())
 		{
 			//call the broadcast
-			MorrowBoneUIComponent->CurrentRagePercentage.Broadcast(GetCurrentRage()/GetMaxRage());
+			MorrowBoneUIComponent->CurrentRagePercentage.Broadcast(GetCurrentRage() / GetMaxRage());
 		}
 	}
 	// Now use the proxy attribute to set the current health
 	if (Attr == GetDamageTakenAttribute())
 	{
 		const float Damage = GetDamageTaken();
-		const float DamagedHealth=FMath::Clamp(GetCurrentHealth()-Damage,0.0f,GetMaxHealth());
+		const float DamagedHealth = FMath::Clamp(GetCurrentHealth() - Damage, 0.0f, GetMaxHealth());
 		SetCurrentHealth(DamagedHealth);
-		PawnUIComponent->CurrentHealthPercentage.Broadcast(GetCurrentHealth()/GetMaxHealth());
-		const float HealthPercentage = GetCurrentHealth()/GetMaxHealth();
+		PawnUIComponent->CurrentHealthPercentage.Broadcast(GetCurrentHealth() / GetMaxHealth());
+		const float HealthPercentage = GetCurrentHealth() / GetMaxHealth();
 		if (HealthPercentage <= 0.3)
 		{
-			UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Enemy_Health_Low);
-
+			UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(
+				Data.Target.GetAvatarActor(),
+				MorrowBoneGameplayTags::Enemy_Health_Low);
 		}
-		if (GetCurrentHealth()<= 0 )
+		if (GetCurrentHealth() <= 0)
 		{
 			// u can add a gameplay tag to call a gameplay event to set the death Montages and everything
 			//From the Data U can get the ASC of the current instance of calling of this function
-			UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(),MorrowBoneGameplayTags::Shared_Status_Death);
-		  
+			UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(
+				Data.Target.GetAvatarActor(),
+				MorrowBoneGameplayTags::Shared_Status_Death);
 		}
 	}
-	
-
 }

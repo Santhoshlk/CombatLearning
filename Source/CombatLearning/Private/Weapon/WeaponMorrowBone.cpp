@@ -15,7 +15,6 @@ AWeaponMorrowBone::AWeaponMorrowBone()
 void AWeaponMorrowBone::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -23,4 +22,3 @@ void AWeaponMorrowBone::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
-

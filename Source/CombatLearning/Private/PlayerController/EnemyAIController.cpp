@@ -8,13 +8,11 @@
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
-AEnemyAIController::AEnemyAIController(const FObjectInitializer& ObjectInitializer):
- Super(ObjectInitializer.SetDefaultSubobjectClass<UCrowdFollowingComponent>(TEXT("PathFollowingComponent")))
+AEnemyAIController::AEnemyAIController(const FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer.SetDefaultSubobjectClass<UCrowdFollowingComponent>(TEXT("PathFollowingComponent")))
 {
-	
-
 	//Create the Components
-	EnemyAISight=CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("EnemyAISight"));
+	EnemyAISight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("EnemyAISight"));
 
 	//SettingPrimaryProperties
 	EnemyAISight->DetectionByAffiliation.bDetectEnemies = true;
@@ -23,28 +21,29 @@ AEnemyAIController::AEnemyAIController(const FObjectInitializer& ObjectInitializ
 	EnemyAISight->SightRadius = 1200.f;
 	EnemyAISight->LoseSightRadius = 0.f;
 	//Depends on the Type of game
-	EnemyAISight->PeripheralVisionAngleDegrees= 360.f;
+	EnemyAISight->PeripheralVisionAngleDegrees = 360.f;
 
 	//Sense is In Perception Component 
-	EnemyPerceptionComponent=CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("EnemyPerceptionComponent"));
+	EnemyPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("EnemyPerceptionComponent"));
 	EnemyPerceptionComponent->ConfigureSense(*EnemyAISight);
 	EnemyPerceptionComponent->SetDominantSense(UAISenseConfig_Sight::StaticClass());
 	//we use a Delegate to update when the enemy character detects a hostile 
-	EnemyPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this,&ThisClass::AEnemyAIController::OnTargetPerceptionUpdate);
+	EnemyPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(
+		this,
+		&ThisClass::AEnemyAIController::OnTargetPerceptionUpdate);
 	SetGenericTeamId(FGenericTeamId(1));
 }
 
 ETeamAttitude::Type AEnemyAIController::GetTeamAttitudeTowards(const AActor& Other) const
 {
-	const APawn* PawnTobeChecked=Cast<const APawn>(&Other);
+	const APawn* PawnTobeChecked = Cast<const APawn>(&Other);
 	const IGenericTeamAgentInterface* Agent = Cast<const IGenericTeamAgentInterface>(PawnTobeChecked->GetController());
 	// anything that has even team ID is an Enemy
-	if (Agent && (Agent->GetGenericTeamId()%2 == 0 ) )
+	if (Agent && (Agent->GetGenericTeamId() % 2 == 0))
 	{
 		return ETeamAttitude::Hostile;
 	}
 	return ETeamAttitude::Friendly;
-	
 }
 
 void AEnemyAIController::BeginPlay()
@@ -54,39 +53,38 @@ void AEnemyAIController::BeginPlay()
 	if (UCrowdFollowingComponent* CrowdFollowingComponent = Cast<UCrowdFollowingComponent>(GetPathFollowingComponent()))
 	{
 		//set some properties of AI Avoidance
-		CrowdFollowingComponent->SetCrowdSimulationState(bDetourAIAvoidanceActivated ? ECrowdSimulationState::Enabled : ECrowdSimulationState::Disabled);
-        // if u hav multiple options use switch statement
+		CrowdFollowingComponent->SetCrowdSimulationState(
+			bDetourAIAvoidanceActivated ? ECrowdSimulationState::Enabled : ECrowdSimulationState::Disabled);
+		// if u hav multiple options use switch statement
 		switch (CrowdAvoidanceQuality)
 		{
 		case 1:
 			CrowdFollowingComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Low);
-         break;
+			break;
 		case 2:
 			CrowdFollowingComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Medium);
 			break;
 		case 3:
 			CrowdFollowingComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Good);
-			break;	
+			break;
 		case 4:
 			CrowdFollowingComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::High);
 			break;
 		default:
 			break;
-			
 		}
-        CrowdFollowingComponent->SetAvoidanceGroup(1);
+		CrowdFollowingComponent->SetAvoidanceGroup(1);
 		CrowdFollowingComponent->SetGroupsToAvoid(1);
 		CrowdFollowingComponent->SetCrowdCollisionQueryRange(CrowdAvoidanceCollisionQueryRange);
 		CrowdFollowingComponent->SetCrowdObstacleAvoidance(true);
 	}
-	
 }
 
 void AEnemyAIController::OnTargetPerceptionUpdate(AActor* Actor, FAIStimulus Stimulus)
 {
 	if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
 	{
-		if(!BlackboardComponent->GetValueAsObject(FName(TEXT("TargetActorKey"))))
+		if (!BlackboardComponent->GetValueAsObject(FName(TEXT("TargetActorKey"))))
 		{
 			//check stimuli and update
 			if (Stimulus.WasSuccessfullySensed() && Actor)

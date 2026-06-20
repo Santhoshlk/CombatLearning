@@ -22,11 +22,11 @@ struct FMorrowBoneDamageDataCapture
 	FMorrowBoneDamageDataCapture()
 	{
 		// now define them
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,AttackPower,Source,false)
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,DefensePower,Target,false)
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,CurrentStamina,Source,false)
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,MaxStamina,Source,false)
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet,DamageTaken,Target,false)
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet, AttackPower, Source, false)
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet, DefensePower, Target, false)
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet, CurrentStamina, Source, false)
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet, MaxStamina, Source, false)
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UMorrowBoneAttributeSet, DamageTaken, Target, false)
 	}
 };
 
@@ -36,6 +36,7 @@ static const FMorrowBoneDamageDataCapture& GetMorrowBoneDamageDataCapture()
 	static FMorrowBoneDamageDataCapture Data;
 	return Data;
 }
+
 UGEEx_Calculation_DamageTaken::UGEEx_Calculation_DamageTaken()
 {
 	// add this to relevant attributes to capture
@@ -51,11 +52,10 @@ void UGEEx_Calculation_DamageTaken::Execute_Implementation(
 	FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
 	Super::Execute_Implementation(ExecutionParams, OutExecutionOutput);
-   
-	
-	
+
+
 	// create get in runtime owning spec Handle
-	const FGameplayEffectSpec& Spec=ExecutionParams.GetOwningSpec();
+	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
 
 	// u can also get the  context handle
 	// Spec.GetContext().GetSourceObject()
@@ -65,75 +65,87 @@ void UGEEx_Calculation_DamageTaken::Execute_Implementation(
 	//create ur aggregate Evaluate Params
 	FAggregatorEvaluateParameters EvaluateParameters;
 	//set the source and target tags
-	EvaluateParameters.SourceTags=Spec.CapturedSourceTags.GetAggregatedTags();
-	EvaluateParameters.TargetTags=Spec.CapturedTargetTags.GetAggregatedTags();
+	EvaluateParameters.SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
+	EvaluateParameters.TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
 
-	float BaseWeaponDamage=0.0f;
-	int32 UsedLightAttackComboCount=0;
-	int32 UsedHeavyAttackComboCount=0;
+	float BaseWeaponDamage = 0.0f;
+	int32 UsedLightAttackComboCount = 0;
+	int32 UsedHeavyAttackComboCount = 0;
 	//use Spec to get ur Base Damage to weapon and combo count
-	for (const auto& TagMagnitude :Spec.SetByCallerTagMagnitudes)
+	for (const auto& TagMagnitude : Spec.SetByCallerTagMagnitudes)
 	{
-		
 		if (TagMagnitude.Key.MatchesTagExact(MorrowBoneGameplayTags::Shared_SetByCaller_BaseDamage))
 		{
-			BaseWeaponDamage=TagMagnitude.Value;
+			BaseWeaponDamage = TagMagnitude.Value;
 			// Debug::PrintDebugData(TEXT("BaseWeaponDamage"),BaseWeaponDamage);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(MorrowBoneGameplayTags::Player_SetByCaller_AttackTypes_LightAttack))
 		{
-			UsedLightAttackComboCount=TagMagnitude.Value;
+			UsedLightAttackComboCount = TagMagnitude.Value;
 			// Debug::PrintDebugData(TEXT("UsedLightAttackComboCount"),UsedLightAttackComboCount);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(MorrowBoneGameplayTags::Player_SetByCaller_AttackTypes_HeavyAttack))
 		{
-			UsedHeavyAttackComboCount=TagMagnitude.Value;
+			UsedHeavyAttackComboCount = TagMagnitude.Value;
 			// Debug::PrintDebugData(TEXT("UsedHeavyAttackComboCount"),UsedHeavyAttackComboCount);
 		}
 	}
-	
+
 
 	// u can use ur Execution Params to calculate the values  of all the parameters u need 
-	float MorrowBoneAttackPower=0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().AttackPowerDef,EvaluateParameters,MorrowBoneAttackPower);
-	float EnemyDefensePower=0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().DefensePowerDef,EvaluateParameters,EnemyDefensePower);
-     float MorrowBoneCurrentStamina=0.0f;
-    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().CurrentStaminaDef,EvaluateParameters,MorrowBoneCurrentStamina);
-     float MorrowBoneMaxStamina=0.0f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetMorrowBoneDamageDataCapture().MaxStaminaDef,EvaluateParameters,MorrowBoneMaxStamina);
+	float MorrowBoneAttackPower = 0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(
+		GetMorrowBoneDamageDataCapture().AttackPowerDef,
+		EvaluateParameters,
+		MorrowBoneAttackPower);
+	float EnemyDefensePower = 0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(
+		GetMorrowBoneDamageDataCapture().DefensePowerDef,
+		EvaluateParameters,
+		EnemyDefensePower);
+	float MorrowBoneCurrentStamina = 0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(
+		GetMorrowBoneDamageDataCapture().CurrentStaminaDef,
+		EvaluateParameters,
+		MorrowBoneCurrentStamina);
+	float MorrowBoneMaxStamina = 0.0f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(
+		GetMorrowBoneDamageDataCapture().MaxStaminaDef,
+		EvaluateParameters,
+		MorrowBoneMaxStamina);
 	// Debug::PrintDebugData(TEXT("MorrowBoneAttackPower"),MorrowBoneAttackPower);
 	// Debug::PrintDebugData(TEXT("EnemyDefensePower"),EnemyDefensePower);
 	//Damage Logic
-	float Damage=BaseWeaponDamage;
+	float Damage = BaseWeaponDamage;
 	if (UsedLightAttackComboCount != 0)
 	{
 		// now write the multiplier 6% for the light attack
-		const float LightAttackMultiplier = (UsedLightAttackComboCount-1)* 0.06 + 1.0f;
-		Damage=BaseWeaponDamage* LightAttackMultiplier;
+		const float LightAttackMultiplier = (UsedLightAttackComboCount - 1) * 0.06 + 1.0f;
+		Damage = BaseWeaponDamage * LightAttackMultiplier;
 	}
 
 	// Heavy Attack Logic
 	if (UsedHeavyAttackComboCount != 0)
 	{
 		// this logic will be updated when 
-		if (UsedHeavyAttackComboCount==2 || (UsedLightAttackComboCount==3 && UsedHeavyAttackComboCount==1))
+		if (UsedHeavyAttackComboCount == 2 || (UsedLightAttackComboCount == 3 && UsedHeavyAttackComboCount == 1))
 		{
 			// this is a direct power multiplier
-			Damage=pow(BaseWeaponDamage,1.32);
+			Damage = pow(BaseWeaponDamage, 1.32);
 		}
 		else
 		{
-			const float HeavyAttackMultiplier = (UsedHeavyAttackComboCount)* 0.18 + 1.0f;
-			Damage=BaseWeaponDamage*HeavyAttackMultiplier;
+			const float HeavyAttackMultiplier = (UsedHeavyAttackComboCount) * 0.18 + 1.0f;
+			Damage = BaseWeaponDamage * HeavyAttackMultiplier;
 		}
 	}
 
 	// final weapon damage
-	const float FinalDamage=Damage*(MorrowBoneAttackPower/EnemyDefensePower)*(1+0.12*(MorrowBoneCurrentStamina/MorrowBoneMaxStamina));
-     // Debug::PrintDebugData(TEXT("FinalDamage"),FinalDamage);
+	const float FinalDamage = Damage * (MorrowBoneAttackPower / EnemyDefensePower) * (1 + 0.12 * (
+		MorrowBoneCurrentStamina / MorrowBoneMaxStamina));
+	// Debug::PrintDebugData(TEXT("FinalDamage"),FinalDamage);
 	//to Send Out The Final Damage u need a PlaceHolder Health Attribute U modify and then u modify health
 	if (FinalDamage > 0.f)
 	{
@@ -143,7 +155,7 @@ void UGEEx_Calculation_DamageTaken::Execute_Implementation(
 				GetMorrowBoneDamageDataCapture().DamageTakenProperty,
 				EGameplayModOp::Override,
 				FinalDamage
-				)
-			);
+			)
+		);
 	}
 }

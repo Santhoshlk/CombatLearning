@@ -24,8 +24,8 @@ float UMorrowBoneCombatComponent::GetMorrowBoneWeaponBaseDamageByLevel(float lev
 void UMorrowBoneCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 {
 	Super::OnWeaponHitTarget(HitActor);
-  // Now when we overlap and get an actor we can check and add it to the array , and we can send a gameplay event.
-  //to give damage to APawn
+	// Now when we overlap and get an actor we can check and add it to the array , and we can send a gameplay event.
+	//to give damage to APawn
 
 	if (OverlappedActors.Contains(HitActor))
 	{
@@ -41,14 +41,14 @@ void UMorrowBoneCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
 		GetOwningPawn(),
 		MorrowBoneGameplayTags::Shared_Attack_MeeleAttack,
-		 EventData
-		);
+		EventData
+	);
 	// we are sending the Hit Pause at the overlap Begin as Well as end Overlap
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
 		GetOwningPawn(),
 		MorrowBoneGameplayTags::Player_Event_HitPause,
 		FGameplayEventData()
-		);
+	);
 }
 
 
@@ -60,5 +60,5 @@ void UMorrowBoneCombatComponent::OnWeaponPulledFromFromTarget(AActor* HitActor)
 		GetOwningPawn(),
 		MorrowBoneGameplayTags::Player_Event_HitPause,
 		FGameplayEventData()
-		);
+	);
 }

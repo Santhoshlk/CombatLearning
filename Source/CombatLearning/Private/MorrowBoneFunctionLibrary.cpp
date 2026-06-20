@@ -11,11 +11,13 @@
 #include "LatentAction/MorrowBoneCooldownLatentAction.h"
 
 
-UMorrowBoneAbilitySystemComponent* UMorrowBoneFunctionLibrary::NativeGetAbilitySystemComponentFromActor(AActor* InputActor)
+UMorrowBoneAbilitySystemComponent* UMorrowBoneFunctionLibrary::NativeGetAbilitySystemComponentFromActor(
+	AActor* InputActor)
 {
 	// first we need to check that if our actor is valid
 	checkf(InputActor, TEXT("You Must provide a valid InputActor"));
-	return CastChecked<UMorrowBoneAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(InputActor));
+	return CastChecked<UMorrowBoneAbilitySystemComponent>(
+		UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(InputActor));
 }
 
 void UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(AActor* InputActor, FGameplayTag InInputTag)
@@ -24,12 +26,11 @@ void UMorrowBoneFunctionLibrary::AddGameplayTagToActorIfNone(AActor* InputActor,
 	checkf(InputActor, TEXT("You Must provide a valid InputActor"));
 
 	// now u need to add a new type of tag known as loose gameplay tag we are adding to actor as we are getting the asc through the actor
-	UMorrowBoneAbilitySystemComponent*ASC=NativeGetAbilitySystemComponentFromActor(InputActor);
+	UMorrowBoneAbilitySystemComponent* ASC = NativeGetAbilitySystemComponentFromActor(InputActor);
 	if (!ASC->HasMatchingGameplayTag(InInputTag))
 	{
 		ASC->AddLooseGameplayTag(InInputTag);
 	}
-		
 }
 
 void UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(AActor* InputActor, FGameplayTag GameplayTagToRemove)
@@ -38,7 +39,7 @@ void UMorrowBoneFunctionLibrary::RemoveGameplayTagToActorIfFound(AActor* InputAc
 	checkf(InputActor, TEXT("You Must provide a valid InputActor"));
 
 	// now u need to add a new type of tag known as loose gameplay tag we are adding to actor as we are getting the asc through the actor
-	UMorrowBoneAbilitySystemComponent*ASC=NativeGetAbilitySystemComponentFromActor(InputActor);
+	UMorrowBoneAbilitySystemComponent* ASC = NativeGetAbilitySystemComponentFromActor(InputActor);
 	if (ASC->HasMatchingGameplayTag(GameplayTagToRemove))
 	{
 		ASC->RemoveLooseGameplayTag(GameplayTagToRemove);
@@ -51,22 +52,21 @@ bool UMorrowBoneFunctionLibrary::NativeDoesActorHaveTag(AActor* InputActor, FGam
 	checkf(InputActor, TEXT("You Must provide a valid InputActor"));
 
 	// now u need to add a new type of tag known as loose gameplay tag we are adding to actor as we are getting the asc through the actor
-	UMorrowBoneAbilitySystemComponent*ASC=NativeGetAbilitySystemComponentFromActor(InputActor);
+	UMorrowBoneAbilitySystemComponent* ASC = NativeGetAbilitySystemComponentFromActor(InputActor);
 
 	return ASC->HasMatchingGameplayTag(InputTag);
 }
 
 bool UMorrowBoneFunctionLibrary::BP_DoesActorHaveTag(AActor* InputActor, FGameplayTag InputTag)
 {
-	
-	return NativeDoesActorHaveTag(InputActor,InputTag);
+	return NativeDoesActorHaveTag(InputActor, InputTag);
 }
 
 UPawnCombatComponent* UMorrowBoneFunctionLibrary::NativeGetCombatComponentFromActor(AActor* InputActor)
 {
-	checkf(InputActor,TEXT("The Input Actor Needs to be valid"))
+	checkf(InputActor, TEXT("The Input Actor Needs to be valid"))
 
-	if(IPawnCombatInterface* PawnCombatInterface=Cast<IPawnCombatInterface>(InputActor))
+	if (IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InputActor))
 	{
 		return PawnCombatInterface->GetPawnCombatComponent();
 	}
@@ -75,13 +75,13 @@ UPawnCombatComponent* UMorrowBoneFunctionLibrary::NativeGetCombatComponentFromAc
 
 UPawnCombatComponent* UMorrowBoneFunctionLibrary::BP_GetCombatComponentFromActor(AActor* InputActor)
 {
-	checkf(InputActor,TEXT("The Input Actor Needs to be valid"))
+	checkf(InputActor, TEXT("The Input Actor Needs to be valid"))
 	return NativeGetCombatComponentFromActor(InputActor);
 }
 
 bool UMorrowBoneFunctionLibrary::IsTargetPawnHostile(APawn* AskingPawn, APawn* TargetPawn)
 {
-   checkf(AskingPawn && TargetPawn,TEXT("The Pawn u want to check are not valid"));
+	checkf(AskingPawn && TargetPawn, TEXT("The Pawn u want to check are not valid"));
 	IGenericTeamAgentInterface* AskingInterface = Cast<IGenericTeamAgentInterface>(AskingPawn->GetController());
 	IGenericTeamAgentInterface* TargetInterface = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
 	if (TargetInterface && AskingInterface)
@@ -94,40 +94,43 @@ bool UMorrowBoneFunctionLibrary::IsTargetPawnHostile(APawn* AskingPawn, APawn* T
 	return false;
 }
 
-float UMorrowBoneFunctionLibrary::ScalableFloatAtLevel(const FScalableFloat& InputFloat, float Level)  
+float UMorrowBoneFunctionLibrary::ScalableFloatAtLevel(const FScalableFloat& InputFloat, float Level)
 {
 	return InputFloat.GetValueAtLevel(Level);
 }
 
-FGameplayTag UMorrowBoneFunctionLibrary::ComputeHitReactDirection(const AActor* InVictimActor,const  AActor* InAttackActor,
-	float& OutDirectionalAngle)
+FGameplayTag UMorrowBoneFunctionLibrary::ComputeHitReactDirection(const AActor* InVictimActor,
+                                                                  const AActor* InAttackActor,
+                                                                  float& OutDirectionalAngle)
 {
-   checkf(InVictimActor && InAttackActor,TEXT("The victim or the Attacker Provided is not valid"));
+	checkf(InVictimActor && InAttackActor, TEXT("The victim or the Attacker Provided is not valid"));
 
 	const FVector VictimForwardVector = InVictimActor->GetActorForwardVector();
-	const FVector VictimToAttackerVector = (InAttackActor->GetActorLocation() - InVictimActor->GetActorLocation()).GetSafeNormal();
-	float DotProduct =  FVector::DotProduct(VictimForwardVector,VictimToAttackerVector);
+	const FVector VictimToAttackerVector = (InAttackActor->GetActorLocation() - InVictimActor->GetActorLocation()).
+		GetSafeNormal();
+	float DotProduct = FVector::DotProduct(VictimForwardVector, VictimToAttackerVector);
 	OutDirectionalAngle = UKismetMathLibrary::DegAcos(DotProduct);
-    const FVector CrossProduct = FVector::CrossProduct(VictimForwardVector,VictimToAttackerVector);
+	const FVector CrossProduct = FVector::CrossProduct(VictimForwardVector, VictimToAttackerVector);
 
 	if (CrossProduct.Z < 0.f)
 	{
-		OutDirectionalAngle*= -1;
+		OutDirectionalAngle *= -1;
 	}
 
-	 if (OutDirectionalAngle <= 45.f && OutDirectionalAngle >= -45.f)
-    {
-	    return MorrowBoneGameplayTags::Shared_Status_HitReact_Front;
-    }
-   if (OutDirectionalAngle >45.f && OutDirectionalAngle <=135.f)
-   {
-   	return MorrowBoneGameplayTags::Shared_Status_HitReact_Right;
-   }
-	if (OutDirectionalAngle < -45.f && OutDirectionalAngle >=-135.f)
+	if (OutDirectionalAngle <= 45.f && OutDirectionalAngle >= -45.f)
+	{
+		return MorrowBoneGameplayTags::Shared_Status_HitReact_Front;
+	}
+	if (OutDirectionalAngle > 45.f && OutDirectionalAngle <= 135.f)
+	{
+		return MorrowBoneGameplayTags::Shared_Status_HitReact_Right;
+	}
+	if (OutDirectionalAngle < -45.f && OutDirectionalAngle >= -135.f)
 	{
 		return MorrowBoneGameplayTags::Shared_Status_HitReact_Left;
 	}
-	if ( (OutDirectionalAngle < -135 && OutDirectionalAngle >=-180) || (OutDirectionalAngle >135 && OutDirectionalAngle <=180))
+	if ((OutDirectionalAngle < -135 && OutDirectionalAngle >= -180) || (OutDirectionalAngle > 135 && OutDirectionalAngle
+		<= 180))
 	{
 		return MorrowBoneGameplayTags::Shared_Status_HitReact_Back;
 	}
@@ -136,65 +139,75 @@ FGameplayTag UMorrowBoneFunctionLibrary::ComputeHitReactDirection(const AActor* 
 
 bool UMorrowBoneFunctionLibrary::ValidBlock(const AActor* InAttacker, AActor* InVictim)
 {
-   checkf(InAttacker && InVictim,TEXT("The Attacker and the victim actors should be valid"));
-  const FVector AttackerFwd = InAttacker->GetActorForwardVector();
-  const FVector VictimFwd = InVictim->GetActorForwardVector();
+	checkf(InAttacker && InVictim, TEXT("The Attacker and the victim actors should be valid"));
+	const FVector AttackerFwd = InAttacker->GetActorForwardVector();
+	const FVector VictimFwd = InVictim->GetActorForwardVector();
 
-	double Angle =FVector::DotProduct(AttackerFwd,VictimFwd);
-	
+	double Angle = FVector::DotProduct(AttackerFwd, VictimFwd);
+
 	if (Angle < 0.f)
 	{
 		return true;
 	}
-	
+
 	return false;
-	
 }
 
 bool UMorrowBoneFunctionLibrary::ApplyGameplayEffectSpecHandleToTarget(AActor* InSource, AActor* InTarget,
-	const FGameplayEffectSpecHandle& SpecHandle)
+                                                                       const FGameplayEffectSpecHandle& SpecHandle)
 {
-	checkf(SpecHandle.IsValid() && InTarget && InSource,TEXT("The Source,Target,Spec Handle Should be valid"));
-	UMorrowBoneAbilitySystemComponent* SourceASC =  NativeGetAbilitySystemComponentFromActor(InSource);
-	UMorrowBoneAbilitySystemComponent* TargetASC =  NativeGetAbilitySystemComponentFromActor(InTarget);
+	checkf(SpecHandle.IsValid() && InTarget && InSource, TEXT("The Source,Target,Spec Handle Should be valid"));
+	UMorrowBoneAbilitySystemComponent* SourceASC = NativeGetAbilitySystemComponentFromActor(InSource);
+	UMorrowBoneAbilitySystemComponent* TargetASC = NativeGetAbilitySystemComponentFromActor(InTarget);
 
-	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data,TargetASC);
-		return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
+	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(
+		*SpecHandle.Data,
+		TargetASC);
+	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
 }
 
 void UMorrowBoneFunctionLibrary::Cooldown(UObject* WorldContextObject, float TotalCooldownTime, float UpdateTimeAt,
-	float& RemainingTime, ECooldownActionsInput CooldownActionsInput, ECooldownActionsOutput& CooldownActionsOutput,
-	FLatentActionInfo LatentInfo)
+                                          float& RemainingTime, ECooldownActionsInput CooldownActionsInput,
+                                          ECooldownActionsOutput& CooldownActionsOutput,
+                                          FLatentActionInfo LatentInfo)
 {
 	UWorld* World = nullptr;
 	if (GEngine)
 	{
-		World = GEngine->GetWorldFromContextObject(WorldContextObject,EGetWorldErrorMode::LogAndReturnNull);
+		World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	}
 
-   if (!World)
-   {
-	   return;
-   }
-	
+	if (!World)
+	{
+		return;
+	}
+
 	FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 
-	FNativeCooldownLatentAction* LatentAction = LatentActionManager.FindExistingAction<FNativeCooldownLatentAction>(LatentInfo.CallbackTarget,LatentInfo.UUID);
+	FNativeCooldownLatentAction* LatentAction = LatentActionManager.FindExistingAction<FNativeCooldownLatentAction>(
+		LatentInfo.CallbackTarget,
+		LatentInfo.UUID);
 	if (CooldownActionsInput == ECooldownActionsInput::Start)
 	{
 		// u do is ki create a new action
 		if (!LatentAction)
 		{
-			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget,LatentInfo.UUID,
-				new FNativeCooldownLatentAction(TotalCooldownTime,UpdateTimeAt,RemainingTime, CooldownActionsOutput,LatentInfo));
-			
+			LatentActionManager.AddNewAction(
+				LatentInfo.CallbackTarget,
+				LatentInfo.UUID,
+				new FNativeCooldownLatentAction(
+					TotalCooldownTime,
+					UpdateTimeAt,
+					RemainingTime,
+					CooldownActionsOutput,
+					LatentInfo));
 		}
 	}
 	if (CooldownActionsInput == ECooldownActionsInput::Cancel)
 	{
-		  if (LatentAction)
-		  {
-			 LatentAction->Cancel();
-		  }
+		if (LatentAction)
+		{
+			LatentAction->Cancel();
+		}
 	}
 }

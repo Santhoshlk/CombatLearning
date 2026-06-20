@@ -12,7 +12,7 @@ AMorrowBone* UMorrowBoneHeroGameplayAbility::GetMorrowBoneCharacter()
 {
 	if (!CachedCharacter.IsValid())
 	{
-		CachedCharacter=Cast<AMorrowBone>(CurrentActorInfo->AvatarActor);
+		CachedCharacter = Cast<AMorrowBone>(CurrentActorInfo->AvatarActor);
 	}
 	return CachedCharacter.Get();
 }
@@ -21,7 +21,7 @@ ACombatClassPlayerController* UMorrowBoneHeroGameplayAbility::GetMorrowBonePlaye
 {
 	if (!CachedPlayerController.IsValid())
 	{
-		CachedPlayerController=Cast<ACombatClassPlayerController>(CurrentActorInfo->PlayerController);
+		CachedPlayerController = Cast<ACombatClassPlayerController>(CurrentActorInfo->PlayerController);
 	}
 	return CachedPlayerController.Get();
 }
@@ -32,12 +32,15 @@ UMorrowBoneCombatComponent* UMorrowBoneHeroGameplayAbility::GetMorrowBoneCombatC
 }
 
 bool UMorrowBoneHeroGameplayAbility::GetRemainingAbilityCooldownFromTag(FGameplayTag InCooldownTag,
-	float& TotalCooldownTime, float& RemainingCooldownTime)
+                                                                        float& TotalCooldownTime,
+                                                                        float& RemainingCooldownTime)
 {
-  checkf(InCooldownTag.IsValid(),TEXT("The Cooldown tag provided needs to be valid"));
+	checkf(InCooldownTag.IsValid(), TEXT("The Cooldown tag provided needs to be valid"));
 
-	FGameplayEffectQuery Query = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(InCooldownTag.GetSingleTagContainer());
-	TArray<TPair<float,float>> TotalCooldownTimeAndDuration = GetMorrowBoneAbilitySystemComponent()->GetActiveEffectsTimeRemainingAndDuration(Query);
+	FGameplayEffectQuery Query = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(
+		InCooldownTag.GetSingleTagContainer());
+	TArray<TPair<float, float>> TotalCooldownTimeAndDuration = GetMorrowBoneAbilitySystemComponent()->
+		GetActiveEffectsTimeRemainingAndDuration(Query);
 	if (TotalCooldownTimeAndDuration.IsEmpty())
 	{
 		return false;
@@ -53,29 +56,30 @@ FGameplayEffectSpecHandle UMorrowBoneHeroGameplayAbility::MakeMorrowBoneDamageEf
 	int32 UsedComboCount)
 {
 	//check the effect class
-	checkf(EffectClass,TEXT("You must provide a valid effect class"));
+	checkf(EffectClass, TEXT("You must provide a valid effect class"));
 
 	// create  Effect Context Handle
-	FGameplayEffectContextHandle EffectContextHandle=GetMorrowBoneAbilitySystemComponent()->MakeEffectContext();
+	FGameplayEffectContextHandle EffectContextHandle = GetMorrowBoneAbilitySystemComponent()->MakeEffectContext();
 	//now set some properties in the effect context handle
 	EffectContextHandle.SetAbility(this);
 	EffectContextHandle.AddSourceObject(GetAvatarActorFromActorInfo());
-	EffectContextHandle.AddInstigator(GetAvatarActorFromActorInfo(),GetAvatarActorFromActorInfo());
+	EffectContextHandle.AddInstigator(GetAvatarActorFromActorInfo(), GetAvatarActorFromActorInfo());
 
-	
-	FGameplayEffectSpecHandle EffectSpecHandle= GetMorrowBoneAbilitySystemComponent()->MakeOutgoingSpec(
-	EffectClass,
-	GetAbilityLevel(),
-	EffectContextHandle
+
+	FGameplayEffectSpecHandle EffectSpecHandle = GetMorrowBoneAbilitySystemComponent()->MakeOutgoingSpec(
+		EffectClass,
+		GetAbilityLevel(),
+		EffectContextHandle
 	);
 
 	// u have to set something's in the effect specHandle
 	if (CurrentAttackType.IsValid())
 	{
-		EffectSpecHandle.Data->SetSetByCallerMagnitude(CurrentAttackType,UsedComboCount);
+		EffectSpecHandle.Data->SetSetByCallerMagnitude(CurrentAttackType, UsedComboCount);
 	}
 
-	EffectSpecHandle.Data->SetSetByCallerMagnitude(MorrowBoneGameplayTags::Shared_SetByCaller_BaseDamage,weaponBaseDamage);
+	EffectSpecHandle.Data->SetSetByCallerMagnitude(
+		MorrowBoneGameplayTags::Shared_SetByCaller_BaseDamage,
+		weaponBaseDamage);
 	return EffectSpecHandle;
 }
-

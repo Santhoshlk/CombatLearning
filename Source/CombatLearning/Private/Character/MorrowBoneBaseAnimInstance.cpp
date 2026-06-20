@@ -6,9 +6,9 @@
 
 bool UMorrowBoneBaseAnimInstance::DoesOurPawnHaveTag(const FGameplayTag InInputTag) const
 {
-	if (APawn* OwningPawn  = TryGetPawnOwner())
+	if (APawn* OwningPawn = TryGetPawnOwner())
 	{
-		return UMorrowBoneFunctionLibrary::NativeDoesActorHaveTag(OwningPawn,InInputTag);
+		return UMorrowBoneFunctionLibrary::NativeDoesActorHaveTag(OwningPawn, InInputTag);
 	}
 	return false;
 }

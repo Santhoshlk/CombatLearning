@@ -23,19 +23,17 @@ UBTTask_RotateOrientToTarget::UBTTask_RotateOrientToTarget()
 
 	// set up the object filter
 	// if you want to give names better is ThisClass
-	InTargetKey.AddObjectFilter(this,GET_MEMBER_NAME_CHECKED(ThisClass,InTargetKey),AActor::StaticClass());
-	
+	InTargetKey.AddObjectFilter(this,GET_MEMBER_NAME_CHECKED(ThisClass, InTargetKey), AActor::StaticClass());
 }
 
 void UBTTask_RotateOrientToTarget::InitializeFromAsset(UBehaviorTree& Asset)
 {
 	Super::InitializeFromAsset(Asset);
 	// if u have a key u need to resolve it
- if (UBlackboardData* BBData = GetBlackboardAsset())
- {
-	 InTargetKey.ResolveSelectedKey(*BBData);
- }
-	
+	if (UBlackboardData* BBData = GetBlackboardAsset())
+	{
+		InTargetKey.ResolveSelectedKey(*BBData);
+	}
 }
 
 uint16 UBTTask_RotateOrientToTarget::GetInstanceMemorySize() const
@@ -60,15 +58,14 @@ EBTNodeResult::Type UBTTask_RotateOrientToTarget::ExecuteTask(UBehaviorTreeCompo
 	{
 		return EBTNodeResult::Failed;
 	}
-    if (IsInAnglePrecision(Memory->OwningPawn.Get(),Memory->TargetActor.Get()))
-    {
-	    // now task has concluded call reset and finish the task
-    	Memory->Reset();
-    	return EBTNodeResult::Succeeded;
-    }
-   // now to do the actual work in tick 
+	if (IsInAnglePrecision(Memory->OwningPawn.Get(), Memory->TargetActor.Get()))
+	{
+		// now task has concluded call reset and finish the task
+		Memory->Reset();
+		return EBTNodeResult::Succeeded;
+	}
+	// now to do the actual work in tick 
 	return EBTNodeResult::InProgress;
-	
 }
 
 void UBTTask_RotateOrientToTarget::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
@@ -80,38 +77,45 @@ void UBTTask_RotateOrientToTarget::TickTask(UBehaviorTreeComponent& OwnerComp, u
 	check(Memory);
 	if (!Memory->isValid())
 	{
-		FinishLatentTask(OwnerComp,EBTNodeResult::Failed);
+		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
 	}
-	else if (IsInAnglePrecision(Memory->OwningPawn.Get(),Memory->TargetActor.Get()))
+	else if (IsInAnglePrecision(Memory->OwningPawn.Get(), Memory->TargetActor.Get()))
 	{
 		// Task has succeeded
 		Memory->Reset();
-		FinishLatentTask(OwnerComp,EBTNodeResult::Succeeded);
+		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 	}
 	else
 	{
 		// now do the actual rotation
 		//we change the rotation from owning pawn to target actor
-		const FRotator FinalRotation = UKismetMathLibrary::FindLookAtRotation(Memory->OwningPawn->GetActorLocation(),Memory->TargetActor->GetActorLocation());
-		FRotator InterpRotation = FMath::RInterpTo(Memory->OwningPawn->GetActorRotation(),FinalRotation,DeltaSeconds,RotationInterpSpeed);
+		const FRotator FinalRotation = UKismetMathLibrary::FindLookAtRotation(
+			Memory->OwningPawn->GetActorLocation(),
+			Memory->TargetActor->GetActorLocation());
+		FRotator InterpRotation = FMath::RInterpTo(
+			Memory->OwningPawn->GetActorRotation(),
+			FinalRotation,
+			DeltaSeconds,
+			RotationInterpSpeed);
 		Memory->OwningPawn->SetActorRotation(InterpRotation);
 		// whole interpolation process
 	}
-	
 }
 
 FString UBTTask_RotateOrientToTarget::GetStaticDescription() const
 {
 	const FString KeyName = InTargetKey.SelectedKeyName.ToString();
-	return FString::Printf(TEXT("Rotate Orient to Face Target KeyName :  %s , Angle Precision : %s"),*KeyName,*FString::SanitizeFloat(AnglePrecision));
-	 
+	return FString::Printf(
+		TEXT("Rotate Orient to Face Target KeyName :  %s , Angle Precision : %s"),
+		*KeyName,
+		*FString::SanitizeFloat(AnglePrecision));
 }
 
-bool UBTTask_RotateOrientToTarget::IsInAnglePrecision( const APawn* QueryPawn,const  AActor* TargetActor) const
+bool UBTTask_RotateOrientToTarget::IsInAnglePrecision(const APawn* QueryPawn, const AActor* TargetActor) const
 {
 	const FVector QueryToTarget = (TargetActor->GetActorLocation() - QueryPawn->GetActorLocation()).GetSafeNormal();
-	float AngleToCheck = FVector::DotProduct(QueryToTarget,QueryPawn->GetActorForwardVector());
-    // this will be in -1 to 1 so now change to degrees by taking cos inverse
-     float Angle = UKismetMathLibrary::DegAcos(AngleToCheck);
+	float AngleToCheck = FVector::DotProduct(QueryToTarget, QueryPawn->GetActorForwardVector());
+	// this will be in -1 to 1 so now change to degrees by taking cos inverse
+	float Angle = UKismetMathLibrary::DegAcos(AngleToCheck);
 	return Angle <= AnglePrecision;
 }

@@ -13,23 +13,19 @@
 // Sets default values
 AMorrowBoneStone::AMorrowBoneStone()
 {
-	
 	PrimaryActorTick.bCanEverTick = false;
 	StoneNiagara = CreateDefaultSubobject<UNiagaraComponent>(TEXT("StoneMesh"));
 	StoneNiagara->SetupAttachment(RootComponent);
 }
 
 void AMorrowBoneStone::PickupInteraction(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                         UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                         const FHitResult& SweepResult)
 {
-	
 	if (AMorrowBone* OverlappedHero = Cast<AMorrowBone>(OtherActor))
 	{
-		
 		FGameplayTag InputTag = MorrowBoneGameplayTags::Player_Ability_Pickup_Stones;
-		OverlappedHero->GetMorrowBoneAbilitySystemComponent()->TryActivateAbilitiesByTag(InputTag.GetSingleTagContainer());
+		OverlappedHero->GetMorrowBoneAbilitySystemComponent()->TryActivateAbilitiesByTag(
+			InputTag.GetSingleTagContainer());
 	}
 }
-
-
-

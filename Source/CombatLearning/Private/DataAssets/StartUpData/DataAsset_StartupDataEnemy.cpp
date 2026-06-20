@@ -14,14 +14,14 @@ void UDataAsset_StartupDataEnemy::GiveToASC(TObjectPtr<UMorrowBoneAbilitySystemC
 	{
 		return;
 	}
-	for (const auto& AbilitiesToGrant:EnemyGameplayAbilities)
+	for (const auto& AbilitiesToGrant : EnemyGameplayAbilities)
 	{
 		if (!AbilitiesToGrant) continue;
 
 		FGameplayAbilitySpec AbilitySpec(AbilitiesToGrant);
 
-		AbilitySpec.SourceObject=ASC->GetAvatarActor();
-		AbilitySpec.Level=ApplyLevel;
+		AbilitySpec.SourceObject = ASC->GetAvatarActor();
+		AbilitySpec.Level = ApplyLevel;
 		ASC->GiveAbility(AbilitySpec);
 	}
 }

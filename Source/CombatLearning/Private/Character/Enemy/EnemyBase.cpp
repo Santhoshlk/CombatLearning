@@ -18,41 +18,42 @@ AEnemyBase::AEnemyBase()
 {
 	// now lets setup  enemy character
 	//this is to ensure that our enemy is controlled after spawning to the world
-	AutoPossessAI=EAutoPossessAI::PlacedInWorldOrSpawned;
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	// to set the 3rd person camera
-	bUseControllerRotationPitch=false;
-	bUseControllerRotationYaw=false;
-	bUseControllerRotationRoll=false;
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationYaw = false;
+	bUseControllerRotationRoll = false;
 
 	//to set up the free camera and other properties
-	GetCharacterMovement()->bUseControllerDesiredRotation=false;
-	GetCharacterMovement()->bOrientRotationToMovement=false;
-	GetCharacterMovement()->RotationRate=FRotator(0.f,180.f,0.f);
-	GetCharacterMovement()->MaxWalkSpeed=400.f;
-	GetCharacterMovement()->BrakingDecelerationWalking=1000.f;
+	GetCharacterMovement()->bUseControllerDesiredRotation = false;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 180.f, 0.f);
+	GetCharacterMovement()->MaxWalkSpeed = 400.f;
+	GetCharacterMovement()->BrakingDecelerationWalking = 1000.f;
 
 	//creating the Subobject of Combat component
-	EnemyCombatComponent=CreateDefaultSubobject<UEnemyCombatComponent>(TEXT("EnemyCombatComponent"));
+	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>(TEXT("EnemyCombatComponent"));
 
 	//Create the enemy UI Component
-	EnemyUIComponent=CreateDefaultSubobject<UEnemyUIComponent>(TEXT("UIComponent"));
+	EnemyUIComponent = CreateDefaultSubobject<UEnemyUIComponent>(TEXT("UIComponent"));
 
 	//Creating the Enemy Health Widget Component
 	EnemyHealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("EnemyHealthWidgetComponent"));
 
 	EnemyHealthWidgetComponent->SetupAttachment(GetMesh());
 
-   LeftHandCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftHandCollisionBox"));
-   LeftHandCollisionBox->SetupAttachment(GetMesh());
-   LeftHandCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-   LeftHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this,&ThisClass::AEnemyBase::OnCollisionBoxOverlap);	
+	LeftHandCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftHandCollisionBox"));
+	LeftHandCollisionBox->SetupAttachment(GetMesh());
+	LeftHandCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	LeftHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this, &ThisClass::AEnemyBase::OnCollisionBoxOverlap);
 
 	RightHandCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("RightHandCollisionBox"));
 	RightHandCollisionBox->SetupAttachment(GetMesh());
 	RightHandCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	RightHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this,&ThisClass::AEnemyBase::OnCollisionBoxOverlap);
-	
+	RightHandCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(
+		this,
+		&ThisClass::AEnemyBase::OnCollisionBoxOverlap);
 }
 
 UPawnCombatComponent* AEnemyBase::GetPawnCombatComponent() const
@@ -79,67 +80,68 @@ void AEnemyBase::BeginPlay()
 }
 
 void AEnemyBase::OnCollisionBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                       const FHitResult& SweepResult)
 {
-  // handle the value and send it to Enemy Combat Component
-	if (APawn* HitPawn  = Cast<APawn>(OtherActor))
+	// handle the value and send it to Enemy Combat Component
+	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
 		// Check Hostility
-		if (UMorrowBoneFunctionLibrary::IsTargetPawnHostile(this,HitPawn))
+		if (UMorrowBoneFunctionLibrary::IsTargetPawnHostile(this, HitPawn))
 		{
 			EnemyCombatComponent->OnWeaponHitTarget(HitPawn);
 		}
 	}
-	
 }
 
 #if WITH_EDITOR
 void AEnemyBase::PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
- 
 
 
-	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass,RightCollisionBox))
+	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, RightCollisionBox))
 	{
-		RightHandCollisionBox->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale,RightCollisionBox);
- 	
+		RightHandCollisionBox->AttachToComponent(
+			GetMesh(),
+			FAttachmentTransformRules::SnapToTargetNotIncludingScale,
+			RightCollisionBox);
 	}
 
 
-	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass,LeftCollisionBox))
+	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, LeftCollisionBox))
 	{
-		LeftHandCollisionBox->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale,LeftCollisionBox);
- 	
+		LeftHandCollisionBox->AttachToComponent(
+			GetMesh(),
+			FAttachmentTransformRules::SnapToTargetNotIncludingScale,
+			LeftCollisionBox);
 	}
-	
 }
 #endif
 
 void AEnemyBase::AsynchronousLoadStartUpData()
 {
-
 	if (StartUpData.IsNull())
 	{
-		  return;
+		return;
 	}
 	UAssetManager::GetStreamableManager().RequestAsyncLoad(
-	  StartUpData.ToSoftObjectPath(),FStreamableDelegate::CreateLambda(
-       [this]()
-       {
-	       // this is for the function Definition
-       	   if ( UDataAsset_StartupData* LoadedData=StartUpData.Get())
-       	   {
-	       	   LoadedData->GiveToASC(AbilitySystemComponent);
-       	   }
-
-       	 
-       }
-	  )
-		);
+		StartUpData.ToSoftObjectPath(),
+		FStreamableDelegate::CreateLambda(
+			[this]()
+			{
+				// this is for the function Definition
+				if (UDataAsset_StartupData* LoadedData = StartUpData.Get())
+				{
+					LoadedData->GiveToASC(AbilitySystemComponent);
+				}
+			}
+		)
+	);
 
 	// u can add the Blueprint Implementable Event in here
-	if (UMorrowBoneWidgetBase* WidgetBase = Cast<UMorrowBoneWidgetBase>(EnemyHealthWidgetComponent->GetUserWidgetObject()))
+	if (UMorrowBoneWidgetBase* WidgetBase = Cast<UMorrowBoneWidgetBase>(
+		EnemyHealthWidgetComponent->GetUserWidgetObject()))
 	{
 		WidgetBase->InitEnemyWidget(this);
 	}

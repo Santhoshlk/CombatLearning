@@ -14,20 +14,20 @@ void UMorrowBoneGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* 
 	Super::OnGiveAbility(ActorInfo, Spec);
 	//FGameplayAbilityActorInfo is a great struct which can have a lot of Info about our actor
 	//i we want we acn include our ASC header and  get Some Functions
-	if (ActivationPolicy==EMorrowBoneAbilityActivationPolicy::onGiven  && !Spec.IsActive())
+	if (ActivationPolicy == EMorrowBoneAbilityActivationPolicy::onGiven && !Spec.IsActive())
 	{
 		//to Activate Ability
 		ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle);
 	}
-	
 }
 
 void UMorrowBoneGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle,
-	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-	bool bReplicateEndAbility, bool bWasCancelled)
+                                            const FGameplayAbilityActorInfo* ActorInfo,
+                                            const FGameplayAbilityActivationInfo ActivationInfo,
+                                            bool bReplicateEndAbility, bool bWasCancelled)
 {
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
-	if (ActivationPolicy==EMorrowBoneAbilityActivationPolicy::onGiven)
+	if (ActivationPolicy == EMorrowBoneAbilityActivationPolicy::onGiven)
 	{
 		if (ActorInfo)
 		{
@@ -42,31 +42,33 @@ UMorrowBoneAbilitySystemComponent* UMorrowBoneGameplayAbility::GetMorrowBoneAbil
 }
 
 FActiveGameplayEffectHandle UMorrowBoneGameplayAbility::NativeApplyGameplayEffectSpecHandleToTarget(AActor* TargetActor,
-	const FGameplayEffectSpecHandle& InputSpectHandle) 
+	const FGameplayEffectSpecHandle& InputSpectHandle)
 {
 	//u need to get the ASC of the target use func from AbilitySystemFunction Library
 
-	UAbilitySystemComponent* TargetASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 
-	checkf(TargetASC && InputSpectHandle.IsValid(),TEXT("U have Give an Valid Target Actor and a Valid GameplayEffectSpecHandle as Input"));
-	return GetMorrowBoneAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*InputSpectHandle.Data,TargetASC);
+	checkf(
+		TargetASC && InputSpectHandle.IsValid(),
+		TEXT("U have Give an Valid Target Actor and a Valid GameplayEffectSpecHandle as Input"));
+	return GetMorrowBoneAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*InputSpectHandle.Data, TargetASC);
 }
 
 FActiveGameplayEffectHandle UMorrowBoneGameplayAbility::BP_ApplyGameplayEffectSpecHandleToTarget(AActor* TargetActor,
-	const FGameplayEffectSpecHandle& InputSpectHandle) 
+	const FGameplayEffectSpecHandle& InputSpectHandle)
 {
 	return NativeApplyGameplayEffectSpecHandleToTarget(TargetActor, InputSpectHandle);
 }
 
 void UMorrowBoneGameplayAbility::ApplyGameplayEffectSpecHandleToHitResult(const FGameplayEffectSpecHandle& SpecHandle,
-	const TArray<FHitResult>& HitResult)
+                                                                          const TArray<FHitResult>& HitResult)
 {
 	if (HitResult.IsEmpty())
 	{
 		return;
 	}
-	checkf(SpecHandle.IsValid(),TEXT("The specified Gameplay Effect Spec Handle should be valid"));
-	for (const auto& Hit :HitResult)
+	checkf(SpecHandle.IsValid(), TEXT("The specified Gameplay Effect Spec Handle should be valid"));
+	for (const auto& Hit : HitResult)
 	{
 		if (APawn* HitPawn = Cast<APawn>(Hit.GetActor()))
 		{
@@ -76,22 +78,22 @@ void UMorrowBoneGameplayAbility::ApplyGameplayEffectSpecHandleToHitResult(const 
 				FGameplayEventData Data;
 				Data.Instigator = OwningPawn;
 				Data.Target = HitPawn;
-				if (UMorrowBoneFunctionLibrary::IsTargetPawnHostile(OwningPawn,HitPawn))
+				if (UMorrowBoneFunctionLibrary::IsTargetPawnHostile(OwningPawn, HitPawn))
 				{
 					// u can apply gameplay effect damage spec handle and call teh hit react
-					FActiveGameplayEffectHandle ActiveGameplayEffect =   NativeApplyGameplayEffectSpecHandleToTarget(HitPawn,SpecHandle);
+					FActiveGameplayEffectHandle ActiveGameplayEffect = NativeApplyGameplayEffectSpecHandleToTarget(
+						HitPawn,
+						SpecHandle);
 					if (ActiveGameplayEffect.WasSuccessfullyApplied())
 					{
 						UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
-					 HitPawn,
-					 MorrowBoneGameplayTags::Shared_Event_HitReact_LightAttack,
-					 Data
-					);
+							HitPawn,
+							MorrowBoneGameplayTags::Shared_Event_HitReact_LightAttack,
+							Data
+						);
 					}
-					
 				}
 			}
 		}
 	}
 }
-

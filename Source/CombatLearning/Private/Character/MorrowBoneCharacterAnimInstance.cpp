@@ -9,10 +9,10 @@
 void UMorrowBoneCharacterAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
-	OwningPtr=Cast<AMorrowBoneClassBase>(TryGetPawnOwner());
+	OwningPtr = Cast<AMorrowBoneClassBase>(TryGetPawnOwner());
 	if (OwningPtr)
 	{
-		OwningCharacterMovement=OwningPtr->GetCharacterMovement();
+		OwningCharacterMovement = OwningPtr->GetCharacterMovement();
 	}
 }
 
@@ -20,12 +20,13 @@ void UMorrowBoneCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float Del
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
 	//check if Owning Ptr and Owning Character Movement is valid
-	if (IsValid(OwningPtr) && OwningCharacterMovement )
+	if (IsValid(OwningPtr) && OwningCharacterMovement)
 	{
-		GroundSpeed=OwningCharacterMovement->Velocity.Size2D();
-		bHasAcceleration=OwningCharacterMovement->GetCurrentAcceleration().SizeSquared2D()>0.f;
+		GroundSpeed = OwningCharacterMovement->Velocity.Size2D();
+		bHasAcceleration = OwningCharacterMovement->GetCurrentAcceleration().SizeSquared2D() > 0.f;
 		// to find the direction in float
-		LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningPtr->GetVelocity(),OwningPtr->GetActorRotation());	
+		LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(
+			OwningPtr->GetVelocity(),
+			OwningPtr->GetActorRotation());
 	}
 }
-

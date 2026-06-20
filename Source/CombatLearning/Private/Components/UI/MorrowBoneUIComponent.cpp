@@ -6,10 +6,5 @@
 
 UMorrowBoneUIComponent::UMorrowBoneUIComponent()
 {
-
 	PrimaryComponentTick.bCanEverTick = false;
-
 }
-
-
-

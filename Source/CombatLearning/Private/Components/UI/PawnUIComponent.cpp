@@ -20,7 +20,7 @@ void UPawnUIComponent::RemoveWidgets()
 		return;
 	}
 
-	for (auto&  Widget : DrawnWidgets)
+	for (auto& Widget : DrawnWidgets)
 	{
 		Widget->RemoveFromParent();
 	}

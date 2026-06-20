@@ -6,7 +6,5 @@
 
 bool FMorrowBoneAbilitySet::IsValid() const
 {
-	return InputTag.IsValid() && HeroInputGameplayAbility!=nullptr;
+	return InputTag.IsValid() && HeroInputGameplayAbility != nullptr;
 }
-
-

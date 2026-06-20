@@ -16,15 +16,14 @@ UBTService_OrientToTarget::UBTService_OrientToTarget()
 	bNotifyTick = true;
 	Interval = 0.f;
 	RandomDeviation = 0.f;
-	InTargetKey.AddObjectFilter(this,GET_MEMBER_NAME_CHECKED(ThisClass,InTargetKey),AActor::StaticClass());
-	
+	InTargetKey.AddObjectFilter(this,GET_MEMBER_NAME_CHECKED(ThisClass, InTargetKey), AActor::StaticClass());
 }
 
 
 FString UBTService_OrientToTarget::GetStaticDescription() const
 {
 	const FString KeyName = InTargetKey.SelectedKeyName.ToString();
-	return FString::Printf(TEXT("BT_Service Orient To Target key %s %s"), *KeyName,*GetStaticServiceDescription());
+	return FString::Printf(TEXT("BT_Service Orient To Target key %s %s"), *KeyName, *GetStaticServiceDescription());
 }
 
 
@@ -46,9 +45,14 @@ void UBTService_OrientToTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 	APawn* OwningPawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (OwningPawn && TargetActor)
 	{
-		const FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(OwningPawn->GetActorLocation(), TargetActor->GetActorLocation());
-		const FRotator InterpRotationAngle = FMath::RInterpTo(OwningPawn->GetActorRotation(),LookAtRotation,DeltaSeconds,RotationInterpSpeed);
+		const FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(
+			OwningPawn->GetActorLocation(),
+			TargetActor->GetActorLocation());
+		const FRotator InterpRotationAngle = FMath::RInterpTo(
+			OwningPawn->GetActorRotation(),
+			LookAtRotation,
+			DeltaSeconds,
+			RotationInterpSpeed);
 		OwningPawn->SetActorRotation(InterpRotationAngle);
 	}
 }
-

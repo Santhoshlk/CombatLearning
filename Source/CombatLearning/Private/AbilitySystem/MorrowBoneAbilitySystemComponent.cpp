@@ -12,29 +12,28 @@ void UMorrowBoneAbilitySystemComponent::OnPressed(FGameplayTag InInputTag)
 		return;
 	}
 	//we need to check if the tags have been activated or then wee need to activate them
-	for (const auto& AbilitySpec :GetActivatableAbilities())
+	for (const auto& AbilitySpec : GetActivatableAbilities())
 	{
 		if (!AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InInputTag)) continue;
 
 		//next if it has the Tag
 		// u Activate The Abilities
-      if (InInputTag.MatchesTag(MorrowBoneGameplayTags::InputTag_ToggleAbility))
-      {
-	      // toggling as try to activate ability is an infinite loop
-      	   if (!AbilitySpec.IsActive())
-      	   {
-	      	   TryActivateAbility(AbilitySpec.Handle);
-      	   }
-           else
-           {
-           	   CancelAbilityHandle(AbilitySpec.Handle);
-           }
-      }
-      else
-      {
-      	TryActivateAbility(AbilitySpec.Handle);
-      }
-		
+		if (InInputTag.MatchesTag(MorrowBoneGameplayTags::InputTag_ToggleAbility))
+		{
+			// toggling as try to activate ability is an infinite loop
+			if (!AbilitySpec.IsActive())
+			{
+				TryActivateAbility(AbilitySpec.Handle);
+			}
+			else
+			{
+				CancelAbilityHandle(AbilitySpec.Handle);
+			}
+		}
+		else
+		{
+			TryActivateAbility(AbilitySpec.Handle);
+		}
 	}
 }
 
@@ -56,24 +55,28 @@ void UMorrowBoneAbilitySystemComponent::OnReleased(FGameplayTag InInputTag)
 	}
 }
 
-void UMorrowBoneAbilitySystemComponent::GiveWeaponAbilitiestoASC(const 
-	TArray<FMorrowBoneAbilitySet>& WeaponGameplayAbilities,const TArray<FMorrowBoneSpecialWeaponAbilitySet>& SpecialWeaponAbilities, int32 ApplyLevel,TArray<FGameplayAbilitySpecHandle>& OutGrantedSpecHandle)
+void UMorrowBoneAbilitySystemComponent::GiveWeaponAbilitiestoASC(const
+                                                                 TArray<FMorrowBoneAbilitySet>& WeaponGameplayAbilities,
+                                                                 const TArray<FMorrowBoneSpecialWeaponAbilitySet>&
+                                                                 SpecialWeaponAbilities, int32 ApplyLevel,
+                                                                 TArray<FGameplayAbilitySpecHandle>&
+                                                                 OutGrantedSpecHandle)
 {
 	if (WeaponGameplayAbilities.IsEmpty())
 	{
 		return;
 	}
 
-	for ( const auto& WeaponAbilitySet:WeaponGameplayAbilities)
+	for (const auto& WeaponAbilitySet : WeaponGameplayAbilities)
 	{
-		if(!WeaponAbilitySet.IsValid())
+		if (!WeaponAbilitySet.IsValid())
 		{
 			continue;
 		}
 
 		FGameplayAbilitySpec AbilitySpec(WeaponAbilitySet.HeroInputGameplayAbility);
 		//next setup the things
-		AbilitySpec.SourceObject=GetAvatarActor();
+		AbilitySpec.SourceObject = GetAvatarActor();
 		AbilitySpec.Level = ApplyLevel;
 		AbilitySpec.GetDynamicSpecSourceTags().AddTag(WeaponAbilitySet.InputTag);
 
@@ -99,10 +102,10 @@ void UMorrowBoneAbilitySystemComponent::GiveWeaponAbilitiestoASC(const
 void UMorrowBoneAbilitySystemComponent::RemoveWeaponGameplayAbilities(
 	TArray<FGameplayAbilitySpecHandle>& OutGrantedWeaponAbilitySpecHandle)
 {
-	 if (OutGrantedWeaponAbilitySpecHandle.IsEmpty())
-	 {
-		 return;
-	 }
+	if (OutGrantedWeaponAbilitySpecHandle.IsEmpty())
+	{
+		return;
+	}
 	for (const auto& WeaponAbilitiesToRemove : OutGrantedWeaponAbilitySpecHandle)
 	{
 		if (WeaponAbilitiesToRemove.IsValid())
@@ -119,12 +122,14 @@ bool UMorrowBoneAbilitySystemComponent::TryActivateEnemyGameplayAbilities(FGamep
 
 	// it gives out all the Matching GameplayAbilitySpec Pointers
 	TArray<FGameplayAbilitySpec*> EnemyGameplayAbilitySpec;
-	GetActivatableGameplayAbilitySpecsByAllMatchingTags(EnemyAbilityTag.GetSingleTagContainer(),EnemyGameplayAbilitySpec);
+	GetActivatableGameplayAbilitySpecsByAllMatchingTags(
+		EnemyAbilityTag.GetSingleTagContainer(),
+		EnemyGameplayAbilitySpec);
 
 	if (!EnemyGameplayAbilitySpec.IsEmpty())
 	{
 		// u can activate the abilities
-		int32 RandomIndex = FMath::RandRange(0,EnemyGameplayAbilitySpec.Num()-1);
+		int32 RandomIndex = FMath::RandRange(0, EnemyGameplayAbilitySpec.Num() - 1);
 		const FGameplayAbilitySpec* AbilityToActivate = EnemyGameplayAbilitySpec[RandomIndex];
 		if (!AbilityToActivate->IsActive())
 		{
@@ -133,6 +138,3 @@ bool UMorrowBoneAbilitySystemComponent::TryActivateEnemyGameplayAbilities(FGamep
 	}
 	return false;
 }
-
-
-
