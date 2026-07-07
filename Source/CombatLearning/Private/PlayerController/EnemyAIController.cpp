@@ -18,7 +18,7 @@ AEnemyAIController::AEnemyAIController(const FObjectInitializer& ObjectInitializ
 	EnemyAISight->DetectionByAffiliation.bDetectEnemies = true;
 	EnemyAISight->DetectionByAffiliation.bDetectFriendlies = false;
 	EnemyAISight->DetectionByAffiliation.bDetectNeutrals = false;
-	EnemyAISight->SightRadius = 1200.f;
+	EnemyAISight->SightRadius = 1500.f;
 	EnemyAISight->LoseSightRadius = 0.f;
 	//Depends on the Type of game
 	EnemyAISight->PeripheralVisionAngleDegrees = 360.f;
