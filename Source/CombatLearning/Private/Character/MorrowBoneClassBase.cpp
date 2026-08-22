@@ -42,7 +42,7 @@ UPawnUIComponent* AMorrowBoneClassBase::GetPawnUIComponent() const
 void AMorrowBoneClassBase::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	if (IsValid(AbilitySystemComponent))
+	if (AbilitySystemComponent)
 	{
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	}
