@@ -7,6 +7,14 @@
 
 namespace MorrowBoneGameplayTags
 {
+  
+	//**Tags for Frontend**//
+	UE_DEFINE_GAMEPLAY_TAG(Frontend_WidgetStack_Modal,TEXT("Frontend.WidgetStack.Modal"))
+	UE_DEFINE_GAMEPLAY_TAG(Frontend_WidgetStack_GameMenu,TEXT("Frontend.WidgetStack.GameMenu"))
+	UE_DEFINE_GAMEPLAY_TAG(Frontend_WidgetStack_GameHUD,TEXT("Frontend.WidgetStack.GameHUD"))
+	UE_DEFINE_GAMEPLAY_TAG(Frontend_WidgetStack_Frontend,TEXT("Frontend.WidgetStack.Frontend"))
+
+	
 	// to define the game play tags u don't need the project name
 	//adopt the dot system
 	//Here the Tag name is the Literal Name you are going to see in the editor
