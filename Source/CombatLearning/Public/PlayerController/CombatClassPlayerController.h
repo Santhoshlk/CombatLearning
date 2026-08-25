@@ -19,6 +19,8 @@ public:
 	ACombatClassPlayerController();
 	// to actually get the Team ID so that onTargetPerception could use it
 	virtual FGenericTeamId GetGenericTeamId() const override;
+
+	virtual void OnPossess(APawn* aPawn) override;
 private:
 	FGenericTeamId MorrowBoneTeamId;
 };
