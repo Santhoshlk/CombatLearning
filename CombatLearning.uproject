@@ -12,7 +12,8 @@
 				"Engine",
 				"AIModule",
 				"UMG",
-				"GameplayAbilities"
+				"GameplayAbilities",
+				"CommonUI"
 			]
 		}
 	],
@@ -32,6 +33,10 @@
 			"Name": "GameplayStateTree",
 			"Enabled": true
 		},
+                {
+                         "Name": "CommonUI",
+                         "Enabled": true
+                },
 		{
 			"Name": "GeForceNOWWrapper",
 			"Enabled": true
