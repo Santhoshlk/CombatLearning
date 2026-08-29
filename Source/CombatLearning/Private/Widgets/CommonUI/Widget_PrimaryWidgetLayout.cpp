@@ -16,13 +16,14 @@ void UWidget_PrimaryWidgetLayout::RegisterWidgetStacks(UPARAM(meta = (Categories
                                                        UCommonActivatableWidgetContainerBase* const InStack)
 {
 	checkf(InStackTag.IsValid(),TEXT("The Tag that u are giving is invalid"));
-	
+		
 	if (!IsDesignTime())
 	{
 		if (!WidgetStackMap.Contains(InStackTag))
 		{
 			  // u just add it
 			WidgetStackMap.Emplace(InStackTag,InStack);
+			
 		}
 	}
 }
