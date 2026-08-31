@@ -4,6 +4,9 @@
 #include "Subsystems/FrontendUISubsystem.h"
 
 #include "CombatDebugHelper.h"
+#include "Engine/AssetManager.h"
+#include "Widgets/CommonActivatableWidgetContainer.h"
+#include "Widgets/CommonUI/Widget_ActivatableBase.h"
 
 UFrontendUISubsystem* UFrontendUISubsystem::GetFrontendUISubsystem(const UObject* WorldContextObject)
 {
@@ -15,6 +18,37 @@ UFrontendUISubsystem* UFrontendUISubsystem::GetFrontendUISubsystem(const UObject
 		return UGameInstance::GetSubsystem<UFrontendUISubsystem>(World->GetGameInstance());
 	}
 	return nullptr;
+}
+
+void UFrontendUISubsystem::NativePushSoftWidgetToStack(const FGameplayTag& InWidgetTag,
+	TSoftClassPtr<UWidget_ActivatableBase> CommonUserWidget,
+	TFunction<void(EWidgetPushActionType PushAction,UWidget_ActivatableBase* Widget)> AsyncPushAction
+	)
+{
+	// first check if the class and tag are valid
+	checkf(!CommonUserWidget.IsNull() && InWidgetTag.IsValid(),TEXT("The tag and the Widget Class that u give must be valid"));
+
+	 // async load
+	UAssetManager::Get().GetStreamableManager().RequestAsyncLoad(
+      CommonUserWidget.ToSoftObjectPath(),
+      FStreamableDelegate::CreateLambda(
+       [&]()
+       {
+	     UClass* LoadedWidgetClass =   CommonUserWidget.Get();
+       	UCommonActivatableWidgetContainerBase* WidgetStack =  PrimaryWidgetLayout->GetWidgetStack(InWidgetTag);
+      UWidget_ActivatableBase* CurrentWidget =  WidgetStack->AddWidget<UWidget_ActivatableBase>(
+          LoadedWidgetClass,
+          [AsyncPushAction](UWidget_ActivatableBase& InWidgetInstance)
+          {
+	          AsyncPushAction(EWidgetPushActionType::CreatedBeforePush,&InWidgetInstance);
+          }
+       	);
+
+       	// call the function again
+       	AsyncPushAction(EWidgetPushActionType::AfterPush,CurrentWidget);
+       }
+      )
+	);
 }
 
 bool UFrontendUISubsystem::ShouldCreateSubsystem(UObject* Outer) const
