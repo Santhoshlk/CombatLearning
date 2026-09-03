@@ -8,6 +8,7 @@
 #include "AsyncAction_PushSoftWidget.generated.h"
 
 class UWidget_ActivatableBase;
+class APlayerController;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAsyncPushDelegate,UWidget_ActivatableBase*,WidgetToPush);
 
 /**
@@ -21,14 +22,25 @@ class COMBATLEARNING_API UAsyncAction_PushSoftWidget : public UBlueprintAsyncAct
 public:
 	// creation of the action
 	UFUNCTION(BlueprintCallable,meta=(WorldContext = "WorldContextObject",HidePin = "WorldContextObject",BlueprintInternalUseOnly))
-	static UAsyncAction_PushSoftWidget*  PushSoftWidgetToStack(const UObject* WorldContextObject,UPARAM(meta = (Categories = "Frontend.WidgetStack"))FGameplayTag FrontendUITag,
+	static UAsyncAction_PushSoftWidget*  PushSoftWidgetToStack(const UObject* WorldContextObject,APlayerController* OwningPlayerController,UPARAM(meta = (Categories = "Frontend.WidgetStack"))FGameplayTag FrontendUITag,
      TSoftClassPtr<UWidget_ActivatableBase> SoftWidgetClass,
      bool FocusOnPushedWidget = true
 	);
 
 	// in async actions if u just create a delegate Instance and just keep them they are auto bind as outputs
 	UPROPERTY(BlueprintAssignable)
-	FOnAsyncPushDelegate BeforePush;
+	FOnAsyncPushDelegate CreatedBeforePush;
 	UPROPERTY(BlueprintAssignable)
 	FOnAsyncPushDelegate AfterPush;
+
+    //Begin BlueprintAsyncActionBase
+	virtual void Activate() override;
+	//End BlueprintAsyncActionBase
+private:
+	// store all the values to activate later
+	TWeakObjectPtr<UObject> CachedWorldContextObject;
+	TWeakObjectPtr<APlayerController> CachedPlayerController;
+	FGameplayTag CachedFrontendUITag;
+	TSoftClassPtr<UWidget_ActivatableBase> SoftWidgetClass;
+	bool FocusOnPushedWidget = false;
 };
