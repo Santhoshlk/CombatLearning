@@ -17,7 +17,7 @@ UAsyncAction_PushSoftWidget* UAsyncAction_PushSoftWidget::PushSoftWidgetToStack(
 		{
 			UAsyncAction_PushSoftWidget* AsyncAction = NewObject<UAsyncAction_PushSoftWidget>();
 
-			AsyncAction->CachedWorldContextObject = World;
+			AsyncAction->CachedWorld = World;
 			AsyncAction->CachedPlayerController = OwningPlayerController;
 			AsyncAction->SoftWidgetClass = SoftWidgetClass;
 			AsyncAction->CachedFrontendUITag = FrontendUITag;
@@ -35,7 +35,7 @@ void UAsyncAction_PushSoftWidget::Activate()
 {
 	Super::Activate();
 
-	UFrontendUISubsystem* FrontendUISubsystem =  UFrontendUISubsystem::GetFrontendUISubsystem(CachedWorldContextObject.Get());
+	UFrontendUISubsystem* FrontendUISubsystem =  UFrontendUISubsystem::GetFrontendUISubsystem(CachedWorld.Get());
 
 	FrontendUISubsystem->NativePushSoftWidgetToStack(CachedFrontendUITag,SoftWidgetClass,
 

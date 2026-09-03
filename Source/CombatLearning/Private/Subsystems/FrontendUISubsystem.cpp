@@ -32,7 +32,7 @@ void UFrontendUISubsystem::NativePushSoftWidgetToStack(const FGameplayTag& InWid
 	UAssetManager::Get().GetStreamableManager().RequestAsyncLoad(
       CommonUserWidget.ToSoftObjectPath(),
       FStreamableDelegate::CreateLambda(
-       [&]()
+       [this,CommonUserWidget,InWidgetTag,AsyncPushAction]()
        {
 	     UClass* LoadedWidgetClass =   CommonUserWidget.Get();
        	UCommonActivatableWidgetContainerBase* WidgetStack =  PrimaryWidgetLayout->GetWidgetStack(InWidgetTag);

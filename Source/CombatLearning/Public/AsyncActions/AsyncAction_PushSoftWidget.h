@@ -38,7 +38,7 @@ public:
 	//End BlueprintAsyncActionBase
 private:
 	// store all the values to activate later
-	TWeakObjectPtr<UObject> CachedWorldContextObject;
+	TWeakObjectPtr<UWorld> CachedWorld;
 	TWeakObjectPtr<APlayerController> CachedPlayerController;
 	FGameplayTag CachedFrontendUITag;
 	TSoftClassPtr<UWidget_ActivatableBase> SoftWidgetClass;
