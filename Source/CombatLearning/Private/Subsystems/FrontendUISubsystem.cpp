@@ -68,10 +68,6 @@ void UFrontendUISubsystem::RegisterPrimaryWidgetLayout( UWidget_PrimaryWidgetLay
 	checkf(CreatedPrimaryWidgetLayout,TEXT("The Primary WidgetLayout should be valid"));
 
 	PrimaryWidgetLayout = CreatedPrimaryWidgetLayout;
-
-	if (PrimaryWidgetLayout)
-	{
-		Debug::PrintMessage("Primary Widget Layout Registered");
-	}
+	
 }
 
