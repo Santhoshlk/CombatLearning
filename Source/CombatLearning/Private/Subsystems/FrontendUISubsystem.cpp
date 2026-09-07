@@ -2,8 +2,6 @@
 
 
 #include "Subsystems/FrontendUISubsystem.h"
-
-#include "CombatDebugHelper.h"
 #include "Engine/AssetManager.h"
 #include "Widgets/CommonActivatableWidgetContainer.h"
 #include "Widgets/CommonUI/Widget_ActivatableBase.h"
@@ -68,6 +66,6 @@ void UFrontendUISubsystem::RegisterPrimaryWidgetLayout( UWidget_PrimaryWidgetLay
 	checkf(CreatedPrimaryWidgetLayout,TEXT("The Primary WidgetLayout should be valid"));
 
 	PrimaryWidgetLayout = CreatedPrimaryWidgetLayout;
-	
+	  
 }
 
