@@ -7,14 +7,15 @@
 
 namespace MorrowBoneGameplayTags
 {
-	//**Tags for Frontend**//
+	//**Tags for Frontend Widgets**//
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_WidgetStack_Modal)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_WidgetStack_GameMenu)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_WidgetStack_GameHUD)
 	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_WidgetStack_Frontend)
 	
-
-
+   //**Tags for the Widget Classes**//
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_Widget_PressAnyKey)
+	COMBATLEARNING_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_Widget_MainMenuScreen)
 
 	
 	//**Tags For input action**//

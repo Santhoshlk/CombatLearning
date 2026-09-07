@@ -14,6 +14,14 @@ namespace MorrowBoneGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Frontend_WidgetStack_GameHUD,TEXT("Frontend.WidgetStack.GameHUD"))
 	UE_DEFINE_GAMEPLAY_TAG(Frontend_WidgetStack_Frontend,TEXT("Frontend.WidgetStack.Frontend"))
 
+  //**Tags for Widget Classes**//
+	UE_DEFINE_GAMEPLAY_TAG(Frontend_Widget_PressAnyKey,TEXT("Frontend.Widget.PressAnyKey"))
+	UE_DEFINE_GAMEPLAY_TAG(Frontend_Widget_MainMenuScreen,TEXT("Frontend.Widget.MainMenuScreen"))
+
+
+
+
+
 	
 	// to define the game play tags u don't need the project name
 	//adopt the dot system
