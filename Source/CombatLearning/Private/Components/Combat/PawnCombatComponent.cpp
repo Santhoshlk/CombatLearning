@@ -40,9 +40,9 @@ AWeaponBase* UPawnCombatComponent::GetWeaponCarriedbyTag(FGameplayTag InputTag) 
 	{
 		return nullptr;
 	}
-	if (AWeaponBase* const* SearchedWeapon = WeaponsToRegister.Find(InputTag))
+	if (AWeaponBase* Weapon = WeaponsToRegister.FindRef(InputTag))
 	{
-		return *SearchedWeapon;
+		return Weapon;
 	}
 	return nullptr;
 }
@@ -86,14 +86,17 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool ActiveWeaponCollision, EWe
 void UPawnCombatComponent::OnWeaponHitTarget(AActor* HitActor)
 {
 	//we bound this to delegate which calls when any weapon has an overlap
+	// this has seperate logic for both MorrowBone and Enemies so override them and do logic
 }
 
 void UPawnCombatComponent::OnWeaponPulledFromFromTarget(AActor* HitActor)
 {
 	//we bound this to delegate which calls when any weapon has an overlap
+	// this has seperate logic for both MorrowBone and Enemies so override them and do logic
 }
 
 void UPawnCombatComponent::ToggleBodyWeaponCollision(bool ActivateWeaponCollision, EWeaponEquippedTypes EquippedWeapon)
 {
 	// we will override it in enemy collision as hero don't need it
+	// this has seperate logic for both MorrowBone and Enemies so override them and do logic
 }

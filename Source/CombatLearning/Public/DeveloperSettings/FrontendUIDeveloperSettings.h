@@ -17,6 +17,6 @@ class COMBATLEARNING_API UFrontendUIDeveloperSettings : public UDeveloperSetting
 	GENERATED_BODY()
 public:
 
-	UPROPERTY(Config,EditDefaultsOnly,Category="WidgetReferences",meta=(ForceInlineRow,Categories = "Frontend.Widget.") )
+	UPROPERTY(Config,EditDefaultsOnly,Category="WidgetReferences",meta=(ForceInlineRow	,Categories = "Frontend.Widget.") )
 	TMap<FGameplayTag,TSoftClassPtr<UWidget_ActivatableBase>> WidgetReferenceMap;
 };
