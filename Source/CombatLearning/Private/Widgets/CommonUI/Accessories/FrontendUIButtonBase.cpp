@@ -22,4 +22,14 @@ void UFrontendUIButtonBase::NativePreConstruct()
 	SetDisplayText(ButtonDisplayText);
 }
 
+void UFrontendUIButtonBase::NativeOnCurrentTextStyleChanged()
+{
+	Super::NativeOnCurrentTextStyleChanged();
+
+	if (CommonButton_Text)
+	{
+		CommonButton_Text->SetStyle(GetCurrentTextStyleClass());
+	}
+}
+
 

@@ -17,8 +17,14 @@ class COMBATLEARNING_API UFrontendUIButtonBase : public UCommonButtonBase
 	GENERATED_BODY()
 
 public:
+	//~Begin UUserWidget Interface
    virtual void NativePreConstruct() override;
-	
+   //~End UUserWidget Interface
+
+	//~Begin UCommonButtonBase Interface
+	virtual void NativeOnCurrentTextStyleChanged() override;
+    //~End UCommonButtonBase Interface
+
 private:
 	UPROPERTY(VisibleAnywhere,Category="Button Text",meta=(BindWidgetOptional))
 	TObjectPtr<UCommonTextBlock> CommonButton_Text;
