@@ -6,6 +6,7 @@
 #include "CommonActivatableWidget.h"
 #include "Widget_ActivatableBase.generated.h"
 
+class ACombatClassPlayerController;
 /**
  * 
  */
@@ -13,5 +14,10 @@ UCLASS(Abstract,meta=(DisableNativeTick))
 class COMBATLEARNING_API UWidget_ActivatableBase : public UCommonActivatableWidget
 {
 	GENERATED_BODY()
-	
+
+public:
+	UFUNCTION(BlueprintPure,Category = "PlayerController")
+	ACombatClassPlayerController* GetOwningPlayerController();
+private:
+	TWeakObjectPtr<ACombatClassPlayerController> CachedPlayerController;
 };
