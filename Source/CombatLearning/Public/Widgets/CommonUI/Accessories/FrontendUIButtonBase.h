@@ -16,7 +16,7 @@ class COMBATLEARNING_API UFrontendUIButtonBase : public UCommonButtonBase
 {
 	GENERATED_BODY()
 
-public:
+protected:
 	//~Begin UUserWidget Interface
    virtual void NativePreConstruct() override;
    //~End UUserWidget Interface
@@ -25,10 +25,17 @@ public:
 	virtual void NativeOnCurrentTextStyleChanged() override;
     //~End UCommonButtonBase Interface
 
+	//~Begin UCommonButtonBase Interface
+	virtual void NativeOnHovered() override;
+	virtual void NativeOnUnhovered() override;
+	//~End UCommonButtonBase Interface
 private:
 	UPROPERTY(VisibleAnywhere,Category="Button Text",meta=(BindWidgetOptional))
 	TObjectPtr<UCommonTextBlock> CommonButton_Text;
 
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true"),Category = "Button Text")\
+	FText ButtonDescriptionText;
+	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true",Category = "Button Text"))
 	FText ButtonDisplayText;
 
@@ -37,4 +44,6 @@ private:
 	
 	UFUNCTION(BlueprintCallable)
 	void SetDisplayText(FText InText);
+ 
+	
 };

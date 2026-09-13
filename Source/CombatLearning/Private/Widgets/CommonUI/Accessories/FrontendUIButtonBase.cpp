@@ -4,6 +4,8 @@
 #include "Widgets/CommonUI/Accessories/FrontendUIButtonBase.h"
 
 #include "CommonTextBlock.h"
+#include "AI/NavigationSystemBase.h"
+#include "Subsystems/FrontendUISubsystem.h"
 
 void UFrontendUIButtonBase::SetDisplayText(FText InText)
 {
@@ -30,6 +32,23 @@ void UFrontendUIButtonBase::NativeOnCurrentTextStyleChanged()
 	{
 		CommonButton_Text->SetStyle(GetCurrentTextStyleClass());
 	}
+}
+
+void UFrontendUIButtonBase::NativeOnHovered()
+{
+	Super::NativeOnHovered();
+	if (!ButtonDescriptionText.IsEmpty())
+	{
+		UFrontendUISubsystem::GetFrontendUISubsystem(FNavigationSystem::GetWorldFromContextObject(this))->OnButtonHovered.Broadcast(this,this->ButtonDescriptionText);
+	}
+	
+}
+
+void UFrontendUIButtonBase::NativeOnUnhovered()
+{
+	Super::NativeOnUnhovered();
+	FText Text;
+	UFrontendUISubsystem::GetFrontendUISubsystem(FNavigationSystem::GetWorldFromContextObject(this))->OnButtonHovered.Broadcast(this,Text);
 }
 
 

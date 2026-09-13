@@ -10,6 +10,7 @@
 class UWidget_ActivatableBase;
 class UWidget_PrimaryWidgetLayout;
 struct FGameplayTag;
+class UFrontendUIButtonBase;
 /**
  * 
  */
@@ -18,6 +19,7 @@ enum class EWidgetPushActionType : uint8
 	CreatedBeforePush,
 	AfterPush
 };
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnButtonHoveredDelegate,UFrontendUIButtonBase*,CommonButton,FText,Text);
 
 UCLASS()
 class COMBATLEARNING_API UFrontendUISubsystem : public UGameInstanceSubsystem
@@ -31,6 +33,8 @@ public:
 	// this is a cpp function
 	void NativePushSoftWidgetToStack(const FGameplayTag& InWidgetTag,TSoftClassPtr<UWidget_ActivatableBase> CommonUserWidget,TFunction<void(EWidgetPushActionType PushAction,UWidget_ActivatableBase* Widget)> AsyncPushAction);
 
+	UPROPERTY(BlueprintAssignable)
+	FOnButtonHoveredDelegate OnButtonHovered;
 	
 protected:
     // ~ Begin USubsystem Interface
