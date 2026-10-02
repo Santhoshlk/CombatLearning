@@ -33,7 +33,7 @@ private:
 	UPROPERTY(VisibleAnywhere,Category="Button Text",meta=(BindWidgetOptional))
 	TObjectPtr<UCommonTextBlock> CommonButton_Text;
 
-	UPROPERTY(EditAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true"),Category = "Button Text")\
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true"),Category = "Button Text")
 	FText ButtonDescriptionText;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,meta=(AllowPrivateAccess = "true",Category = "Button Text"))

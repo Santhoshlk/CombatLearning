@@ -36,7 +36,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnButtonHoveredDelegate OnButtonHovered;
 	
-protected:
+protected:	
     // ~ Begin USubsystem Interface
 	virtual bool ShouldCreateSubsystem(UObject* Outer) const override;
 	//~ End USubsystem Interface
