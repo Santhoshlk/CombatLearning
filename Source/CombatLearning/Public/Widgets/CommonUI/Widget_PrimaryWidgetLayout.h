@@ -26,7 +26,7 @@ protected:
 	
  // register function
 	UFUNCTION(BlueprintCallable,Category = "WidgetLayout")
-	void RegisterWidgetStacks( UPARAM(meta = (Categories = "Frontend.WidgetStack.")) FGameplayTag InStackTag,  UCommonActivatableWidgetContainerBase* const InStack);
+		void RegisterWidgetStacks( UPARAM(meta = (Categories = "Frontend.WidgetStack.")) FGameplayTag InStackTag,  UCommonActivatableWidgetContainerBase* const InStack);
 
 	
 private:
