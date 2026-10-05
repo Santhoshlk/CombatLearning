@@ -16,5 +16,5 @@ enum class EConformationScreenButtonType : uint8
 	 Confirm,
 	Cancel,
 	Close,
-	Unknown UMETA(Hidden)
+	Unknown UMETA(Hidden)	
 };

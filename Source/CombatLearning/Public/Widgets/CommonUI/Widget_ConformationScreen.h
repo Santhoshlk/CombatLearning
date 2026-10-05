@@ -12,6 +12,49 @@ class UCommonTextBlock;
 /**
  * 
  */
+USTRUCT(BlueprintType)
+struct FConfirmScreenButtonInfo
+{
+	GENERATED_BODY()
+	
+	// default public
+	UPROPERTY(EditAnywhere)
+	EConformationScreenButtonType ButtonType = EConformationScreenButtonType::Unknown;
+	
+	UPROPERTY(EditAnywhere)
+	FText ButtonName;
+	
+	
+};
+
+ // each screen contains many info which is why we can package it in an Info Object
+UCLASS(BlueprintType)
+class COMBATLEARNING_API UConformationScreenInitObject : public UObject
+{
+	GENERATED_BODY()
+public:
+	// u need to create the runtime holder with static so use 
+	UFUNCTION(BlueprintCallable)
+	static UConformationScreenInitObject* CreateConfirmOkScreen(const FText& Title,const FText& Message);
+	
+	UFUNCTION(BlueprintCallable)
+	static UConformationScreenInitObject* CreateConfirmYesNoScreen(const FText& Title,const FText& Message);
+	
+	UFUNCTION(BlueprintCallable)
+	static UConformationScreenInitObject* CreateConfirmCancelScreen(const FText& Title,const FText& Message);
+	
+	UPROPERTY(Transient)
+	FText ScreenTitle;
+	
+	UPROPERTY(Transient)
+	FText ScreenMessage;
+	
+	UPROPERTY(Transient)
+	TArray<FConfirmScreenButtonInfo> Buttons;
+ 	
+};
+
+
 UCLASS(Abstract,meta=(DisableNativeTick))
 class COMBATLEARNING_API UWidget_ConformationScreen : public UWidget_ActivatableBase
 {
